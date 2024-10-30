@@ -1,0 +1,143 @@
+@startuml
+
+Player -* PlayersController
+TournamentsController *- Tournament
+TeamsController *- Team
+TournamentsController <.> Matchmaking
+Stat --o Player
+Player -o Tournament
+Team -o Tournament
+EnumCategory <. Stat
+PlayersController <. LogIn
+LogIn ..> AdminsController
+Tournament .> EnumCategory
+Admin -* AdminsController
+LogIn <. App
+PlayersController <. App
+App .> TournamentsController
+App ..> Matchmaking
+App .> TeamsController
+
+class App{}
+
+class User{
+    -nameUser
+    -password
+    +String getNameUser()
+    +String getPassword()
+    +void setNameUser(String)
+    +void setPassword(String)
+}
+
+class Player extends User{
+    -name
+    -surname
+    -dni
+    -stats
+    -creator
+    +void showStats()
+    +Stat getStat(String)
+    +boolean updateStat(String, Double)
+}
+
+class Admin extends User{
+    +CRUD
+}
+
+class EnumCategory{
+    -categories
+    -boolean categoryExist(String)
+    +String getCategory(String)
+}
+
+class Stat{
+    -category
+    -value
+    +String getCategory()
+    +Double getValue()
+    +void setCategory(String)
+    +void setValue(Double)
+}
+
+class Team{
+    -name
+    -players
+    -creator
+    +String getName()
+    +List<Player> getPlayers()
+    +Admin getCreator()
+    +void setName(String)
+    +void setPlayers(List<Player>)
+}
+
+class Matchmaking{
+    -boolean isMatchmaking(T, Tournament)
+    +boolean deleteMatchmaking(T, Tournament)
+    +boolean clearMatchmaking(Tournament)
+    +boolean autoMatchmaking(Tournament)
+    +boolean manualMatchmaking(T, T, Tournament)
+}
+
+class Tournament{
+    -name
+    -startDate
+    -finalDate
+    -league
+    -sport
+    -categoryRank
+    -participants
+    -matchmaking
+    +void rankParticipants()
+    +String getName()
+    +Date getStartDate()
+    +Date getFinalDate()
+    +String getLeague()
+    +String getSport()
+    +String getCategory()
+    +List<T> getParticipants()
+    +Lits<T[]> getMatchmaking()
+}
+
+class AdminsController{
+    -admins
+    +Admin existAdmin(String)
+}
+
+class PlayersController{
+    -players
+    +Player existPlayer(String)
+    +boolean createPlayer(String, String, String)
+    +boolean deletePlayer(Player)
+}
+
+class LogIn{
+    -admin
+    -player
+    +boolean logIn(String, String)
+    +boolean logOut()
+}
+
+class TournamentsController{
+    -tournaments
+    -Tournament existTournament(String)
+    -Tournament isParticipating(T)
+    +boolean createTournament(String, String, String)
+    +boolean deleteTournament(Tournament)
+    +boolean addParticipant(T, Tournament)
+    +boolean deleteParticipant(T, Tournament)
+    +void listTournamentNotLog()
+    +void listTournamentPlayer()
+    +void listTournamentAdmin()
+}
+
+class TeamsController{
+    -teams
+    -Team existTeam(String)
+    +boolean createTeam(String)
+    +boolean deleteTeam(Team)
+    +boolean addPlayer(Player, Team)
+    +boolean deletePlayer(Player)
+    +void getStats(Team)
+}
+
+@enduml
