@@ -37,7 +37,6 @@ class Player extends User{
     -stats
     -creator
     -List<Stat> initialStats()
-    +void showStats()
     +Stat getStat(String)
     +boolean updateStat(String, Double)
 }
@@ -48,7 +47,6 @@ class Admin extends User{
 
 class EnumCategory{
     -categories
-    -boolean categoryExist(String)
     +String getCategory(String)
 }
 
@@ -107,6 +105,7 @@ class AdminsController{
 
 class PlayersController{
     -players
+    +void showStats()
     +Player existPlayer(String)
     +boolean createPlayer(String, String, String)
     +boolean deletePlayer(Player)
