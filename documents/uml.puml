@@ -6,6 +6,7 @@ TeamsController *- Team
 TournamentsController <.> Matchmaking
 Stat --o Player
 Player -o Tournament
+Player .> EnumCategory
 Team -o Tournament
 EnumCategory <. Stat
 PlayersController <. LogIn
@@ -35,6 +36,7 @@ class Player extends User{
     -dni
     -stats
     -creator
+    -List<Stat> initialStats()
     +void showStats()
     +Stat getStat(String)
     +boolean updateStat(String, Double)
