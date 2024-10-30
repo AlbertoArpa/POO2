@@ -32,6 +32,12 @@ public class Player extends User {
         return statList;
     }
 
+    public void showStats(){
+        for (int i = 0; i<stats.size(); i++){
+            System.out.println(stats.get(i));
+        }
+    }
+
     public Stat getStat(String category){
         Stat stat = null;
         for (int i = 0; i<stats.size(); i++){
@@ -50,5 +56,30 @@ public class Player extends User {
             updated = true;
         }
         return updated;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public Admin getCreator() {
+        return creator;
+    }
+
+    public List<Stat> getStats() {
+        return stats;
+    }
+
+    @Override
+    public String toString() {
+        return getSurname() + ", " + getName() + "(" + getDni() + ")";
     }
 }
