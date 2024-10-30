@@ -1,5 +1,18 @@
-import java.util.List;
+import java.util.ArrayList;
 
 public class PlayersController {
-    private List<Player> players;
+    private ArrayList<Player> players;
+
+    public Player getPlayer(String username) {
+        Player result = null;
+        int i = 0;
+        if (!players.isEmpty()) {
+            while (players.get(i) != null && result == null) {
+                if (username.equals(players.get(i).getUsername())) result = players.get(i);
+                i++;
+            }
+        }
+
+        return result;
+    }
 }

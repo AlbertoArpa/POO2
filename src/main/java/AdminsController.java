@@ -1,14 +1,18 @@
-import java.util.List;
+import java.util.ArrayList;
 
 public class AdminsController {
-    private List<Admin> admins;
-    public Admin existAdmin(String username){
-        Admin admin = null;
-        for (int i = 0; i<admins.size(); i++){
-            if (admins.get(i).getUsername().equalsIgnoreCase(username)){
-                admin = admins.get(i);
+    private ArrayList<Admin> admins;
+
+    public Admin getAdmin(String username) {
+        Admin result = null;
+        int i = 0;
+        if (!admins.isEmpty()) {
+            while (admins.get(i) != null && result == null) {
+                if (username.equals(admins.get(i).getUsername())) result = admins.get(i);
+                i++;
             }
         }
-        return admin;
+
+        return result;
     }
 }
