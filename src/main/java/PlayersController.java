@@ -1,5 +1,5 @@
-import java.util.ArrayList;
+import java.util.List;
 
 public class PlayersController {
-    private ArrayList<Player> players;
+    private List<Player> players;
 }

@@ -1,7 +1,7 @@
-import java.util.ArrayList;
+import java.util.List;
 
 public class Team {
     private String name;
-    private ArrayList<Player> players;
+    private List<Player> players;
     private Admin creator;
 }

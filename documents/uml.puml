@@ -6,6 +6,7 @@ TeamsController *- Team
 TournamentsController <.> Matchmaking
 Stat --o Player
 Player -o Tournament
+Player .> EnumCategory
 Team -o Tournament
 EnumCategory <. Stat
 PlayersController <. LogIn
@@ -35,7 +36,7 @@ class Player extends User{
     -dni
     -stats
     -creator
-    +void showStats()
+    -List<Stat> initialStats()
     +Stat getStat(String)
     +boolean updateStat(String, Double)
 }
@@ -46,7 +47,6 @@ class Admin extends User{
 
 class EnumCategory{
     -categories
-    -boolean categoryExist(String)
     +String getCategory(String)
 }
 
@@ -105,6 +105,7 @@ class AdminsController{
 
 class PlayersController{
     -players
+    +void showStats()
     +Player existPlayer(String)
     +boolean createPlayer(String, String, String)
     +boolean deletePlayer(Player)
