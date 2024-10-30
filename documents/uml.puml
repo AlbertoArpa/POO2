@@ -21,11 +21,11 @@ App .> TeamsController
 class App{}
 
 class User{
-    -nameUser
+    -username
     -password
-    +String getNameUser()
+    +String getUsername()
     +String getPassword()
-    +void setNameUser(String)
+    +void setUsername(String)
     +void setPassword(String)
 }
 
