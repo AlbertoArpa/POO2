@@ -7,6 +7,11 @@ public class Team {
     private List<Stat> stats;
     private Admin creator;
 
+    public Team (String name, Admin creator){
+        this.name = name;
+        this.creator = creator;
+    }
+
     private List<Stat> initialStats(){
         List<Stat> statList = new ArrayList<>();
         Stat stat0 = new Stat("Scored points");
