@@ -17,10 +17,9 @@ public class AdminsController {
         return result;
     }
 
-    public boolean addAdmin(Admin admin){
-        if (getAdmin(admin.getUsername())==null){
+    public void addAdmin(Admin admin){
+        if (getAdmin(admin.getUsername())==null) {
             admins.add(admin);
-            return true;
-        } else return false;
+        }
     }
 }

@@ -15,16 +15,10 @@ public class Team {
 
     private ArrayList<Stat> initialStats(){
         ArrayList<Stat> statList = new ArrayList<>();
-        Stat stat0 = new Stat("Scored points");
-        statList.add(stat0);
-        Stat stat1 = new Stat("Assist points");
-        statList.add(stat1);
-        Stat stat2 = new Stat("Won games");
-        statList.add(stat2);
-        Stat stat3 = new Stat("Won tournaments");
-        statList.add(stat3);
-        Stat stat4 = new Stat("Money generated");
-        statList.add(stat4);
+        for (int i = 0; i< EnumCategory.getCategories().length; i++){
+            Stat stat = new Stat(EnumCategory.getCategories()[i]);
+            statList.add(stat);
+        }
         return statList;
     }
 

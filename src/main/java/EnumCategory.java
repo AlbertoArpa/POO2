@@ -5,17 +5,25 @@ public class EnumCategory {
 
     public static String getCategory(String category){
         String categoryS = null;
-        if (category.equalsIgnoreCase("Scored points")){
-            categoryS = categories.SCORED_POINTS.name();
-        } else if (category.equalsIgnoreCase("Assist points")) {
-            categoryS = categories.ASSIST_POINTS.name();
-        } else if (category.equalsIgnoreCase("Won games")) {
-            categoryS = categories.WON_GAMES.name();
-        } else if (category.equalsIgnoreCase("Won tournaments")) {
-            categoryS = categories.WON_TOURNAMENTS.name();
-        } else if (category.equalsIgnoreCase("Money generated")) {
-            categoryS = categories.MONEY_GENERATED.name();
+        category = category.toUpperCase();
+        if(category.contains(" ")) {
+            String[] arg = category.split(" ");
+            category = arg[0] + "_" + arg[1];
+        }
+        for (categories categoryA : categories.values()) {
+            if (categoryA.name().equals(category)){
+                categoryS = category;
+            }
         }
         return categoryS;
     }
+
+    public static String[] getCategories(){
+        String[] categoryS = new String[categories.values().length];
+        for (categories categoryA : categories.values()) {
+            categoryS[categoryA.ordinal()] = categoryA.name();
+        }
+        return categoryS;
+    }
+
 }
