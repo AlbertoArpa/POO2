@@ -1,9 +1,13 @@
-import java.util.List;
+import java.util.ArrayList;
 
 public class TournamentsController {
-    private List<Tournament> tournaments;
+    private ArrayList<Tournament> tournaments;
 
-    Tournament existTournament(String name) {
+    public TournamentsController(){
+        this.tournaments = new ArrayList<>();
+    }
+
+    public Tournament existTournament(String name) {
         for (Tournament tournament : tournaments) {
             if (tournament.getName().equals(name)) {
                 return tournament;

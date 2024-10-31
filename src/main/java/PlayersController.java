@@ -3,6 +3,10 @@ import java.util.ArrayList;
 public class PlayersController {
     private ArrayList<Player> players;
 
+    public PlayersController(){
+        this.players = new ArrayList<>();
+    }
+
     public Player getPlayer(String username) {
         Player result = null;
         int i = 0;

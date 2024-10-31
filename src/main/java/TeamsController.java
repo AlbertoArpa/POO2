@@ -1,5 +1,9 @@
-import java.util.List;
+import java.util.ArrayList;
 
 public class TeamsController {
-    private List<Team> teams;
+    private ArrayList<Team> teams;
+
+    public TeamsController(){
+        this.teams = new ArrayList<>();
+    }
 }

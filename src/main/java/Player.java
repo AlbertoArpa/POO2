@@ -1,11 +1,10 @@
 import java.util.ArrayList;
-import java.util.List;
 
 public class Player extends User {
     private String name;
     private String surname;
     private String dni;
-    private List<Stat> stats;
+    private ArrayList<Stat> stats;
     private Admin creator;
 
     public Player(String username, String password, String name, String surname, String dni, Admin creator){
@@ -17,8 +16,8 @@ public class Player extends User {
         this.creator = creator;
     }
 
-    private List<Stat> initialStats(){
-        List<Stat> statList = new ArrayList<>();
+    private ArrayList<Stat> initialStats(){
+        ArrayList<Stat> statList = new ArrayList<>();
         Stat stat0 = new Stat("Scored points");
         statList.add(stat0);
         Stat stat1 = new Stat("Assist points");
@@ -74,7 +73,7 @@ public class Player extends User {
         return creator;
     }
 
-    public List<Stat> getStats() {
+    public ArrayList<Stat> getStats() {
         return stats;
     }
 

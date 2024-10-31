@@ -49,4 +49,7 @@ public class Authentication {
         return userType.name();
     }
 
+    public String getUsername() {
+        return username;
+    }
 }

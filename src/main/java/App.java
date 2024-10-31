@@ -2,28 +2,75 @@ import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
+        AdminsController adminsController = new AdminsController();
+        PlayersController playersController = new PlayersController();
+        TeamsController teamsController = new TeamsController();
+        TournamentsController tournamentsController = new TournamentsController();
+        initialUsers(adminsController);
         System.out.println("SISTEMA DE GESTION DEPORTIVA INICIADO:");
         Scanner sc = new Scanner(System.in);
-        String name;
-        String[] arguments = sc.nextLine().split(";");
-        String option = arguments[0].split(" ")[0];
-        arguments[0] = arguments[0].split(" ")[1];
         boolean end = false;
         Authentication auth = new Authentication();
         while (!end) {
-            if (!auth.isLoggedIn()) {
-                System.out.println("- login\n- tournament-list");
-            } else {
-                System.out.println("- logout\n- tournament-list");
-                if (auth.getUserType().equals("ADMIN")) {
-                    System.out.println("- player-create\n- team-create\n- player-delete\n- team delete\n- team-add" +
-                            "\n- team-remove\n- tournament-create\n- tournament-delete\n- tournament-matchmaking");
-                } else {
-                    System.out.println("- tournament-add\n- tournament-remove\n- statistics-show");
-                }
-            }
-            switch (option) {
+            System.out.print("Comandos:\n> login\n> tournament-list\n----------\n> ");
+            String option = sc.nextLine();
+            switch (option.toLowerCase()) {
                 case "login":
+                    System.out.print("username: ");
+                    String username = sc.nextLine();
+                    System.out.print("password: ");
+                    String password = sc.nextLine();
+                    if (auth.logIn(adminsController, playersController, username, password)){
+                        System.out.println("\nBienvenido, " + auth.getUsername().toUpperCase());
+                        if (auth.getUserType().equals("ADMIN")){
+                            menuAdmin(sc, auth, playersController, teamsController, tournamentsController);
+                        } else menuPlayer(sc, auth, tournamentsController);
+                    } else System.out.println("No se ha podido iniciar sesión.");
+                    break;
+                case "tournament-list":
+                    break;
+                default:
+                    System.out.println("No existe esa opción. Se procederá a finalizar la ejecución.");
+                    end = true;
+                    break;
+            }
+        }sc.close();
+    }
+
+    private static void initialUsers(AdminsController adminsController){
+        Admin alberto = new Admin("alberto", "4321");
+        Admin javier = new Admin("javier", "1234");
+        Admin adri = new Admin("adrian", "1432");
+        adminsController.addAdmin(alberto);
+        adminsController.addAdmin(javier);
+        adminsController.addAdmin(adri);
+    }
+
+    private static void menuAdmin(Scanner sc, Authentication auth, PlayersController playersController,
+                                  TeamsController teamsController, TournamentsController tournamentsController){
+        boolean exit = false;
+        while(!exit){
+            System.out.print("Comandos:\n> player-create [argumentos separados por ;]\n" + "> team-create [argumentos separados por ;]\n" +
+                    "> player-delete [argumentos separados por ;]\n" + "> team-delete [argumentos separados por ;]\n" +
+                    "> team-add [argumentos separados por ;]\n" + "> team-remove [argumentos separados por ;]\n" +
+                    "> tournament-create [argumentos separados por ;]\n" + "> tournament-create [argumentos separados por ;]\n" +
+                    "> tournament-matchmaking [argumentos separados por ;]\n" + "> tournament-list\n" + "> logout\n----------\n> ");
+            String option = sc.nextLine().split(" ")[0];
+            switch (option.toLowerCase()){
+
+            }
+        }
+    }
+
+    private static void menuPlayer(Scanner sc, Authentication auth, TournamentsController tournamentsController){
+        boolean exit = false;
+        while(!exit){
+            System.out.print("Comandos:\n> tournament-add [argumentos separados por ;]\n" +
+                    "> tournament-remove [argumentos separados por ;]\n" +
+                    "> statistics-show [argumentos separados por ;]" + "> tournament-list\n" + "> logout\n----------\n> ");
+            String option = sc.nextLine().split(" ")[0];
+            switch (option.toLowerCase()){
+
             }
         }
     }

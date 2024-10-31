@@ -3,16 +3,24 @@ import java.util.ArrayList;
 public class AdminsController {
     private ArrayList<Admin> admins;
 
+    public AdminsController(){
+        this.admins = new ArrayList<>();
+    }
+
     public Admin getAdmin(String username) {
         Admin result = null;
-        int i = 0;
-        if (!admins.isEmpty()) {
-            while (admins.get(i) != null && result == null) {
-                if (username.equals(admins.get(i).getUsername())) result = admins.get(i);
-                i++;
+        for (int i = 0; i<admins.size(); i++){
+            if (admins.get(i).getUsername().equalsIgnoreCase(username)){
+                result = admins.get(i);
             }
         }
-
         return result;
+    }
+
+    public boolean addAdmin(Admin admin){
+        if (getAdmin(admin.getUsername())==null){
+            admins.add(admin);
+            return true;
+        } else return false;
     }
 }

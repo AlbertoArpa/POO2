@@ -1,10 +1,9 @@
 import java.util.ArrayList;
-import java.util.List;
 
 public class Team {
     private String name;
-    private List<Player> players;
-    private List<Stat> stats;
+    private ArrayList<Player> players;
+    private ArrayList<Stat> stats;
     private Admin creator;
 
     public Team (String name, Admin creator){
@@ -14,8 +13,8 @@ public class Team {
         this.creator = creator;
     }
 
-    private List<Stat> initialStats(){
-        List<Stat> statList = new ArrayList<>();
+    private ArrayList<Stat> initialStats(){
+        ArrayList<Stat> statList = new ArrayList<>();
         Stat stat0 = new Stat("Scored points");
         statList.add(stat0);
         Stat stat1 = new Stat("Assist points");
