@@ -42,7 +42,7 @@ public class Authentication {
     }
 
     public boolean isLoggedIn() {
-        return username == null;
+        return username != null;
     }
 
     public String getUserType() {
