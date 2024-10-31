@@ -9,6 +9,8 @@ public class Team {
 
     public Team (String name, Admin creator){
         this.name = name;
+        this.players = new ArrayList<>();
+        this.stats = initialStats();
         this.creator = creator;
     }
 
