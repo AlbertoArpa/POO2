@@ -53,11 +53,37 @@ public class App {
             System.out.print("Comandos:\n> player-create [argumentos separados por ;]\n" + "> team-create [argumentos separados por ;]\n" +
                     "> player-delete [argumentos separados por ;]\n" + "> team-delete [argumentos separados por ;]\n" +
                     "> team-add [argumentos separados por ;]\n" + "> team-remove [argumentos separados por ;]\n" +
-                    "> tournament-create [argumentos separados por ;]\n" + "> tournament-create [argumentos separados por ;]\n" +
+                    "> tournament-create [argumentos separados por ;]\n" + "> tournament-delete [argumentos separados por ;]\n" +
                     "> tournament-matchmaking [argumentos separados por ;]\n" + "> tournament-list\n" + "> logout\n----------\n> ");
             String option = sc.nextLine().split(" ")[0];
             switch (option.toLowerCase()){
-
+                case "player-create":
+                    break;
+                case "team-create":
+                    break;
+                case "player-delete":
+                    break;
+                case "team-delete":
+                    break;
+                case "team-add":
+                    break;
+                case "team-remove":
+                    break;
+                case "tournament-create":
+                    break;
+                case "tournament-delete":
+                    break;
+                case "tournament-matchmaking":
+                    break;
+                case "tournament-list":
+                    break;
+                case "logout":
+                    auth.logOut();
+                    exit = true;
+                    break;
+                default:
+                    System.out.println("No existe esa opción.");
+                    break;
             }
         }
     }
@@ -70,7 +96,21 @@ public class App {
                     "> statistics-show [argumentos separados por ;]" + "> tournament-list\n" + "> logout\n----------\n> ");
             String option = sc.nextLine().split(" ")[0];
             switch (option.toLowerCase()){
-
+                case "tournament-add":
+                    break;
+                case "tournament-remove":
+                    break;
+                case "statistics-show":
+                    break;
+                case "tournament-list":
+                    break;
+                case "logout":
+                    auth.logOut();
+                    exit = true;
+                    break;
+                default:
+                    System.out.println("No existe esa opción.");
+                    break;
             }
         }
     }
