@@ -5,17 +5,17 @@ import java.util.List;
 public class Tournament<T> {
     private String name;
     private Date startDate;
-    private Date finalDate;
+    private Date endDate;
     private String league;
     private String sport;
     private String categoryRank;
     private List<T> participants;
     private List<List<T>> matchmaking;
 
-    public Tournament(String name, Date startDate, Date finalDate, String league, String sport, String categoryRank){
+    public Tournament(String name, Date startDate, Date endDate, String league, String sport, String categoryRank){
         this.name = name;
         this.startDate = startDate;
-        this.finalDate = finalDate;
+        this.endDate = endDate;
         this.league = league;
         this.sport = sport;
         this.categoryRank = EnumCategory.getCategory(categoryRank);
@@ -39,12 +39,12 @@ public class Tournament<T> {
         this.startDate = startDate;
     }
 
-    public Date getFinalDate() {
-        return finalDate;
+    public Date getEndDate() {
+        return endDate;
     }
 
-    public void setFinalDate(Date finalDate) {
-        this.finalDate = finalDate;
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
     public String getLeague() {
