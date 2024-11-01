@@ -51,4 +51,9 @@ public class Team {
             stats.get(i).setValue(Math.pow(stats.get(i).getValue(), 1.0/players.size()));
         }
     }
+
+    public String getName() {
+        return name;
+    }
+
 }
