@@ -52,7 +52,7 @@ public class Date {
         return result;
     }
 
-    public boolean LowerThan(Date date) {
+    public boolean lowerThan(Date date) {
         return greaterThan(date) && !equals(date);
     }
 
