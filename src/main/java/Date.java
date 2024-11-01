@@ -56,4 +56,15 @@ public class Date {
         return greaterThan(date) && !equals(date);
     }
 
+    public static boolean isCorrect(String date){
+        boolean result = false;
+        String[] original = date.split("/");
+        try {
+            result = Integer.parseInt(original[0]) > 0 && Integer.parseInt(original[0]) <= 31 &&
+                    Integer.parseInt(original[1]) > 0 && Integer.parseInt(original[1]) <= 12;
+        } catch (NumberFormatException ex) {
+            result = false;
+        }
+        return result;
+    }
 }
