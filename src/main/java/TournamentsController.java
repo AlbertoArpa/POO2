@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Date;
 
 public class TournamentsController<T> {
     private ArrayList<Tournament> tournaments;
@@ -28,11 +27,17 @@ public class TournamentsController<T> {
 
     public boolean deleteTournament(String name) {
         boolean result = false;
-        if (getTournament(name) != null) {
+        Date now = new Date();
+        if (getTournament(name) != null && ((now.lowerThan(getTournament(name).getStartDate()) && now.lowerThan(getTournament(name).getEndDate())) || (now.greaterThan(getTournament(name).getStartDate()) && now.greaterThan(getTournament(name).getEndDate())))) {
             tournaments.remove(getTournament(name));
             result = true;
         }
         return result;
+    }
+
+    public boolean isParticipating(Team team) {  // GENERICOS
+        boolean result = false;
+            return result;
     }
 
 }
