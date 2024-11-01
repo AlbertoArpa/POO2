@@ -117,8 +117,11 @@ public class App {
                     break;
                 case "tournament-create":
                     if (arguments.length >= 6) {
-
-                        if (tournamentsController.createTournament(arguments[0], new Date(arguments[1]), new Date(arguments[2]), arguments[3], arguments[4], arguments[5]));
+                        if (Date.isCorrect(arguments[2]) && Date.isCorrect(arguments[3])) {
+                            if (tournamentsController.createTournament(arguments[0], new Date(arguments[1]), new Date(arguments[2]), arguments[3], arguments[4], arguments[5])) {
+                                System.out.println("TORNEO " + arguments[0] + " CREADO");
+                            } else System.out.println("NO SE HA PODIDO CREAR EL TORNEO.");
+                        } else System.out.println("FORMATO DE FECHA INCORRECTO");
                     } else System.out.println("MUY POCOS ARGUMENTOS");
                     break;
                 case "tournament-delete":
