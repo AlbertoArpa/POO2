@@ -21,7 +21,7 @@ public class App {
                     System.out.print("password: ");
                     String password = sc.nextLine();
                     if (auth.logIn(adminsController, playersController, username, password)){
-                        System.out.println("\nBienvenido, " + auth.getUsername().toUpperCase());
+                        System.out.println("\nBIENVENIDO, " + auth.getUsername().toUpperCase());
                         if (auth.getUserType().equals("ADMIN")){
                             menuAdmin(sc, auth, playersController, teamsController, tournamentsController);
                         } else menuPlayer(sc, auth, tournamentsController);
@@ -34,7 +34,7 @@ public class App {
                     end = true;
                     break;
             }
-        }sc.close();
+        } sc.close();
     }
 
     private static void initialUsers(AdminsController adminsController){

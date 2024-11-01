@@ -1,14 +1,14 @@
 import java.util.ArrayList;
 import java.util.Date;
 
-public class TournamentsController {
+public class TournamentsController<T> {
     private ArrayList<Tournament> tournaments;
 
-    public TournamentsController(){
+    public TournamentsController() {
         this.tournaments = new ArrayList<>();
     }
 
-    public Tournament getTournament(String name) {
+    private Tournament getTournament(String name) {
         for (Tournament tournament : tournaments) {
             if (tournament.getName().equals(name)) {
                 return tournament;
@@ -21,6 +21,15 @@ public class TournamentsController {
         boolean result = false;
         if (getTournament(name) != null) {
             tournaments.add(new Tournament<>(name, startDate, endDate, league, sport, categoryRank));
+            result = true;
+        }
+        return result;
+    }
+
+    public boolean deleteTournament(String name) {
+        boolean result = false;
+        if (getTournament(name) != null) {
+            tournaments.remove(getTournament(name));
             result = true;
         }
         return result;
