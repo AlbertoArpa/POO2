@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class TeamsController {
     private ArrayList<Team> teams;
 
-    public TeamsController(){
+    public TeamsController() {
         this.teams = new ArrayList<>();
     }
 
@@ -24,6 +24,11 @@ public class TeamsController {
             teams.add(new Team(name, creator));
             result = true;
         }
+        return result;
+    }
+
+    public boolean deleteTeam(String name) { // GENERICO
+        boolean result = false;
         return result;
     }
 }
