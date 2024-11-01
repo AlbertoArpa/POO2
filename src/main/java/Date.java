@@ -1,3 +1,5 @@
+import java.util.Calendar;
+
 public class Date {
     private int year;
     private int month;
@@ -14,6 +16,15 @@ public class Date {
         day = Integer.parseInt(original[0]);
         month = Integer.parseInt(original[1]);
         year = Integer.parseInt(original[2]);
+    }
+
+    /**
+     * CONSTRUYE UNA FECHA CON LA FECHA DE HOY
+     */
+    public Date() {
+        year = java.time.LocalDate.now().getYear();
+        month = java.time.LocalDateTime.now().getMonthValue();
+        day = java.time.LocalDate.now().getDayOfMonth();
     }
 
     public int getYear() {
