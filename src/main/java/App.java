@@ -57,9 +57,9 @@ public class App {
                     "> player-delete [username]\n" +
                     "> team-delete [name]\n" +
                     "> team-add [name;team]\n" +
-                    "> team-remove [argumentos separados por ;]\n" +
-                    "> tournament-create [argumentos separados por ;]\n" +
-                    "> tournament-delete [argumentos separados por ;]\n" +
+                    "> team-remove [name;team]\n" +
+                    "> tournament-create [name;startDate;endDate;league;sport;categoryRank]\n" +
+                    "> tournament-delete [name]\n" +
                     "> tournament-matchmaking [argumentos separados por ;]\n" +
                     "> tournament-list\n" + "> logout\n----------\n\t> ");
             String[] arguments = sc.nextLine().split(" ", 2);
@@ -107,13 +107,24 @@ public class App {
                     } else System.out.println("MUY POCOS ARGUMENTOS");
                     break;
                 case "team-remove":
+                    if (arguments.length >= 2) {
+                        if (teamsController.getTeam(arguments[1]) != null) {
+                            if (teamsController.getTeam(arguments[1]).removePlayer(arguments[0])) {
+                                System.out.println("JUGADOR " + arguments[0].toUpperCase() + " BORRADO DEL EQUIPO" + arguments[1].toUpperCase());
+                            } else System.out.println("NO EXISTE EL JUGADOR " + arguments[0].toUpperCase());
+                        } else System.out.println("NO EXISTE EL EQUIPO " + arguments[1].toUpperCase());
+                    } else System.out.println("MUY POCOS ARGUMENTOS");
                     break;
                 case "tournament-create":
+                    if (arguments.length >= 6) {
+
+                        if (tournamentsController.createTournament(arguments[0], new Date(arguments[1]), new Date(arguments[2]), arguments[3], arguments[4], arguments[5]));
+                    } else System.out.println("MUY POCOS ARGUMENTOS");
                     break;
                 case "tournament-delete":
                     if (arguments.length >= 1) {
                         if (tournamentsController.deleteTournament(arguments[0])) {
-
+                            System.out.println("TORNEO " + arguments[0].toUpperCase() + " BORRADO");
                         } else System.out.println("NO EXISTE EL TORNEO " + arguments[0].toUpperCase());
                     } else System.out.println("MUY POCOS ARGUMENTOS");
                     break;
