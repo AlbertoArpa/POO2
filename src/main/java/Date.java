@@ -28,22 +28,22 @@ public class Date {
         return day;
     }
 
-    public static boolean greaterThan(Date date1, Date date2) {
+    public boolean greaterThan(Date date) {
         boolean result = false;
-        if (date1.getYear() == date2.getYear()) {
-            if (date1.getMonth() == date2.getMonth()) {
-                result = date1.getDay() > date2.getDay();
+        if (year == date.getYear()) {
+            if (month == date.getMonth()) {
+                result = day > date.getDay();
             } else {
-                result = date1.getMonth() > date2.getMonth();
+                result = month > date.getMonth();
             }
         } else {
-            result = date1.getYear() > date2.getYear();
+            result = year > date.getYear();
         }
         return result;
     }
 
-    public static boolean LowerThan(Date date1, Date date2) {
-        return !greaterThan(date1, date2) && !date1.equals(date2);
+    public boolean LowerThan(Date date) {
+        return greaterThan(date) && !equals(date);
     }
 
 }
