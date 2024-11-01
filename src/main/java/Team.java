@@ -56,4 +56,23 @@ public class Team {
         return name;
     }
 
+    public Player getPlayer(String name) {
+        Player result = null;
+        int i = 0;
+        while (i < players.size() && result == null) {
+            if (players.get(i).getName().equals(name)) result = players.get(i);
+            i++;
+        }
+        return result;
+    }
+
+    public boolean addPlayer(Player player) {
+        boolean result = false;
+        if (getPlayer(player.getName()) == null) {
+            players.add(player);
+            result = true;
+        }
+        return result;
+    }
+
 }
