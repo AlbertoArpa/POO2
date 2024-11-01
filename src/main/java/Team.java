@@ -75,4 +75,13 @@ public class Team {
         return result;
     }
 
+    public boolean removePlayer(String name) {
+        boolean result = false;
+        if (getPlayer(name) == null) {
+            players.remove(getPlayer(name));
+            result = true;
+        }
+        return result;
+    }
+
 }
