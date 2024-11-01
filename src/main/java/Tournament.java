@@ -9,8 +9,8 @@ public class Tournament<T> {
     private String league;
     private String sport;
     private String categoryRank;
-    private List<T> participants;
-    private List<List<T>> matchmaking;
+    private ArrayList<T> participants;
+    private ArrayList<List<T>> matchmaking;
 
     public Tournament(String name, Date startDate, Date endDate, String league, String sport, String categoryRank){
         this.name = name;
