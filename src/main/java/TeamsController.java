@@ -30,6 +30,10 @@ public class TeamsController {
 
     public boolean deleteTeam(String name) { // GENERICO
         boolean result = false;
+        if (getTeam(name) != null) {
+            teams.remove(getTeam(name));
+            result = true;
+        }
         return result;
     }
 }
