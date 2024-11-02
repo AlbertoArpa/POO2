@@ -108,7 +108,7 @@ public class App {
                             if (teamsController.getTeam(arguments[1]).addPlayer(playersController.getPlayer(arguments[0]))) {
                                 System.out.println("\nJUGADOR " + arguments[0].toUpperCase() + " ANADIDO AL EQUIPO " + arguments[1].toUpperCase());
                             } else System.out.println("\nEL JUGADOR " + arguments[0].toUpperCase() + " NO EXISTE O YA SE ENCUENTRA EN EL EQUIPO.");
-                        } else System.out.println("\nEL EQUIPO " + arguments[1].toUpperCase() + "NO EXISTE");
+                        } else System.out.println("\nEL EQUIPO " + arguments[1].toUpperCase() + " NO EXISTE");
                     } else System.out.println("\nMUY POCOS ARGUMENTOS");
                     break;
                 case "team-remove":
