@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Player extends User {
+public class Player extends User{
     private String name;
     private String surname;
     private String dni;
@@ -40,6 +40,7 @@ public class Player extends User {
         }
         return stat;
     }
+
 
     public boolean updateStat(String category, double value){
         boolean updated = false;

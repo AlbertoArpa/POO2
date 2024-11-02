@@ -5,6 +5,8 @@ public class Authentication {
 
     private String username;
 
+    private User currentUser;
+
     public enum UserType {
         ADMIN, PLAYER
     }
@@ -19,6 +21,7 @@ public class Authentication {
         if (!isLoggedIn()) {
             if (admins.getAdmin(username) != null) {
                 if (admins.getAdmin(username).getPassword().equals(password)) {
+                    currentUser = admins.getAdmin(username);
                     this.username = username;
                     userType = UserType.ADMIN;
                     result = true;
@@ -26,6 +29,7 @@ public class Authentication {
             } else {
                 if (players.getPlayer(username) != null) {
                     if (players.getPlayer(username).getPassword().equals(password)) {
+                        currentUser = players.getPlayer(username);
                         this.username = username;
                         userType = UserType.PLAYER;
                         result = true;
@@ -51,5 +55,9 @@ public class Authentication {
 
     public String getUsername() {
         return username;
+    }
+
+    public User getCurrentUser() {
+        return currentUser;
     }
 }

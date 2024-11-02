@@ -76,7 +76,7 @@ public class App {
                         if (adminsController.getAdmin(arguments[0]) == null) {
                             if (playersController.createPlayer(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4], adminsController.getAdmin(auth.getUsername()))) {
                                 System.out.println("\nJUGADOR " + arguments[2].toUpperCase() + " CREADO");
-                            } else System.out.println("\nYA EXISTE EL JUGADOR " + arguments[2].toUpperCase());
+                            } else System.out.println("\nYA EXISTE EL JUGADOR " + arguments[0].toUpperCase());
                         } else
                             System.out.println("\nYA EXISTE UN USUARIO CON EL NOMBRE DE USUARIO " + arguments[0].toUpperCase());
                     } else System.out.println("\nMUY POCOS ARGUMENTOS");
@@ -156,9 +156,9 @@ public class App {
     private static void menuPlayer(Scanner sc, Authentication auth, TournamentsController tournamentsController) {
         boolean exit = false;
         while (!exit) {
-            System.out.print("Comandos:\n> tournament-add [argumentos separados por ;]\n" +
+            System.out.print("Comandos:\n> tournament-add [name]\n" +
                     "> tournament-remove [argumentos separados por ;]\n" +
-                    "> statistics-show [argumentos separados por ;]" + "> tournament-list\n" + "> logout\n----------\n\t> ");
+                    "> statistics-show [argumentos separados por ;]" + "\n> tournament-list\n" + "> logout\n----------\n\t> ");
             String[] arguments = sc.nextLine().split(" ", 2);
             String option = arguments[0];
             if (!option.equals("logout") && !option.equals("tournament-list")){
@@ -168,6 +168,7 @@ public class App {
             }
             switch (option.toLowerCase()) {
                 case "tournament-add":
+                    tournamentsController.getTournament(arguments[0]).addParticipant(auth.getCurrentUser());
                     break;
                 case "tournament-remove":
                     break;
@@ -177,11 +178,11 @@ public class App {
                     break;
                 case "logout":
                     auth.logOut();
-                    System.out.println("CERRANDO SESIÓN...");
+                    System.out.println("\nCERRANDO SESIÓN...\n");
                     exit = true;
                     break;
                 default:
-                    System.out.println("No existe esa opción.");
+                    System.out.println("NO EXISTE LA OPCION " + option.toUpperCase());
                     break;
             }
         }

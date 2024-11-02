@@ -53,7 +53,7 @@ public class Date {
     }
 
     public boolean lowerThan(Date date) {
-        return greaterThan(date) && !equals(date);
+        return !greaterThan(date) && !equals(date);
     }
 
     public static boolean isCorrect(String date){
@@ -66,5 +66,10 @@ public class Date {
             result = false;
         }
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return getDay() + "/" + getMonth() + "/" + getYear();
     }
 }

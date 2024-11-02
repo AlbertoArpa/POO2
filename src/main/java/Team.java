@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Team {
+public class Team{
     private String name;
     private ArrayList<Player> players;
     private ArrayList<Stat> stats;
@@ -50,6 +50,10 @@ public class Team {
         for (int i = 0; i<stats.size(); i++){
             stats.get(i).setValue(Math.pow(stats.get(i).getValue(), 1.0/players.size()));
         }
+    }
+
+    public ArrayList<Stat> getStats() {
+        return stats;
     }
 
     public String getName() {

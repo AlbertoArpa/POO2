@@ -7,7 +7,7 @@ public class TournamentsController<T> {
         this.tournaments = new ArrayList<>();
     }
 
-    private Tournament getTournament(String name) {
+    public Tournament getTournament(String name) {
         for (Tournament tournament : tournaments) {
             if (tournament.getName().equals(name)) {
                 return tournament;
@@ -19,8 +19,12 @@ public class TournamentsController<T> {
     public boolean createTournament(String name, Date startDate, Date endDate, String league, String sport, String categoryRank) {
         boolean result = false;
         if (getTournament(name) == null) {
-            tournaments.add(new Tournament<>(name, startDate, endDate, league, sport, categoryRank));
-            result = true;
+            if (startDate.greaterThan(new Date()) && endDate.greaterThan(startDate)){
+                if (EnumCategory.getCategory(categoryRank)!=null){
+                    tournaments.add(new Tournament(name, startDate, endDate, league, sport, categoryRank));
+                    result = true;
+                }
+            }
         }
         return result;
     }
@@ -28,21 +32,16 @@ public class TournamentsController<T> {
     public boolean deleteTournament(String name) {
         boolean result = false;
         Date now = new Date();
-        if (getTournament(name) != null && (now.lowerThan(getTournament(name).getStartDate()) || now.greaterThan(getTournament(name).getEndDate()))) {
+        if (getTournament(name) != null) {
             tournaments.remove(getTournament(name));
             result = true;
         }
         return result;
     }
 
-    public boolean isParticipating(Team team) {  // GENERICOS
-        boolean result = false;
-            return result;
-    }
-
     private boolean deletePastTournaments() {
         boolean result = false;
-        for (int i = 0; i < tournaments.size(); i++) {
+        for (int i = tournaments.size()-1; i >= 0; i--) {
             if (tournaments.get(i).getEndDate().lowerThan(new Date())) {
                 tournaments.remove(i);
                 i--;
@@ -75,7 +74,16 @@ public class TournamentsController<T> {
         } else {
             if (type.equals("ADMIN")) {
                 if (deletePastTournaments()) result.append("\nTORNEOS PASADOS BORRADOS.\n");
-                else result.append("\nNO HAY TORNEOS PASADOS PARA BORRAR.\n");
+                for (int i = 0; i< tournaments.size(); i++){
+                    result.append("\nNOMBRE: ").append(tournaments.get(i).getName())
+                            .append("\nFECHA: ").append(tournaments.get(i).getStartDate()).append(" - ").append(tournaments.get(i).getEndDate())
+                            .append("\nLIGA: ").append(tournaments.get(i).getLeague())
+                            .append("\nDEPORTE: ").append(tournaments.get(i).getSport())
+                            .append("\nCATEGORIA DE ORDEN: ").append(tournaments.get(i).getCategoryRank()).append("\nPARTICIPANTES:\n");
+                    for (int d = 0; d<tournaments.get(i).getParticipantsRanked().size(); d++){
+                        result.append(tournaments.get(i).getParticipantsRanked().get(d));
+                    }
+                }
             }
         }
         return result.toString();

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class Tournament<T> {
@@ -20,6 +21,16 @@ public class Tournament<T> {
         this.categoryRank = EnumCategory.getCategory(categoryRank);
         this.participants = new ArrayList<>();
         this.matchmaking = new ArrayList<>();
+    }
+
+    private T existT(T participant){
+        T exist = null;
+        for (int i = 0; i< participants.size(); i++){
+            if (participants.get(i).equals(participant)){
+                exist = participants.get(i);
+            }
+        }
+        return exist;
     }
 
     public String getName() {
@@ -70,19 +81,47 @@ public class Tournament<T> {
         this.categoryRank = categoryRank;
     }
 
-    public List<T> getParticipants() {
+    public ArrayList<T> getParticipants() {
         return participants;
     }
 
-    public List<List<T>> getMatchmaking() {
+    public ArrayList<List<T>> getMatchmaking() {
         return matchmaking;
     }
 
+    public boolean addParticipant(T participant){
+        if (existT(participant)==null){
+            participants.add(participant);
+            return true;
+        } else return false;
+    }
     public ArrayList<T> randomizeParticipants() {
         ArrayList<T> result = new ArrayList<>();
         for (int i = 0; i < participants.size(); i++) {
 
         }
+        return result;
+    }
+
+    public ArrayList<T> getParticipantsRanked(){
+        ArrayList<T> result = participants;
+        result.sort(Comparator.comparingDouble(obj ->{
+            List<Stat> items;
+            if (obj instanceof Player) {
+                items = ((Player) obj).getStats();
+            } else if (obj instanceof Team) {
+                items = ((Team) obj).getStats();
+            } else {
+                return Double.MIN_VALUE; // Valor por defecto si no es una clase válida
+            }
+
+            // Buscar el Item con el nombre especificado
+            return items.stream()
+                    .filter(item -> item.getCategory().equals(categoryRank))
+                    .map(Stat::getValue)
+                    .findFirst()
+                    .orElse(Double.MIN_VALUE); // Valor por defecto si no se encuentra
+        }).reversed());
         return result;
     }
 }
