@@ -4,6 +4,7 @@ public class Team{
     private String name;
     private ArrayList<Player> players;
     private ArrayList<Stat> stats;
+    @SuppressWarnings("unused")
     private Admin creator;
 
     public Team (String name, Admin creator){
