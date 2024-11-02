@@ -28,7 +28,6 @@ public class App {
                             } else menuPlayer(sc, auth, tournamentsController);
                         } else System.out.println("\nNO SE HA PODIDO INICIAR SESION");
                     } else System.out.println("\nMUY POCOS ARGUMENTOS");
-
                     break;
                 case "tournament-list":
                     break;
