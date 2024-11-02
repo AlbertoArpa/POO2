@@ -96,11 +96,13 @@ public class App {
                     } else System.out.println("\nMUY POCOS ARGUMENTOS");
                     break;
                 case "team-delete": // GENERICOS
-/*                    if (arguments.length >= 1) {
+                /*                    
+                    if (arguments.length >= 1) {
                         if (teamsController.deleteTeam(arguments[0])) {
                             System.out.println("\nEQUIPO ");
                         } else System.out.println();
-                    } else System.out.println("MUY POCOS ARGUMENTOS");*/
+                    } else System.out.println("MUY POCOS ARGUMENTOS");
+                */
                     break;
                 case "team-add":
                     if (arguments.length >= 2) {
@@ -108,7 +110,7 @@ public class App {
                             if (teamsController.getTeam(arguments[1]).addPlayer(playersController.getPlayer(arguments[0]))) {
                                 System.out.println("\nJUGADOR " + arguments[0].toUpperCase() + " ANADIDO AL EQUIPO " + arguments[1].toUpperCase());
                             } else System.out.println("\nEL JUGADOR " + arguments[0].toUpperCase() + " NO EXISTE O YA SE ENCUENTRA EN EL EQUIPO.");
-                        } else System.out.println("\nEL EQUIPO " + arguments[1].toUpperCase() + "NO EXISTE");
+                        } else System.out.println("\nEL EQUIPO " + arguments[1].toUpperCase() + " NO EXISTE");
                     } else System.out.println("\nMUY POCOS ARGUMENTOS");
                     break;
                 case "team-remove":

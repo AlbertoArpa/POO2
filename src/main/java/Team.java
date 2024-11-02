@@ -72,6 +72,9 @@ public class Team{
 
     public boolean addPlayer(Player player) {
         boolean result = false;
+        if(player == null) {
+            return false;
+        }
         if (getPlayer(player.getName()) == null) {
             players.add(player);
             result = true;
