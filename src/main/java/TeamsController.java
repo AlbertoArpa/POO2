@@ -28,7 +28,7 @@ public class TeamsController {
         return result;
     }
 
-    public boolean deleteTeam(String name) { // GENERICO
+    public boolean deleteTeam(String name) {
         boolean result = false;
         if (getTeam(name) != null) {
             teams.remove(getTeam(name));
