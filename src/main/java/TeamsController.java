@@ -14,13 +14,14 @@ public class TeamsController {
             if (teams.get(i).getName().equals(name)) {
                 result = teams.get(i);
             }
+            i++;
         }
         return result;
     }
 
     public boolean createTeam(String name, Admin creator) {
         boolean result = false;
-        if (getTeam(name) != null) {
+        if (getTeam(name) == null) {
             teams.add(new Team(name, creator));
             result = true;
         }

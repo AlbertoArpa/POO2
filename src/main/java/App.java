@@ -16,19 +16,19 @@ public class App {
             System.out.print("Comandos:\n> login\n> tournament-list\n----------\n\t> ");
             String[] arguments = sc.nextLine().split(" ", 2);
             String option = arguments[0];
-            arguments = arguments[1].split(";");
+            if (!option.equals("tournament-list") && arguments.length > 1) arguments = arguments[1].split(";");
+            else System.out.println("NO HAY ARGUMENTOS");
             switch (option.toLowerCase()) {
                 case "login":
-                    System.out.print("username: ");
-                    String username = sc.nextLine();
-                    System.out.print("password: ");
-                    String password = sc.nextLine();
-                    if (auth.logIn(adminsController, playersController, username, password)) {
-                        System.out.println("\nBIENVENIDO, " + auth.getUsername().toUpperCase());
-                        if (auth.getUserType().equals("ADMIN")) {
-                            menuAdmin(sc, auth, playersController, teamsController, tournamentsController, adminsController);
-                        } else menuPlayer(sc, auth, tournamentsController);
-                    } else System.out.println("No se ha podido iniciar sesión.");
+                    if (arguments.length >= 2) {
+                        if (auth.logIn(adminsController, playersController, arguments[0], arguments[1])) {
+                            System.out.println("\nBIENVENIDO, " + auth.getUsername().toUpperCase());
+                            if (auth.getUserType().equals("ADMIN")) {
+                                menuAdmin(sc, auth, playersController, teamsController, tournamentsController, adminsController);
+                            } else menuPlayer(sc, auth, tournamentsController);
+                        } else System.out.println("\nNO SE HA PODIDO INICIAR SESION");
+                    } else System.out.println("\nMUY POCOS ARGUMENTOS");
+
                     break;
                 case "tournament-list":
                     break;
@@ -64,36 +64,37 @@ public class App {
                     "> tournament-list\n" + "> logout\n----------\n\t> ");
             String[] arguments = sc.nextLine().split(" ", 2);
             String option = arguments[0];
-            arguments = arguments[1].split(";");
+            if (!option.equals("logout") && !option.equals("tournament-list") && arguments.length > 1) arguments = arguments[1].split(";");
+            else System.out.println("\nNO HAY ARGUMENTOS");
             switch (option.toLowerCase()) {
                 case "player-create":
                     if (arguments.length >= 5) {
                         if (adminsController.getAdmin(arguments[0]) == null) {
                             if (playersController.createPlayer(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4], adminsController.getAdmin(auth.getUsername()))) {
-                                System.out.println("JUGADOR " + arguments[2].toUpperCase() + " CREADO");
-                            } else System.out.println("YA EXISTE EL JUGADOR " + arguments[2].toUpperCase());
+                                System.out.println("\nJUGADOR " + arguments[2].toUpperCase() + " CREADO");
+                            } else System.out.println("\nYA EXISTE EL JUGADOR " + arguments[2].toUpperCase());
                         } else
-                            System.out.println("YA EXISTE UN USUARIO CON EL NOMBRE DE USUARIO " + arguments[0].toUpperCase());
-                    } else System.out.println("MUY POCOS ARGUMENTOS");
+                            System.out.println("\nYA EXISTE UN USUARIO CON EL NOMBRE DE USUARIO " + arguments[0].toUpperCase());
+                    } else System.out.println("\nMUY POCOS ARGUMENTOS");
                     break;
                 case "team-create":
                     if (arguments.length >= 1) {
                         if (teamsController.createTeam(arguments[0], adminsController.getAdmin(auth.getUsername()))) {
-                            System.out.println("EQUIPO " + arguments[0].toUpperCase() + " CREADO");
-                        } else System.out.println("EL EQUIPO " + arguments[0].toUpperCase() + " YA EXISTE");
-                    } else System.out.println("MUY POCOS ARGUMENTOS");
+                            System.out.println("\nEQUIPO " + arguments[0].toUpperCase() + " CREADO");
+                        } else System.out.println("\nEL EQUIPO " + arguments[0].toUpperCase() + " YA EXISTE");
+                    } else System.out.println("\nMUY POCOS ARGUMENTOS");
                     break;
                 case "player-delete":
                     if (arguments.length >= 1) {
                         if (playersController.deletePlayer(arguments[0])) {
-                            System.out.println("JUGADOR " + arguments[0].toUpperCase() + " ELIMINADO");
-                        } else System.out.println("NO EXISTE EL JUGADOR " + arguments[0].toUpperCase());
-                    } else System.out.println("MUY POCOS ARGUMENTOS");
+                            System.out.println("\nJUGADOR " + arguments[0].toUpperCase() + " ELIMINADO");
+                        } else System.out.println("\nNO EXISTE EL JUGADOR " + arguments[0].toUpperCase());
+                    } else System.out.println("\nMUY POCOS ARGUMENTOS");
                     break;
                 case "team-delete": // GENERICOS
 /*                    if (arguments.length >= 1) {
                         if (teamsController.deleteTeam(arguments[0])) {
-                            System.out.println("EQUIPO ");
+                            System.out.println("\nEQUIPO ");
                         } else System.out.println();
                     } else System.out.println("MUY POCOS ARGUMENTOS");*/
                     break;
@@ -101,35 +102,35 @@ public class App {
                     if (arguments.length >= 2) {
                         if (teamsController.getTeam(arguments[1]) != null) {
                             if (teamsController.getTeam(arguments[1]).addPlayer(playersController.getPlayer(arguments[0]))) {
-                                System.out.println("JUGADOR " + arguments[0].toUpperCase() + " ANADIDO AL EQUIPO " + arguments[1].toUpperCase());
-                            } else System.out.println("EL JUGADOR " + arguments[0].toUpperCase() + " NO EXISTE");
-                        } else System.out.println("EL EQUIPO " + arguments[1].toUpperCase() + "NO EXISTE");
-                    } else System.out.println("MUY POCOS ARGUMENTOS");
+                                System.out.println("\nJUGADOR " + arguments[0].toUpperCase() + " ANADIDO AL EQUIPO " + arguments[1].toUpperCase());
+                            } else System.out.println("\nEL JUGADOR " + arguments[0].toUpperCase() + " NO EXISTE");
+                        } else System.out.println("\nEL EQUIPO " + arguments[1].toUpperCase() + "NO EXISTE");
+                    } else System.out.println("\nMUY POCOS ARGUMENTOS");
                     break;
                 case "team-remove":
                     if (arguments.length >= 2) {
                         if (teamsController.getTeam(arguments[1]) != null) {
                             if (teamsController.getTeam(arguments[1]).removePlayer(arguments[0])) {
-                                System.out.println("JUGADOR " + arguments[0].toUpperCase() + " BORRADO DEL EQUIPO" + arguments[1].toUpperCase());
-                            } else System.out.println("NO EXISTE EL JUGADOR " + arguments[0].toUpperCase());
-                        } else System.out.println("NO EXISTE EL EQUIPO " + arguments[1].toUpperCase());
-                    } else System.out.println("MUY POCOS ARGUMENTOS");
+                                System.out.println("\nJUGADOR " + arguments[0].toUpperCase() + " BORRADO DEL EQUIPO" + arguments[1].toUpperCase());
+                            } else System.out.println("\nNO EXISTE EL JUGADOR " + arguments[0].toUpperCase());
+                        } else System.out.println("\nNO EXISTE EL EQUIPO " + arguments[1].toUpperCase());
+                    } else System.out.println("\nMUY POCOS ARGUMENTOS");
                     break;
                 case "tournament-create":
                     if (arguments.length >= 6) {
-                        if (Date.isCorrect(arguments[2]) && Date.isCorrect(arguments[3])) {
+                        if (Date.isCorrect(arguments[1]) && Date.isCorrect(arguments[2])) {
                             if (tournamentsController.createTournament(arguments[0], new Date(arguments[1]), new Date(arguments[2]), arguments[3], arguments[4], arguments[5])) {
-                                System.out.println("TORNEO " + arguments[0] + " CREADO");
-                            } else System.out.println("NO SE HA PODIDO CREAR EL TORNEO.");
-                        } else System.out.println("FORMATO DE FECHA INCORRECTO");
-                    } else System.out.println("MUY POCOS ARGUMENTOS");
+                                System.out.println("\nTORNEO " + arguments[0].toUpperCase() + " CREADO");
+                            } else System.out.println("\nNO SE HA PODIDO CREAR EL TORNEO.");
+                        } else System.out.println("\nFORMATO DE FECHA INCORRECTO");
+                    } else System.out.println("\nMUY POCOS ARGUMENTOS");
                     break;
                 case "tournament-delete":
                     if (arguments.length >= 1) {
                         if (tournamentsController.deleteTournament(arguments[0])) {
-                            System.out.println("TORNEO " + arguments[0].toUpperCase() + " BORRADO");
-                        } else System.out.println("NO EXISTE EL TORNEO " + arguments[0].toUpperCase());
-                    } else System.out.println("MUY POCOS ARGUMENTOS");
+                            System.out.println("\nTORNEO " + arguments[0].toUpperCase() + " BORRADO");
+                        } else System.out.println("\nNO EXISTE EL TORNEO " + arguments[0].toUpperCase());
+                    } else System.out.println("\nMUY POCOS ARGUMENTOS");
                     break;
                 case "tournament-matchmaking":
                     break;
@@ -140,7 +141,7 @@ public class App {
                     exit = true;
                     break;
                 default:
-                    System.out.println("No existe esa opción.");
+                    System.out.println("NO EXISTE LA OPCION " + option.toUpperCase());
                     break;
             }
         }
@@ -152,7 +153,10 @@ public class App {
             System.out.print("Comandos:\n> tournament-add [argumentos separados por ;]\n" +
                     "> tournament-remove [argumentos separados por ;]\n" +
                     "> statistics-show [argumentos separados por ;]" + "> tournament-list\n" + "> logout\n----------\n\t> ");
-            String option = sc.nextLine().split(" ")[0];
+            String[] arguments = sc.nextLine().split(" ", 2);
+            String option = arguments[0];
+            if (!option.equals("logout") && !option.equals("tournament-list") && arguments.length > 1) arguments = arguments[1].split(";");
+            else System.out.println("NO HAY ARGUMENTOS");
             switch (option.toLowerCase()) {
                 case "tournament-add":
                     break;

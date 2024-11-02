@@ -18,7 +18,7 @@ public class TournamentsController<T> {
 
     public boolean createTournament(String name, Date startDate, Date endDate, String league, String sport, String categoryRank) {
         boolean result = false;
-        if (getTournament(name) != null) {
+        if (getTournament(name) == null) {
             tournaments.add(new Tournament<>(name, startDate, endDate, league, sport, categoryRank));
             result = true;
         }

@@ -11,7 +11,7 @@ public class PlayersController {
         Player result = null;
         int i = 0;
         if (!players.isEmpty()) {
-            while (players.get(i) != null && result == null) {
+            while (i < players.size() && players.get(i) != null && result == null) {
                 if (username.equals(players.get(i).getUsername())) result = players.get(i);
                 i++;
             }
