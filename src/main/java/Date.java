@@ -56,7 +56,7 @@ public class Date {
         return !greaterThan(date) && !equals(date);
     }
 
-    public static boolean isCorrect(String date){
+    public static boolean isCorrect(String date) {
         boolean result = false;
         String[] original = date.split("/");
         try {

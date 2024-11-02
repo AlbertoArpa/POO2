@@ -50,7 +50,8 @@ public class Authentication {
     }
 
     public String getUserType() {
-        return userType.name();
+        if (userType != null) return userType.name();
+        else return null;
     }
 
     public String getUsername() {

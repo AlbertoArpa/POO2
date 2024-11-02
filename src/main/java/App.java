@@ -143,7 +143,7 @@ public class App {
                     break;
                 case "logout":
                     auth.logOut();
-                    System.out.println("\nCERRANDO SESIÓN...\n");
+                    System.out.println("\nCERRANDO SESIÓN...");
                     exit = true;
                     break;
                 default:
@@ -175,6 +175,7 @@ public class App {
                 case "statistics-show":
                     break;
                 case "tournament-list":
+                    System.out.println(tournamentsController.listTournaments(auth.getUserType()));
                     break;
                 case "logout":
                     auth.logOut();

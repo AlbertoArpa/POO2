@@ -12,7 +12,7 @@ public class Tournament<T> {
     private ArrayList<T> participants;
     private ArrayList<List<T>> matchmaking;
 
-    public Tournament(String name, Date startDate, Date endDate, String league, String sport, String categoryRank){
+    public Tournament(String name, Date startDate, Date endDate, String league, String sport, String categoryRank) {
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -23,10 +23,10 @@ public class Tournament<T> {
         this.matchmaking = new ArrayList<>();
     }
 
-    private T existT(T participant){
+    private T existT(T participant) {
         T exist = null;
-        for (int i = 0; i< participants.size(); i++){
-            if (participants.get(i).equals(participant)){
+        for (int i = 0; i < participants.size(); i++) {
+            if (participants.get(i).equals(participant)) {
                 exist = participants.get(i);
             }
         }
@@ -89,23 +89,26 @@ public class Tournament<T> {
         return matchmaking;
     }
 
-    public boolean addParticipant(T participant){
-        if (existT(participant)==null){
+    public boolean addParticipant(T participant) {
+        if (existT(participant) == null) {
             participants.add(participant);
             return true;
         } else return false;
     }
-    public ArrayList<T> randomizeParticipants() {
-        ArrayList<T> result = new ArrayList<>();
-        for (int i = 0; i < participants.size(); i++) {
 
+    public ArrayList<T> getRandomizedParticipants() {
+        ArrayList<T> result = new ArrayList<>(), aux = new ArrayList<>();
+        for (int i = 0; i < participants.size(); i++) aux.add(participants.get(i));
+        for (int i = 0; i < participants.size(); i++) {
+            int random = (int) (Math.random() * aux.size());
+            result.add(aux.get(random));
         }
         return result;
     }
 
-    public ArrayList<T> getParticipantsRanked(){
+    public ArrayList<T> getParticipantsRanked() {
         ArrayList<T> result = participants;
-        result.sort(Comparator.comparingDouble(obj ->{
+        result.sort(Comparator.comparingDouble(obj -> {
             List<Stat> items;
             if (obj instanceof Player) {
                 items = ((Player) obj).getStats();
