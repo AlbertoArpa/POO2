@@ -28,7 +28,7 @@ public class TournamentsController<T> {
     public boolean deleteTournament(String name) {
         boolean result = false;
         Date now = new Date();
-        if (getTournament(name) != null && ((now.lowerThan(getTournament(name).getStartDate()) && now.lowerThan(getTournament(name).getEndDate())) || (now.greaterThan(getTournament(name).getStartDate()) && now.greaterThan(getTournament(name).getEndDate())))) {
+        if (getTournament(name) != null && (now.lowerThan(getTournament(name).getStartDate()) || now.greaterThan(getTournament(name).getEndDate()))) {
             tournaments.remove(getTournament(name));
             result = true;
         }
@@ -38,6 +38,17 @@ public class TournamentsController<T> {
     public boolean isParticipating(Team team) {  // GENERICOS
         boolean result = false;
             return result;
+    }
+
+    private boolean deletePastTournaments() {
+        boolean result = false;
+        for (int i = 0; i < tournaments.size(); i++) {
+            if (tournaments.get(i).getEndDate().lowerThan(new Date())) {
+                tournaments.remove(i);
+                result = true;
+            }
+        }
+        return result;
     }
 
 }
