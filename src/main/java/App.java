@@ -49,8 +49,8 @@ public class App {
     }
 
     private static void menuAdmin(Scanner sc, Authentication auth, PlayersController playersController,
-                                  TeamsController teamsController, TournamentsController tournamentsController,
-                                  AdminsController adminsController) {
+                                TeamsController teamsController, TournamentsController tournamentsController,
+                                AdminsController adminsController) {
         boolean exit = false;
         while (!exit) {
             System.out.print("Comandos:\n> player-create [username;password;name;surname;dni]\n" +
