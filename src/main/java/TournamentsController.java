@@ -76,12 +76,17 @@ public class TournamentsController<T> {
                 else result.append("\nNO HAY TORNEOS PASADOS PARA BORRAR.\n");
             }
             for (int i = 0; i < tournaments.size(); i++) {
-                ArrayList<T> rankedParticipants = tournaments.get(i).getParticipantsRanked();
+                result.append("\nNOMBRE: ").append(tournaments.get(i).getName())
+                        .append("\nFECHA: ").append(tournaments.get(i).getStartDate()).append(" - ").append(tournaments.get(i).getEndDate())
+                        .append("\nLIGA: ").append(tournaments.get(i).getLeague())
+                        .append("\nDEPORTE: ").append(tournaments.get(i).getSport())
+                        .append("\nCATEGORIA DE ORDEN: ").append(tournaments.get(i).getCategoryRank()).append("\n");
+                ArrayList rankedParticipants = tournaments.get(i).getParticipantsRanked();
                 for (int j = 0; j < rankedParticipants.size(); j++) {
                     if (rankedParticipants.get(j) instanceof Player) result.append("\n\t\tNOMBRE: ").append(((Player) rankedParticipants.get(j)).getName());
                     if (rankedParticipants.get(j) instanceof Team) result.append("\n\t\tNOMBRE: ").append(((Team) rankedParticipants.get(j)).getName());
-                    if (rankedParticipants.get(j) instanceof Player) result.append("\n\t\tNOMBRE: ").append(((Player) rankedParticipants.get(j)).getName());
-                    if (rankedParticipants.get(j) instanceof Team) result.append("\n\t\t: ").append(((Team) rankedParticipants.get(j)).getName());
+                    if (rankedParticipants.get(j) instanceof Player) result.append("\n\t\t").append(tournaments.get(i).getCategoryRank()).append(": ").append(((Player) rankedParticipants.get(j)).getName());
+                    if (rankedParticipants.get(j) instanceof Team) result.append("\n\t\t").append(tournaments.get(i).getCategoryRank()).append(": ").append(((Team) rankedParticipants.get(j)).getName());
                 }
             }
         }
