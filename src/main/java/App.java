@@ -63,7 +63,8 @@ public class App {
                     "> tournament-list\n" + "> logout\n----------\n\t> ");
             String[] arguments = sc.nextLine().split(" ", 2);
             String option = arguments[0];
-            if (!option.equals("logout") && !option.equals("tournament-list") && arguments.length > 1) arguments = arguments[1].split(";");
+            if (!option.equals("logout") && !option.equals("tournament-list") && arguments.length > 1)
+                arguments = arguments[1].split(";");
             else System.out.println("\nNO HAY ARGUMENTOS");
             switch (option.toLowerCase()) {
                 case "player-create":
@@ -134,6 +135,7 @@ public class App {
                 case "tournament-matchmaking":
                     break;
                 case "tournament-list":
+                    System.out.println(tournamentsController.listTournaments(auth.getUserType()));
                     break;
                 case "logout":
                     auth.logOut();
@@ -154,7 +156,8 @@ public class App {
                     "> statistics-show [argumentos separados por ;]" + "> tournament-list\n" + "> logout\n----------\n\t> ");
             String[] arguments = sc.nextLine().split(" ", 2);
             String option = arguments[0];
-            if (!option.equals("logout") && !option.equals("tournament-list") && arguments.length > 1) arguments = arguments[1].split(";");
+            if (!option.equals("logout") && !option.equals("tournament-list") && arguments.length > 1)
+                arguments = arguments[1].split(";");
             else System.out.println("NO HAY ARGUMENTOS");
             switch (option.toLowerCase()) {
                 case "tournament-add":

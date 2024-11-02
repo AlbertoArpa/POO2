@@ -77,4 +77,12 @@ public class Tournament<T> {
     public List<List<T>> getMatchmaking() {
         return matchmaking;
     }
+
+    public ArrayList<T> randomizeParticipants() {
+        ArrayList<T> result = new ArrayList<>();
+        for (int i = 0; i < participants.size(); i++) {
+
+        }
+        return result;
+    }
 }
