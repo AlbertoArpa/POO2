@@ -1,4 +1,3 @@
-import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class App {
@@ -13,11 +12,13 @@ public class App {
         boolean end = false;
         Authentication auth = new Authentication();
         while (!end) {
-            System.out.print("Comandos:\n> login\n> tournament-list\n----------\n\t> ");
+            System.out.print("Comandos:\n> login [username;password]\n> tournament-list\n----------\n\t> ");
             String[] arguments = sc.nextLine().split(" ", 2);
             String option = arguments[0];
-            if (!option.equals("tournament-list") && arguments.length > 1) arguments = arguments[1].split(";");
-            else System.out.println("NO HAY ARGUMENTOS");
+            if (!option.equals("tournament-list")){
+                if (arguments.length > 1) arguments = arguments[1].split(";");
+                else System.out.println("NO HAY ARGUMENTOS");
+            }
             switch (option.toLowerCase()) {
                 case "login":
                     if (arguments.length >= 2) {
@@ -30,6 +31,7 @@ public class App {
                     } else System.out.println("\nMUY POCOS ARGUMENTOS");
                     break;
                 case "tournament-list":
+                    System.out.println(tournamentsController.listTournaments(auth.getUserType()));
                     break;
                 default:
                     System.out.println("No existe esa opción. Se procederá a finalizar la ejecución.");
@@ -52,7 +54,7 @@ public class App {
         boolean exit = false;
         while (!exit) {
             System.out.print("Comandos:\n> player-create [username;password;name;surname;dni]\n" +
-                    "> team-create [argumentos separados por ;]\n" +
+                    "> team-create [name]\n" +
                     "> player-delete [username]\n" +
                     "> team-delete [name]\n" +
                     "> team-add [name;team]\n" +
@@ -63,9 +65,11 @@ public class App {
                     "> tournament-list\n" + "> logout\n----------\n\t> ");
             String[] arguments = sc.nextLine().split(" ", 2);
             String option = arguments[0];
-            if (!option.equals("logout") && !option.equals("tournament-list") && arguments.length > 1)
-                arguments = arguments[1].split(";");
-            else System.out.println("\nNO HAY ARGUMENTOS");
+            if (!option.equals("logout") && !option.equals("tournament-list")){
+                if (arguments.length > 1)
+                    arguments = arguments[1].split(";");
+                else System.out.println("\nNO HAY ARGUMENTOS");
+            }
             switch (option.toLowerCase()) {
                 case "player-create":
                     if (arguments.length >= 5) {
@@ -103,7 +107,7 @@ public class App {
                         if (teamsController.getTeam(arguments[1]) != null) {
                             if (teamsController.getTeam(arguments[1]).addPlayer(playersController.getPlayer(arguments[0]))) {
                                 System.out.println("\nJUGADOR " + arguments[0].toUpperCase() + " ANADIDO AL EQUIPO " + arguments[1].toUpperCase());
-                            } else System.out.println("\nEL JUGADOR " + arguments[0].toUpperCase() + " NO EXISTE");
+                            } else System.out.println("\nEL JUGADOR " + arguments[0].toUpperCase() + " NO EXISTE O YA SE ENCUENTRA EN EL EQUIPO.");
                         } else System.out.println("\nEL EQUIPO " + arguments[1].toUpperCase() + "NO EXISTE");
                     } else System.out.println("\nMUY POCOS ARGUMENTOS");
                     break;
@@ -139,6 +143,7 @@ public class App {
                     break;
                 case "logout":
                     auth.logOut();
+                    System.out.println("\nCERRANDO SESIÓN...\n");
                     exit = true;
                     break;
                 default:
@@ -156,9 +161,11 @@ public class App {
                     "> statistics-show [argumentos separados por ;]" + "> tournament-list\n" + "> logout\n----------\n\t> ");
             String[] arguments = sc.nextLine().split(" ", 2);
             String option = arguments[0];
-            if (!option.equals("logout") && !option.equals("tournament-list") && arguments.length > 1)
-                arguments = arguments[1].split(";");
-            else System.out.println("NO HAY ARGUMENTOS");
+            if (!option.equals("logout") && !option.equals("tournament-list")){
+                if (arguments.length > 1)
+                    arguments = arguments[1].split(";");
+                else System.out.println("\nNO HAY ARGUMENTOS");
+            }
             switch (option.toLowerCase()) {
                 case "tournament-add":
                     break;
@@ -170,6 +177,7 @@ public class App {
                     break;
                 case "logout":
                     auth.logOut();
+                    System.out.println("CERRANDO SESIÓN...");
                     exit = true;
                     break;
                 default:
