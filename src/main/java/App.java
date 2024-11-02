@@ -96,11 +96,13 @@ public class App {
                     } else System.out.println("\nMUY POCOS ARGUMENTOS");
                     break;
                 case "team-delete": // GENERICOS
-/*                    if (arguments.length >= 1) {
+                /*                    
+                    if (arguments.length >= 1) {
                         if (teamsController.deleteTeam(arguments[0])) {
                             System.out.println("\nEQUIPO ");
                         } else System.out.println();
-                    } else System.out.println("MUY POCOS ARGUMENTOS");*/
+                    } else System.out.println("MUY POCOS ARGUMENTOS");
+                */
                     break;
                 case "team-add":
                     if (arguments.length >= 2) {
