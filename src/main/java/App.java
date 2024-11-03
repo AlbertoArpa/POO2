@@ -159,8 +159,16 @@ public class App {
                                 } else System.out.println("\nMUY POCOS ARGUMENTOS");
                                 break;
                             case "-a":
+                                if (arguments.length >= 2) {
+                                    if (i == 0) arguments[0] = arguments[1];
+                                    if (tournamentsController.getTournament(arguments[0]) != null) {
+                                        if (tournamentsController.getTournament(arguments[0]).matchmake()) {
+                                            System.out.println("PARTICIPANTES DE " + arguments[0].toUpperCase() + " EMPAREJADOS");
+                                        } else System.out.println("\nNO SE HAN PODIDO HACER LOS EMPAREJAMIENTOS");
+                                    } else System.out.println("\nNO EXISTE EL TORNEO " + arguments[0].toUpperCase());
+                                } else System.out.println("\nMUY POCOS ARGUMENTOS");
                         }
-                    } else System.out.println("\nFALTA ARGUMENTO -m O -a");
+                    } else System.out.println("\nFALTA ARGUMENTO \"-m\" O \"-a\"");
                     break;
                 case "tournament-list":
                     System.out.println(tournamentsController.listTournaments(auth.getUserType()));

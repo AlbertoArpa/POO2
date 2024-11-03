@@ -129,7 +129,23 @@ public class Tournament<T> {
     public boolean matchmake() {
         boolean result = false;
         if (participants.size() % 2 == 0) {
+            ArrayList<T> randomized = getRandomizedParticipants();
+            for (int i = 0; i < randomized.size(); i++) {
+                if (!isMatchmaked(randomized.get(i))) {
+                    if (matchmaking.get(matchmaking.size() - 1).size() == 2) {
+                        matchmaking.add(new ArrayList<>());
+                    }
+                    matchmaking.get(matchmaking.size() - 1).add(randomized.get(i));
+                }
+            }
+        }
+        return result;
+    }
 
+    private boolean isMatchmaked(T participant) {
+        boolean result = false;
+        for (int i = 0; i < matchmaking.size(); i++) {
+            result = matchmaking.get(i).get(0).equals(participant) || matchmaking.get(i).get(1).equals(participant);
         }
         return result;
     }
