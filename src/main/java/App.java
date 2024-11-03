@@ -188,9 +188,10 @@ public class App {
     private static void menuPlayer(Scanner sc, Authentication auth, TournamentsController tournamentsController, PlayersController playersController) {
         boolean exit = false;
         while (!exit) {
-            System.out.print("Comandos:\n> tournament-add [participant;tournament]\n" +
+            System.out.print("Comandos:\n> tournament-add [name]\n" +
                     "> tournament-remove [argumentos separados por ;]\n" +
-                    "> statistics-show [argumentos separados por ;]" + "\n> tournament-list\n" + "> logout\n----------\n\t> ");
+                    "> statistics-show [argumentos separados por ;]\n" +
+                    "> tournament-list\n" + "> logout\n----------\n\t> ");
             String[] arguments = sc.nextLine().split(" ", 2);
             String option = arguments[0];
             if (!option.equals("logout") && !option.equals("tournament-list")) {
@@ -200,15 +201,13 @@ public class App {
             }
             switch (option.toLowerCase()) {
                 case "tournament-add":
-                    if (arguments.length >= 2) {
-                        if (tournamentsController.getTournament(arguments[1]) != null) {
-                            if (playersController.getPlayer(arguments[0]) != null) {
-                                if (tournamentsController.getTournament(arguments[1]).addParticipant(playersController.getPlayer(arguments[0]))) {
-                                    System.out.println("\nJUGADOR " + arguments[0].toUpperCase() + " ANADIDO A " + arguments[1].toUpperCase());
+                    if (arguments.length >= 1) {
+                        if (tournamentsController.getTournament(arguments[0]) != null) {
+                                if (tournamentsController.getTournament(arguments[0]).addParticipant(auth.getCurrentUser())) {
+                                    System.out.println("\nJUGADOR " + auth.getUsername().toUpperCase() + " ANADIDO A " + arguments[0].toUpperCase());
                                 } else
-                                    System.out.println("\nNO SE HA PODIDO ANADIR EL JUGADOR " + arguments[0].toUpperCase() + " AL EQUIPO " + arguments[1].toUpperCase());
-                            } else System.out.println("\nNO EXISTE EL JUGADOR " + arguments[0].toUpperCase());
-                        } else System.out.println("\nNO EXISTE EL EQUIPO " + arguments[1].toUpperCase());
+                                    System.out.println("\nNO SE HA PODIDO ANADIR EL JUGADOR " + auth.getUsername().toUpperCase() + " AL EQUIPO " + arguments[0].toUpperCase());
+                        } else System.out.println("\nNO EXISTE EL EQUIPO " + arguments[0].toUpperCase());
                     } else System.out.println("\nMUY POCOS ARGUMENTOS");
                     break;
                 case "tournament-remove":
