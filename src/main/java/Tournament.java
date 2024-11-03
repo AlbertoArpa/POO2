@@ -23,16 +23,6 @@ public class Tournament<T> {
         this.matchmaking = new ArrayList<>();
     }
 
-    private T existT(T participant) {
-        T exist = null;
-        for (int i = 0; i < participants.size(); i++) {
-            if (participants.get(i).equals(participant)) {
-                exist = participants.get(i);
-            }
-        }
-        return exist;
-    }
-
     public String getName() {
         return name;
     }
@@ -102,8 +92,18 @@ public class Tournament<T> {
         return result;
     }
 
+    public boolean existParticipant(T participant) {
+        boolean result = false;
+        int i = 0;
+        while (i < participants.size() && !result) {
+            if (participants.get(i).equals(participant)) result = true;
+            i++;
+        }
+        return result;
+    }
+
     public boolean addParticipant(T participant) {
-        if (existT(participant) == null) {
+        if (!existParticipant(participant)) {
             participants.add(participant);
             return true;
         } else return false;

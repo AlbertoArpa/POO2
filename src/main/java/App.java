@@ -26,7 +26,7 @@ public class App {
                             System.out.println("\nBIENVENIDO, " + auth.getUsername().toUpperCase());
                             if (auth.getUserType().equals("ADMIN")) {
                                 menuAdmin(sc, auth, playersController, teamsController, tournamentsController, adminsController);
-                            } else menuPlayer(sc, auth, tournamentsController);
+                            } else menuPlayer(sc, auth, tournamentsController, playersController);
                         } else System.out.println("\nNO SE HA PODIDO INICIAR SESION");
                     } else System.out.println("\nMUY POCOS ARGUMENTOS");
                     break;
@@ -57,8 +57,8 @@ public class App {
                     "> team-create [name]\n" +
                     "> player-delete [username]\n" +
                     "> team-delete [name]\n" +
-                    "> team-add [name;team]\n" +
-                    "> team-remove [name;team]\n" +
+                    "> team-add [player;team]\n" +
+                    "> team-remove [player;team]\n" +
                     "> tournament-create [name;startDate;endDate;league;sport;categoryRank]\n" +
                     "> tournament-delete [name]\n" +
                     "> tournament-matchmaking [tournament(;team1;team2)] (con -m o -a)\n" +
@@ -185,10 +185,10 @@ public class App {
         }
     }
 
-    private static void menuPlayer(Scanner sc, Authentication auth, TournamentsController tournamentsController) {
+    private static void menuPlayer(Scanner sc, Authentication auth, TournamentsController tournamentsController, PlayersController playersController) {
         boolean exit = false;
         while (!exit) {
-            System.out.print("Comandos:\n> tournament-add [name]\n" +
+            System.out.print("Comandos:\n> tournament-add [participant;tournament]\n" +
                     "> tournament-remove [argumentos separados por ;]\n" +
                     "> statistics-show [argumentos separados por ;]" + "\n> tournament-list\n" + "> logout\n----------\n\t> ");
             String[] arguments = sc.nextLine().split(" ", 2);
@@ -200,7 +200,16 @@ public class App {
             }
             switch (option.toLowerCase()) {
                 case "tournament-add":
-                    tournamentsController.getTournament(arguments[0]).addParticipant(auth.getCurrentUser());
+                    if (arguments.length >= 2) {
+                        if (tournamentsController.getTournament(arguments[1]) != null) {
+                            if (playersController.getPlayer(arguments[0]) != null) {
+                                if (tournamentsController.getTournament(arguments[1]).addParticipant(playersController.getPlayer(arguments[0]))) {
+                                    System.out.println("\nJUGADOR " + arguments[0].toUpperCase() + " ANADIDO A " + arguments[1].toUpperCase());
+                                } else
+                                    System.out.println("\nNO SE HA PODIDO ANADIR EL JUGADOR " + arguments[0].toUpperCase() + " AL EQUIPO " + arguments[1].toUpperCase());
+                            } else System.out.println("\nNO EXISTE EL JUGADOR " + arguments[0].toUpperCase());
+                        } else System.out.println("\nNO EXISTE EL EQUIPO " + arguments[1].toUpperCase());
+                    } else System.out.println("\nMUY POCOS ARGUMENTOS");
                     break;
                 case "tournament-remove":
                     break;
