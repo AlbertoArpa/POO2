@@ -89,11 +89,49 @@ public class Tournament<T> {
         return matchmaking;
     }
 
+    public T getParticipant(String name) {
+        T result = null;
+        int i = 0;
+        while (i < participants.size() && result == null) {
+            if (participants.get(i) instanceof Player && ((Player) (participants.get(i))).getName().equals(name))
+                result = participants.get(i);
+            if (participants.get(i) instanceof Team && ((Team) (participants.get(i))).getName().equals(name))
+                result = participants.get(i);
+            i++;
+        }
+        return result;
+    }
+
     public boolean addParticipant(T participant) {
         if (existT(participant) == null) {
             participants.add(participant);
             return true;
         } else return false;
+    }
+
+    public boolean matchmake(String participant1, String participant2) {
+        boolean result = false;
+        int i = 0;
+        if (getParticipant(participant1) != null && getParticipant(participant2) != null) {
+            while (i < participants.size() && !result) {
+                if ((!(matchmaking.get(i).get(0).equals(getParticipant(participant1)) && matchmaking.get(i).get(1).equals(getParticipant(participant2)))) ||
+                        (!(matchmaking.get(i).get(1).equals(getParticipant(participant1)) && matchmaking.get(i).get(0).equals(getParticipant(participant2))))) {
+                    matchmaking.add(new ArrayList<T>());
+                    matchmaking.get(matchmaking.size() - 1).add(getParticipant(participant1));
+                    matchmaking.get(matchmaking.size() - 1).add(getParticipant(participant2));
+                    result = true;
+                }
+            }
+        }
+        return result;
+    }
+
+    public boolean matchmake() {
+        boolean result = false;
+        if (participants.size() % 2 == 0) {
+
+        }
+        return result;
     }
 
     public ArrayList<T> getRandomizedParticipants() {

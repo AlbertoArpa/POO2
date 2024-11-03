@@ -15,7 +15,7 @@ public class App {
             System.out.print("Comandos:\n> login [username;password]\n> tournament-list\n----------\n\t> ");
             String[] arguments = sc.nextLine().split(" ", 2);
             String option = arguments[0];
-            if (!option.equals("tournament-list")){
+            if (!option.equals("tournament-list")) {
                 if (arguments.length > 1) arguments = arguments[1].split(";");
                 else System.out.println("NO HAY ARGUMENTOS");
             }
@@ -49,8 +49,8 @@ public class App {
     }
 
     private static void menuAdmin(Scanner sc, Authentication auth, PlayersController playersController,
-                                TeamsController teamsController, TournamentsController tournamentsController,
-                                AdminsController adminsController) {
+                                  TeamsController teamsController, TournamentsController tournamentsController,
+                                  AdminsController adminsController) {
         boolean exit = false;
         while (!exit) {
             System.out.print("Comandos:\n> player-create [username;password;name;surname;dni]\n" +
@@ -61,11 +61,11 @@ public class App {
                     "> team-remove [name;team]\n" +
                     "> tournament-create [name;startDate;endDate;league;sport;categoryRank]\n" +
                     "> tournament-delete [name]\n" +
-                    "> tournament-matchmaking [argumentos separados por ;]\n" +
+                    "> tournament-matchmaking [tournament(;team1;team2)] (con -m o -a)\n" +
                     "> tournament-list\n" + "> logout\n----------\n\t> ");
             String[] arguments = sc.nextLine().split(" ", 2);
             String option = arguments[0];
-            if (!option.equals("logout") && !option.equals("tournament-list")){
+            if (!option.equals("logout") && !option.equals("tournament-list")) {
                 if (arguments.length > 1)
                     arguments = arguments[1].split(";");
                 else System.out.println("\nNO HAY ARGUMENTOS");
@@ -107,7 +107,8 @@ public class App {
                         if (teamsController.getTeam(arguments[1]) != null) {
                             if (teamsController.getTeam(arguments[1]).addPlayer(playersController.getPlayer(arguments[0]))) {
                                 System.out.println("\nJUGADOR " + arguments[0].toUpperCase() + " ANADIDO AL EQUIPO " + arguments[1].toUpperCase());
-                            } else System.out.println("\nEL JUGADOR " + arguments[0].toUpperCase() + " NO EXISTE O YA SE ENCUENTRA EN EL EQUIPO.");
+                            } else
+                                System.out.println("\nEL JUGADOR " + arguments[0].toUpperCase() + " NO EXISTE O YA SE ENCUENTRA EN EL EQUIPO.");
                         } else System.out.println("\nEL EQUIPO " + arguments[1].toUpperCase() + " NO EXISTE");
                     } else System.out.println("\nMUY POCOS ARGUMENTOS");
                     break;
@@ -137,6 +138,29 @@ public class App {
                     } else System.out.println("\nMUY POCOS ARGUMENTOS");
                     break;
                 case "tournament-matchmaking":
+                    int i = 0;
+                    while (i < arguments.length && !arguments[i].equals("-a") && !arguments[i].equals("-m")) {
+                        i++;
+                    }
+                    if (i < arguments.length) {
+                        String matchmaking = arguments[i];
+                        switch (matchmaking) {
+                            case "-m":
+                                if (arguments.length >= 4) {
+                                    while (i < 3) {
+                                        arguments[i] = arguments[i + 1];
+                                        i++;
+                                    }
+                                    if (tournamentsController.getTournament(arguments[0]) != null) {
+                                        if (tournamentsController.getTournament(arguments[0]).matchmake(arguments[1], arguments[2])) {
+                                            System.out.println("\nEQUIPOS " + arguments[1].toUpperCase() + " Y " + arguments[2].toUpperCase() + " EMPAREJADOS");
+                                        } else System.out.println("\nNO SE HA PODIDO HACER EL EMPAREJAMIENTO");
+                                    } else System.out.println("\nNO EXISTE EL TORNEO " + arguments[0].toUpperCase());
+                                } else System.out.println("\nMUY POCOS ARGUMENTOS");
+                                break;
+                            case "-a":
+                        }
+                    } else System.out.println("\nFALTA ARGUMENTO -m O -a");
                     break;
                 case "tournament-list":
                     System.out.println(tournamentsController.listTournaments(auth.getUserType()));
@@ -147,7 +171,7 @@ public class App {
                     exit = true;
                     break;
                 default:
-                    System.out.println("NO EXISTE LA OPCION " + option.toUpperCase());
+                    System.out.println("\nNO EXISTE LA OPCION " + option.toUpperCase());
                     break;
             }
         }
@@ -161,7 +185,7 @@ public class App {
                     "> statistics-show [argumentos separados por ;]" + "\n> tournament-list\n" + "> logout\n----------\n\t> ");
             String[] arguments = sc.nextLine().split(" ", 2);
             String option = arguments[0];
-            if (!option.equals("logout") && !option.equals("tournament-list")){
+            if (!option.equals("logout") && !option.equals("tournament-list")) {
                 if (arguments.length > 1)
                     arguments = arguments[1].split(";");
                 else System.out.println("\nNO HAY ARGUMENTOS");
