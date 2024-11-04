@@ -189,7 +189,7 @@ public class App {
         boolean exit = false;
         while (!exit) {
             System.out.print("Comandos:\n> tournament-add [name]\n" +
-                    "> tournament-remove [argumentos separados por ;]\n" +
+                    "> tournament-remove [tournament(;team)]\n" +
                     "> statistics-show [argumentos separados por ;]\n" +
                     "> tournament-list\n" + "> logout\n----------\n\t> ");
             String[] arguments = sc.nextLine().split(" ", 2);
@@ -203,14 +203,27 @@ public class App {
                 case "tournament-add":
                     if (arguments.length >= 1) {
                         if (tournamentsController.getTournament(arguments[0]) != null) {
-                                if (tournamentsController.getTournament(arguments[0]).addParticipant(auth.getCurrentUser())) {
-                                    System.out.println("\nJUGADOR " + auth.getUsername().toUpperCase() + " ANADIDO A " + arguments[0].toUpperCase());
-                                } else
-                                    System.out.println("\nNO SE HA PODIDO ANADIR EL JUGADOR " + auth.getUsername().toUpperCase() + " AL EQUIPO " + arguments[0].toUpperCase());
+                            if (tournamentsController.getTournament(arguments[0]).addParticipant(auth.getCurrentUser())) {
+                                System.out.println("\nJUGADOR " + auth.getUsername().toUpperCase() + " ANADIDO A " + arguments[0].toUpperCase());
+                            } else
+                                System.out.println("\nNO SE HA PODIDO ANADIR EL JUGADOR " + auth.getUsername().toUpperCase() + " AL EQUIPO " + arguments[0].toUpperCase());
                         } else System.out.println("\nNO EXISTE EL EQUIPO " + arguments[0].toUpperCase());
                     } else System.out.println("\nMUY POCOS ARGUMENTOS");
                     break;
                 case "tournament-remove":
+                    if (arguments.length >= 1) {
+                        if (arguments.length >= 2) {
+                            if (tournamentsController.getTournament(arguments[0]).removeParticipant(arguments[1])) {
+                                System.out.println("\nEQUIPO " + arguments[1].toUpperCase() + "ELIMINADO DE " + arguments[0].toUpperCase());
+                            } else
+                                System.out.println("\nNO SE HA PODIDO ELIMINAR EL EQUIPO " + arguments[1].toUpperCase() + " DE " + arguments[0].toUpperCase());
+                        } else {
+                            if (tournamentsController.getTournament(arguments[0]).removeParticipant(auth.getUsername())) {
+                                System.out.println("\nJUGADOR " + auth.getUsername().toUpperCase() + "ELIMINADO DE " + arguments[0].toUpperCase());
+                            } else
+                                System.out.println("\nNO SE HA PODIDO ELIMINAR AL JUGADOR " + auth.getUsername().toUpperCase() + " DE " + arguments[0].toUpperCase());
+                        }
+                    } else System.out.println("\nMUY POCOS ARGUMENTOS");
                     break;
                 case "statistics-show":
                     break;

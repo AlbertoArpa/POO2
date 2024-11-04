@@ -109,6 +109,18 @@ public class Tournament<T> {
         } else return false;
     }
 
+    public boolean removeParticipant(T participant) {
+        boolean result = false;
+        if (existParticipant(participant)) {
+            if (isMatchmaked(participant)) {
+                removeMatchmaking(participant);
+            }
+            participants.remove(participant);
+            result = true;
+        }
+        return result;
+    }
+
     public boolean matchmake(String participant1, String participant2) {
         boolean result = false;
         int i = 0;
@@ -146,6 +158,24 @@ public class Tournament<T> {
         boolean result = false;
         for (int i = 0; i < matchmaking.size(); i++) {
             result = matchmaking.get(i).get(0).equals(participant) || matchmaking.get(i).get(1).equals(participant);
+        }
+        return result;
+    }
+
+    /**
+     * DESEMPAREJA A "PARTICIPANT" Y A SU PAREJA
+     *
+     * @param participant
+     * @return
+     */
+    private boolean removeMatchmaking(T participant) {
+        boolean result = false;
+        int i = 0;
+        while (i < matchmaking.size()) {
+            if (matchmaking.get(i).get(0).equals(participant) || matchmaking.get(i).get(1).equals(participant)) {
+                matchmaking.remove(i);
+                result = true;
+            }
         }
         return result;
     }
