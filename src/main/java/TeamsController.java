@@ -11,7 +11,7 @@ public class TeamsController {
         Team result = null;
         int i = 0;
         while (i < teams.size() && result == null) {
-            if (teams.get(i).getName().equals(name)) {
+            if (teams.get(i).getName().equalsIgnoreCase(name)) {
                 result = teams.get(i);
             }
             i++;
@@ -35,5 +35,21 @@ public class TeamsController {
             result = true;
         }
         return result;
+    }
+
+    public boolean addPlayer(Player player, Team team){
+        if (isInTeam(player.getUsername())==null){
+            return team.addPlayer(player);
+        } else return false;
+    }
+
+    public Team isInTeam(String username){
+        Team team = null;
+        for (int i = 0; i<teams.size(); i++){
+            if (teams.get(i).getPlayer(username)!=null){
+                team = teams.get(i);
+            }
+        }
+        return team;
     }
 }
