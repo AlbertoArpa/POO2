@@ -1,5 +1,5 @@
 public class Stat {
-    private String category;
+    private EnumCategory category;
     private double value;
 
     public Stat (String category){
