@@ -1,7 +1,13 @@
+
+HACER:
 arreglar tema correos
 q la enddate no pueda ser antes q la startdate
 comprobar en cada case que la entrada de cada Enum es correcta(como la fecha)
 revisar import de todas las clases
 revisar calculo del rankeo de los equipos
 
-preguntar al profe por las cosas amarillas de la T
+
+
+PREGUNTAR:
+cosas amarillas de la T
+csv y json se tienen q mostrar por pantalla (?)
