@@ -23,16 +23,6 @@ public class Tournament<T> {
         this.matchmaking = new ArrayList<>();
     }
 
-    private T existT(T participant) {
-        T exist = null;
-        for (int i = 0; i < participants.size(); i++) {
-            if (participants.get(i).equals(participant)) {
-                exist = participants.get(i);
-            }
-        }
-        return exist;
-    }
-
     public String getName() {
         return name;
     }
@@ -89,11 +79,105 @@ public class Tournament<T> {
         return matchmaking;
     }
 
+    public T getParticipant(String name) {
+        T result = null;
+        int i = 0;
+        while (i < participants.size() && result == null) {
+            if (participants.get(i) instanceof Player && ((Player) (participants.get(i))).getName().equals(name))
+                result = participants.get(i);
+            if (participants.get(i) instanceof Team && ((Team) (participants.get(i))).getName().equals(name))
+                result = participants.get(i);
+            i++;
+        }
+        return result;
+    }
+
+    public boolean existParticipant(T participant) {
+        boolean result = false;
+        int i = 0;
+        while (i < participants.size() && !result) {
+            if (participants.get(i).equals(participant)) result = true;
+            i++;
+        }
+        return result;
+    }
+
     public boolean addParticipant(T participant) {
-        if (existT(participant) == null) {
+        if (!existParticipant(participant)) {
             participants.add(participant);
             return true;
         } else return false;
+    }
+
+    public boolean removeParticipant(T participant) {
+        boolean result = false;
+        if (existParticipant(participant)) {
+            if (isMatchmaked(participant)) {
+                removeMatchmaking(participant);
+            }
+            participants.remove(participant);
+            result = true;
+        }
+        return result;
+    }
+
+    public boolean matchmake(String participant1, String participant2) {
+        boolean result = false;
+        int i = 0;
+        if (getParticipant(participant1) != null && getParticipant(participant2) != null) {
+            while (i < participants.size() && !result) {
+                if ((!(matchmaking.get(i).get(0).equals(getParticipant(participant1)) && matchmaking.get(i).get(1).equals(getParticipant(participant2)))) ||
+                        (!(matchmaking.get(i).get(1).equals(getParticipant(participant1)) && matchmaking.get(i).get(0).equals(getParticipant(participant2))))) {
+                    matchmaking.add(new ArrayList<T>());
+                    matchmaking.get(matchmaking.size() - 1).add(getParticipant(participant1));
+                    matchmaking.get(matchmaking.size() - 1).add(getParticipant(participant2));
+                    result = true;
+                }
+            }
+        }
+        return result;
+    }
+
+    public boolean matchmake() {
+        boolean result = false;
+        if (participants.size() % 2 == 0) {
+            ArrayList<T> randomized = getRandomizedParticipants();
+            for (int i = 0; i < randomized.size(); i++) {
+                if (!isMatchmaked(randomized.get(i))) {
+                    if (matchmaking.get(matchmaking.size() - 1).size() == 2) {
+                        matchmaking.add(new ArrayList<>());
+                    }
+                    matchmaking.get(matchmaking.size() - 1).add(randomized.get(i));
+                }
+            }
+        }
+        return result;
+    }
+
+    private boolean isMatchmaked(T participant) {
+        boolean result = false;
+        for (int i = 0; i < matchmaking.size(); i++) {
+            result = matchmaking.get(i).get(0).equals(participant) || matchmaking.get(i).get(1).equals(participant);
+        }
+        return result;
+    }
+
+    /**
+     * DESEMPAREJA A "PARTICIPANT" Y A SU PAREJA
+     *
+     * @param participant
+     * @return
+     */
+    private boolean removeMatchmaking(T participant) {
+        boolean result = false;
+        int i = 0;
+        while (i < matchmaking.size()) {
+            if (matchmaking.get(i).get(0).equals(participant) || matchmaking.get(i).get(1).equals(participant)) {
+                matchmaking.remove(i);
+                result = true;
+            }
+        }
+        return result;
     }
 
     public ArrayList<T> getRandomizedParticipants() {

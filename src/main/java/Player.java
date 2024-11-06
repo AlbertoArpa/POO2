@@ -25,9 +25,15 @@ public class Player extends User{
         return statList;
     }
 
-    public void showStats(){
+    public void showStatsJson(){
         for (int i = 0; i<stats.size(); i++){
-            System.out.println(stats.get(i));
+            System.out.println(stats.get(i).getCategory() + " \t\t" + stats.get(i).getValue());
+        }
+    }
+
+    public void showStatsCsv(){
+        for (int i = 0; i<stats.size(); i++){
+            System.out.println(stats.get(i).getCategory() + ";" + stats.get(i).getValue());
         }
     }
 

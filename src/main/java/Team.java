@@ -61,11 +61,11 @@ public class Team{
         return name;
     }
 
-    public Player getPlayer(String name) {
+    public Player getPlayer(String username) {
         Player result = null;
         int i = 0;
         while (i < players.size() && result == null) {
-            if (players.get(i).getName().equals(name)) result = players.get(i);
+            if (players.get(i).getUsername().equalsIgnoreCase(username)) result = players.get(i);
             i++;
         }
         return result;
@@ -76,17 +76,19 @@ public class Team{
         if(player == null) {
             return false;
         }
-        if (getPlayer(player.getName()) == null) {
+        if (getPlayer(player.getUsername()) == null) {
             players.add(player);
+            updateStats();
             result = true;
         }
         return result;
     }
 
-    public boolean removePlayer(String name) {
+    public boolean removePlayer(String username) {
         boolean result = false;
-        if (getPlayer(name) == null) {
-            players.remove(getPlayer(name));
+        if (getPlayer(username) != null) {
+            players.remove(getPlayer(username));
+            updateStats();
             result = true;
         }
         return result;
