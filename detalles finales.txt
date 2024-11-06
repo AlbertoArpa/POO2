@@ -11,3 +11,4 @@ revisar calculo del rankeo de los equipos
 PREGUNTAR:
 cosas amarillas de la T
 csv y json se tienen q mostrar por pantalla (?)
+obj instanceof Player está bien??
