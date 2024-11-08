@@ -28,8 +28,7 @@ public class Control {
 
     public static boolean teamCreate(String name){
         if (teamsController.getTeam(name)==null && playersController.getPlayer(name)==null){
-            teamsController.createTeam(name, (Admin) authentication.getCurrentUser());
-            return true;
+            return teamsController.createTeam(name, (Admin) authentication.getCurrentUser());
         } else return false;
     }
 
@@ -38,12 +37,10 @@ public class Control {
             if (teamsController.isInTeam(username)!=null){
                 if (tournamentsController.isParticipant(teamsController.isInTeam(username))==null){
                     teamsController.isInTeam(username).removePlayer(username);
-                    playersController.deletePlayer(username);
-                    return true;
+                    return playersController.deletePlayer(username);
                 } else return false;
             } else if (tournamentsController.isParticipant(playersController.getPlayer(username))==null) {
-                playersController.deletePlayer(username);
-                return true;
+                return playersController.deletePlayer(username);
             } else return false;
         } else return false;
     }
@@ -51,8 +48,7 @@ public class Control {
     public static boolean teamDelete(String name){
         if (teamsController.getTeam(name)!=null){
             if (tournamentsController.isParticipant(teamsController.getTeam(name))==null){
-                teamsController.deleteTeam(name);
-                return true;
+                return teamsController.deleteTeam(name);
             } else return false;
         } else return false;
     }
@@ -61,8 +57,7 @@ public class Control {
         if (playersController.getPlayer(username)!=null){
             if (teamsController.getTeam(team)!=null){
                 if (teamsController.isInTeam(username)==null){
-                    teamsController.getTeam(team).addPlayer(playersController.getPlayer(username));
-                    return true;
+                    return teamsController.getTeam(team).addPlayer(playersController.getPlayer(username));
                 } else return false;
             } else return false;
         } else return false;
@@ -72,8 +67,7 @@ public class Control {
         if (playersController.getPlayer(username)!=null){
             if (teamsController.getTeam(team)!=null){
                 if (teamsController.isInTeam(username).equals(teamsController.getTeam(team))){
-                    teamsController.getTeam(team).removePlayer(username);
-                    return true;
+                    return teamsController.getTeam(team).removePlayer(username);
                 } else return false;
             } else return false;
         } else return false;
