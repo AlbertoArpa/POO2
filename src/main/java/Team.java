@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Team{
+public class Team implements Participant{
     private String name;
     private ArrayList<Player> players;
     private ArrayList<Stat> stats;
@@ -16,23 +16,18 @@ public class Team{
 
     private ArrayList<Stat> initialStats(){
         ArrayList<Stat> statList = new ArrayList<>();
-        for (int i = 0; i< EnumCategory.getCategories().length; i++){
-            Stat stat = new Stat(EnumCategory.getCategories()[i]);
+        for (int i = 0; i< Categories.getCategories().length; i++){
+            Stat stat = new Stat(Categories.getCategories()[i]);
             statList.add(stat);
         }
         return statList;
     }
 
-    public void showStats(){
-        for (int i = 0; i<stats.size(); i++){
-            System.out.println(stats.get(i));
-        }
-    }
-
+    @Override
     public Stat getStat(String category){
         Stat stat = null;
         for (int i = 0; i<stats.size(); i++){
-            if (stats.get(i).getCategory().equals(EnumCategory.getCategory(category))){
+            if (stats.get(i).getCategory().equals(Categories.getCategory(category))){
                 stat = stats.get(i);
             }
         }

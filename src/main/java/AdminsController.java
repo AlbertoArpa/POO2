@@ -1,9 +1,10 @@
 import java.util.ArrayList;
 
 public class AdminsController {
+    private static AdminsController uniqueInstance;
     private ArrayList<Admin> admins;
 
-    public AdminsController(){
+    private AdminsController(){
         this.admins = new ArrayList<>();
     }
 
@@ -15,6 +16,13 @@ public class AdminsController {
             }
         }
         return result;
+    }
+
+    public static AdminsController getInstance() {
+        if (uniqueInstance == null) {
+            uniqueInstance = new AdminsController();
+        }
+        return uniqueInstance;
     }
 
     public void addAdmin(Admin admin){

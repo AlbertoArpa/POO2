@@ -1,10 +1,18 @@
 import java.util.ArrayList;
 
 public class PlayersController {
+    private static PlayersController uniqueInstance;
     private ArrayList<Player> players;
 
-    public PlayersController(){
+    private PlayersController(){
         this.players = new ArrayList<>();
+    }
+
+    public static PlayersController getInstance() {
+        if (uniqueInstance == null) {
+            uniqueInstance = new PlayersController();
+        }
+        return uniqueInstance;
     }
 
     public Player getPlayer(String username) {

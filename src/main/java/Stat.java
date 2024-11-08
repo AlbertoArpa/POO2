@@ -1,9 +1,9 @@
 public class Stat {
-    private EnumCategory category;
+    private String category;
     private double value;
 
     public Stat (String category){
-        this.category = EnumCategory.getCategory(category);
+        this.category = Categories.getCategory(category);
         this.value = 0.0;
     }
 
@@ -12,7 +12,7 @@ public class Stat {
     }
 
     public void setCategory(String category) {
-        this.category = EnumCategory.getCategory(category);
+        this.category = Categories.getCategory(category);
     }
 
     public double getValue() {
