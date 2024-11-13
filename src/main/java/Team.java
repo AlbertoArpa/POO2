@@ -1,10 +1,14 @@
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Team implements Participant{
+    private static final String ATTR_NAME_NAME = "name";
+    private static final String ATTR_PLAYERS_NAME = "players";
+    private static final String ATTR_STATS_NAME = "stats";
+    private static final String ATTR_CREATOR_NAME = "creator";
     private String name;
     private ArrayList<Player> players;
     private ArrayList<Stat> stats;
-    @SuppressWarnings("unused")
     private Admin creator;
 
     public Team (String name, Admin creator){
@@ -89,4 +93,16 @@ public class Team implements Participant{
         return result;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Team team = (Team) o;
+        return Objects.equals(name, team.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
 }

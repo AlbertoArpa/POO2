@@ -1,6 +1,11 @@
 import java.util.ArrayList;
 
 public class Player extends User implements Participant{
+    private static final String ATTR_NAME_NAME = "name";
+    private static final String ATTR_SURNAME_NAME = "surname";
+    private static final String ATTR_DNI_NAME = "dni";
+    private static final String ATTR_STATS_NAME = "stats";
+    private static final String ATTR_CREATOR_NAME = "creator";
     private String name;
     private String surname;
     private String dni;

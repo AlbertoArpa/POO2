@@ -1,4 +1,6 @@
 public class Stat {
+    private static final String ATTR_CATEGORY_NAME = "category";
+    private static final String ATTR_VALUE_NAME = "value";
     private String category;
     private double value;
 
