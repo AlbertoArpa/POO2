@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
 public class Matchmaking {
+    private static final String ATTR_PARTICIPANTS_NAME = "participants";
     private ArrayList<Participant> participants;
     public Matchmaking(Participant participant1, Participant participant2){
         this.participants = new ArrayList<>();

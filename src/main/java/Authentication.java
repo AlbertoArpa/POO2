@@ -1,4 +1,6 @@
 public class Authentication {
+    private static final String ATTR_CURRENTUSER_NAME = "currentUser";
+    private static final String ATTR_USERTYPE_NAME = "userType";
     private static Authentication uniqueInstance;
     private User currentUser;
     private UserType userType;

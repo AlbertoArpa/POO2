@@ -3,6 +3,14 @@ import java.util.Comparator;
 import java.util.List;
 
 public class Tournament {
+    private static final String ATTR_NAME_NAME = "name";
+    private static final String ATTR_STARTDATE_NAME = "startDate";
+    private static final String ATTR_ENDDATE_NAME = "endDate";
+    private static final String ATTR_LEAGUE_NAME = "league";
+    private static final String ATTR_SPORT_NAME = "sport";
+    private static final String ATTR_CATEGORYRANK_NAME = "categoryRank";
+    private static final String ATTR_PARTICIPANTS_NAME = "participants";
+    private static final String ATTR_MATCHMAKING_NAME = "matchmaking";
     private String name;
     private Date startDate;
     private Date endDate;
