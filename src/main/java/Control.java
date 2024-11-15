@@ -1,8 +1,3 @@
-import Controllers.AdminsController;
-import Controllers.PlayersController;
-import Controllers.TeamsController;
-import Controllers.TournamentsController;
-
 public class Control {
     //Clase Facade
     private static final AdminsController adminsController = AdminsController.getInstance();

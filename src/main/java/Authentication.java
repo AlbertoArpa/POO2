@@ -1,6 +1,3 @@
-import Controllers.AdminsController;
-import Controllers.PlayersController;
-
 public class Authentication {
     private static final String ATTR_CURRENTUSER_NAME = "currentUser";
     private static final String ATTR_USERTYPE_NAME = "userType";
