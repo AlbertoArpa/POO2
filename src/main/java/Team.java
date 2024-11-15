@@ -1,10 +1,14 @@
 import java.util.ArrayList;
+import java.util.Objects;
 
-public class Team{
+public class Team implements Participant{
+    private static final String ATTR_NAME_NAME = "name";
+    private static final String ATTR_PLAYERS_NAME = "players";
+    private static final String ATTR_STATS_NAME = "stats";
+    private static final String ATTR_CREATOR_NAME = "creator";
     private String name;
     private ArrayList<Player> players;
     private ArrayList<Stat> stats;
-    @SuppressWarnings("unused")
     private Admin creator;
 
     public Team (String name, Admin creator){
@@ -16,23 +20,18 @@ public class Team{
 
     private ArrayList<Stat> initialStats(){
         ArrayList<Stat> statList = new ArrayList<>();
-        for (int i = 0; i< EnumCategory.getCategories().length; i++){
-            Stat stat = new Stat(EnumCategory.getCategories()[i]);
+        for (int i = 0; i< Categories.getCategories().length; i++){
+            Stat stat = new Stat(Categories.getCategories()[i]);
             statList.add(stat);
         }
         return statList;
     }
 
-    public void showStats(){
-        for (int i = 0; i<stats.size(); i++){
-            System.out.println(stats.get(i));
-        }
-    }
-
+    @Override
     public Stat getStat(String category){
         Stat stat = null;
         for (int i = 0; i<stats.size(); i++){
-            if (stats.get(i).getCategory().equals(EnumCategory.getCategory(category))){
+            if (stats.get(i).getCategory().equals(Categories.getCategory(category))){
                 stat = stats.get(i);
             }
         }
@@ -94,4 +93,16 @@ public class Team{
         return result;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Team team = (Team) o;
+        return Objects.equals(name, team.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
 }

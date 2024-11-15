@@ -1,6 +1,11 @@
 import java.util.ArrayList;
 
-public class Player extends User{
+public class Player extends User implements Participant{
+    private static final String ATTR_NAME_NAME = "name";
+    private static final String ATTR_SURNAME_NAME = "surname";
+    private static final String ATTR_DNI_NAME = "dni";
+    private static final String ATTR_STATS_NAME = "stats";
+    private static final String ATTR_CREATOR_NAME = "creator";
     private String name;
     private String surname;
     private String dni;
@@ -8,7 +13,8 @@ public class Player extends User{
     private Admin creator;
 
     public Player(String username, String password, String name, String surname, String dni, Admin creator){
-        super(username, password);
+        setUsername(username);
+        setPassword(password);
         this.name = name;
         this.surname = surname;
         this.dni = dni;
@@ -18,8 +24,8 @@ public class Player extends User{
 
     private ArrayList<Stat> initialStats(){
         ArrayList<Stat> statList = new ArrayList<>();
-        for (int i = 0; i< EnumCategory.getCategories().length; i++){
-            Stat stat = new Stat(EnumCategory.getCategories()[i]);
+        for (int i = 0; i< Categories.getCategories().length; i++){
+            Stat stat = new Stat(Categories.getCategories()[i]);
             statList.add(stat);
         }
         return statList;
@@ -37,10 +43,11 @@ public class Player extends User{
         }
     }
 
+    @Override
     public Stat getStat(String category){
         Stat stat = null;
         for (int i = 0; i<stats.size(); i++){
-            if (stats.get(i).getCategory().equals(EnumCategory.getCategory(category))){
+            if (stats.get(i).getCategory().equals(Categories.getCategory(category))){
                 stat = stats.get(i);
             }
         }
@@ -59,6 +66,10 @@ public class Player extends User{
     }
 
     public String getName() {
+        return getUsername();
+    }
+
+    public String getName1(){
         return name;
     }
 
@@ -80,6 +91,6 @@ public class Player extends User{
 
     @Override
     public String toString() {
-        return getSurname() + ", " + getName() + "(" + getDni() + ")";
+        return getSurname() + ", " + getName1() + "(" + getDni() + ")";
     }
 }

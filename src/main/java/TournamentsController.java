@@ -1,10 +1,18 @@
 import java.util.ArrayList;
 
-public class TournamentsController<T> {
+public class TournamentsController {
+    private static TournamentsController uniqueInstance;
     private ArrayList<Tournament> tournaments;
 
-    public TournamentsController() {
+    private TournamentsController() {
         this.tournaments = new ArrayList<>();
+    }
+
+    public static TournamentsController getInstance() {
+        if (uniqueInstance == null) {
+            uniqueInstance = new TournamentsController();
+        }
+        return uniqueInstance;
     }
 
     public Tournament getTournament(String name) {
@@ -20,7 +28,7 @@ public class TournamentsController<T> {
         boolean result = false;
         if (getTournament(name) == null) {
             if (startDate.greaterThan(new Date()) && endDate.greaterThan(startDate)){
-                if (EnumCategory.getCategory(categoryRank)!=null){
+                if (Categories.getCategory(categoryRank)!=null){
                     tournaments.add(new Tournament(name, startDate, endDate, league, sport, categoryRank));
                     result = true;
                 }
@@ -51,10 +59,10 @@ public class TournamentsController<T> {
         return result;
     }
 
-    public Tournament isParticipant(Object participant){
+    public Tournament isParticipant(Participant participant){
         Tournament result = null;
         for (int i = 0; i< tournaments.size();i++){
-            if (tournaments.get(i).existParticipant(participant)){
+            if (tournaments.get(i).getParticipant(participant)!=null){
                 result = tournaments.get(i);
             }
         }
@@ -69,7 +77,7 @@ public class TournamentsController<T> {
             for (int i = 0; i < tournaments.size(); i++) {
                 int random = (int) (Math.random() * tournamentsAux.size());
                 randomTournaments.add(tournamentsAux.get(random));
-                ArrayList<T> randomizedParticipants = randomTournaments.get(random).getRandomizedParticipants();
+                ArrayList<Participant> randomizedParticipants = randomTournaments.get(random).getRandomizedParticipants();
                 tournamentsAux.remove(random);
                 result.append("\nNOMBRE: ").append(randomTournaments.get(i).getName())
                         .append("\nFECHA: ").append(randomTournaments.get(i).getStartDate()).append(" - ").append(randomTournaments.get(i).getEndDate())
@@ -93,8 +101,8 @@ public class TournamentsController<T> {
                         .append("\nCATEGORIA DE ORDEN: ").append(tournaments.get(i).getCategoryRank()).append("\n");
                 ArrayList rankedParticipants = tournaments.get(i).getParticipantsRanked();
                 for (int j = 0; j < rankedParticipants.size(); j++) {
-                    if (rankedParticipants.get(j) instanceof Player) result.append("\n\t\tNOMBRE: (team) ").append(((Player) rankedParticipants.get(j)).getName());
-                    if (rankedParticipants.get(j) instanceof Team) result.append("\n\t\tNOMBRE: ").append(((Team) rankedParticipants.get(j)).getName());
+                    if (rankedParticipants.get(j) instanceof Player) result.append("\n\t\tNOMBRE: ").append(((Player) rankedParticipants.get(j)).getName());
+                    if (rankedParticipants.get(j) instanceof Team) result.append("\n\t\tNOMBRE: (team) ").append(((Team) rankedParticipants.get(j)).getName());
                     if (rankedParticipants.get(j) instanceof Player) result.append("\n\t\t").append(tournaments.get(i).getCategoryRank()).append(": ").append(((Player) rankedParticipants.get(j)).getStat(tournaments.get(i).getCategoryRank()).getValue());
                     if (rankedParticipants.get(j) instanceof Team) result.append("\n\t\t").append(tournaments.get(i).getCategoryRank()).append(": ").append(((Team) rankedParticipants.get(j)).getStat(tournaments.get(i).getCategoryRank()).getValue()).append("\n");
                 }

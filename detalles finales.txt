@@ -1,14 +1,14 @@
 
 HACER:
 arreglar tema correos
-q la enddate no pueda ser antes q la startdate
+q la enddate no pueda ser antes q la startdate (ESTO CREO QUE LO CAMBIÉ YO)
 comprobar en cada case que la entrada de cada Enum es correcta(como la fecha)
 revisar import de todas las clases
-revisar calculo del rankeo de los equipos
+revisar calculo del rankeo de los equipos (Y ESTO TMB)
 
 
 
 PREGUNTAR:
-cosas amarillas de la T
+cosas amarillas de la T (AJJAJSAJSAJSJA q es esto?)
 csv y json se tienen q mostrar por pantalla (?)
 obj instanceof Player está bien??

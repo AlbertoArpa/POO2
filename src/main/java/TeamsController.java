@@ -1,10 +1,18 @@
 import java.util.ArrayList;
 
 public class TeamsController {
+    private static TeamsController uniqueInstance;
     private ArrayList<Team> teams;
 
-    public TeamsController() {
+    private TeamsController() {
         this.teams = new ArrayList<>();
+    }
+
+    public static TeamsController getInstance() {
+        if (uniqueInstance == null) {
+            uniqueInstance = new TeamsController();
+        }
+        return uniqueInstance;
     }
 
     public Team getTeam(String name) {
@@ -35,12 +43,6 @@ public class TeamsController {
             result = true;
         }
         return result;
-    }
-
-    public boolean addPlayer(Player player, Team team){
-        if (isInTeam(player.getUsername())==null){
-            return team.addPlayer(player);
-        } else return false;
     }
 
     public Team isInTeam(String username){
