@@ -1,10 +1,5 @@
 public class Control {
     //Clase Facade
-    private static final AdminsController adminsController = AdminsController.getInstance();
-    private static final TournamentsController tournamentsController = TournamentsController.getInstance();
-    private static final PlayersController playersController = PlayersController.getInstance();
-    private static final TeamsController teamsController = TeamsController.getInstance();
-    private static final Authentication authentication = Authentication.getInstance();
     private static final UserLogic userLogic = new UserLogic();
     private static final TournamentLogic tournamentLogic = new TournamentLogic();
 
