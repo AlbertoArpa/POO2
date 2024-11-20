@@ -4,7 +4,7 @@ public class I_O {
     private static final Scanner sc = new Scanner(System.in);
 
     public static void start(){
-        Control.initialUsers();
+        UserController.initialUsers();
         System.out.println("SISTEMA DE GESTION DEPORTIVA INICIADO:");
         boolean end = false;
         while (!end) {
@@ -24,7 +24,7 @@ public class I_O {
         switch (option.toLowerCase()) {
             case "login":
                 if (reviewArguments(arguments, 2)) {
-                    if (Control.logIn(arguments[0], arguments[1])) {
+                    if (UserController.logIn(arguments[0], arguments[1])) {
                         System.out.println("\nBIENVENIDO, " + authentication.getCurrentUser().getUsername());
                         if (authentication.getUserType().equals("ADMIN")) {
                             menuAdmin(authentication);
@@ -33,7 +33,7 @@ public class I_O {
                 }
                 break;
             case "tournament-list":
-                System.out.println(Control.tournamentList());
+                System.out.println(TournamentsController.listTournaments(authentication.getUserType()));
                 break;
             default:
                 System.out.println("No existe esa opción. Se procederá a finalizar la ejecución.");
@@ -63,56 +63,56 @@ public class I_O {
             switch (option.toLowerCase()) {
                 case "player-create":
                     if (reviewArguments(arguments, 5)) {
-                        if (Control.playerCreate(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4])) {
+                        if (UserController.playerCreate(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4])) {
                             System.out.println("\nJUGADOR " + arguments[0].toUpperCase() + " CREADO");
                         } else System.out.println("\nYA EXISTE UN USUARIO O UN EQUIPO CON EL NOMBRE: " + arguments[0].toUpperCase());
                     }
                     break;
                 case "team-create":
                     if (reviewArguments(arguments, 1)) {
-                        if (Control.teamCreate(arguments[0])) {
+                        if (TournamentsController.teamCreate(arguments[0])) {
                             System.out.println("\nEQUIPO " + arguments[0].toUpperCase() + " CREADO");
                         } else System.out.println("\nEL EQUIPO O EL JUGADOR " + arguments[0].toUpperCase() + " YA EXISTE");
                     }
                     break;
                 case "player-delete":
                     if (reviewArguments(arguments, 1)) {
-                        if (Control.playerDelete(arguments[0])){
+                        if (TournamentsController.playerDelete(arguments[0])){
                             System.out.println("\nJUGADOR BORRADO CORRECTAMENTE");
                         } else System.out.println("\nNO EXISTE EL JUGADOR " + arguments[0].toUpperCase() + " O ESTÁ EN ACTIVO.");
                     }
                     break;
                 case "team-delete":
                     if (reviewArguments(arguments, 1)) {
-                        if (Control.teamDelete(arguments[0])){
+                        if (TournamentsController.teamDelete(arguments[0])){
                             System.out.println("\nEQUIPO " + arguments[0].toUpperCase() + " ELIMINADO");
                         } else System.out.println("\nNO EXISTE EL EQUIPO " + arguments[0].toUpperCase() + " O ESTÁ ACTIVO");
                     }
                     break;
                 case "team-add":
                     if (reviewArguments(arguments, 2)) {
-                        if (Control.teamAdd(arguments[0], arguments[1])) {
+                        if (TournamentsController.teamAdd(arguments[0], arguments[1])) {
                             System.out.println("\nJUGADOR " + arguments[0].toUpperCase() + " ANADIDO AL EQUIPO " + arguments[1].toUpperCase());
                         } else System.out.println("\nEL EQUIPO O EL JUGADOR " + arguments[0].toUpperCase() + " NO EXISTE O YA SE ENCUENTRA EN UN EQUIPO.");
                     }
                     break;
                 case "team-remove":
                     if (reviewArguments(arguments, 2)) {
-                        if (Control.teamRemove(arguments[0], arguments[1])) {
+                        if (TournamentsController.teamRemove(arguments[0], arguments[1])) {
                             System.out.println("\nJUGADOR " + arguments[0].toUpperCase() + " BORRADO DEL EQUIPO " + arguments[1].toUpperCase());
                         } else System.out.println("\nNO EXISTE EL EQUIPO " + arguments[1].toUpperCase() + " O NO EXISTE EL JUGADOR " + arguments[0].toUpperCase() +  " DENTRO DEL EQUIPO");
                     }
                     break;
                 case "tournament-create":
                     if (reviewArguments(arguments, 6)) {
-                        if (Control.tournamentCreate(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4], arguments[5])) {
+                        if (TournamentsController.tournamentCreate(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4], arguments[5])) {
                             System.out.println("\nTORNEO " + arguments[0].toUpperCase() + " CREADO");
                         } else System.out.println("\nNO SE HA PODIDO CREAR EL TORNEO. ASEGURATE DE QUE LA FECHA SEA CORRECTA Y LA CATEGORIA EXISTA.");
                     }
                     break;
                 case "tournament-delete":
                     if (reviewArguments(arguments, 1)) {
-                        if (Control.tournamentDelete(arguments[0])) {
+                        if (TournamentsController.tournamentDelete(arguments[0])) {
                             System.out.println("\nTORNEO " + arguments[0].toUpperCase() + " BORRADO");
                         } else System.out.println("\nNO EXISTE EL TORNEO " + arguments[0].toUpperCase());
                     }
@@ -128,7 +128,7 @@ public class I_O {
                                         arguments[i] = arguments[i + 1];
                                         i++;
                                     }
-                                    if (Control.tournamentMatchmakingM(arguments[0], arguments[1], arguments[2])) {
+                                    if (TournamentsController.tournamentMatchmakingM(arguments[0], arguments[1], arguments[2])) {
                                         System.out.println("\nPARTICIPANTES " + arguments[1].toUpperCase() + " Y " + arguments[2].toUpperCase() + " EMPAREJADOS");
                                     } else System.out.println("\nNO EXISTE EL TORNEO O ALGUNO DE LOS PARTICIPANTES");
                                 }
@@ -136,7 +136,7 @@ public class I_O {
                             case "-a":
                                 if (reviewArguments(arguments, 2)) {
                                     arguments[0] = arguments[1];
-                                    if (Control.tournamentMatchmakingA(arguments[0])) {
+                                    if (TournamentsController.tournamentMatchmakingA(arguments[0])) {
                                         System.out.println("PARTICIPANTES DE " + arguments[0].toUpperCase() + " EMPAREJADOS");
                                     } else System.out.println("\nNO EXISTE EL TORNEO O EL NUMERO DE PARTICIPANTES NO ES OPTIMO");
                                 }
@@ -144,7 +144,7 @@ public class I_O {
                     }
                     break;
                 case "tournament-list":
-                    System.out.println(Control.tournamentList());
+                    System.out.println(TournamentsController.listTournaments(authentication.getUserType()));
                     break;
                 case "logout":
                     authentication.logOut();
@@ -173,11 +173,11 @@ public class I_O {
                 case "tournament-add":
                     if (reviewArguments(arguments, 1)) {
                         if (arguments.length>1) {
-                            if (Control.tournamentAdd(arguments[0], arguments[1])){
+                            if (TournamentsController.tournamentAdd(arguments[0], arguments[1])){
                                 System.out.println("\nEQUIPO " + arguments[1].toUpperCase() + " ANADIDO A " + arguments[0].toUpperCase());
                             } else System.out.println("\nNO SE HA PODIDO ANADIR EL EQUIPO. ASEGURATE DE QUE FORMAS PARTE DE EL O DE QUE EXISTE Y NO ESTA YA AÑADIDO");
                         } else {
-                            if (Control.tournamentAdd(arguments[0], null)){
+                            if (TournamentsController.tournamentAdd(arguments[0], null)){
                                 System.out.println("\nJUGADOR AÑADIDO AL TORNEO");
                             } else System.out.println("\nNO SE HA PODIDO AÑADIR AL JUGADOR");
                         }
@@ -186,11 +186,11 @@ public class I_O {
                 case "tournament-remove":
                     if (reviewArguments(arguments, 1)) {
                         if (arguments.length>1) {
-                            if (Control.tournamentRemove(arguments[0], arguments[1])){
+                            if (TournamentsController.tournamentRemove(arguments[0], arguments[1])){
                                 System.out.println("\nEQUIPO BORRADO DEL TORNEO");
                             } else System.out.println("\nNO SE HA PODIDO BORRAR EL EQUIPO.");
                         } else {
-                            if (Control.tournamentRemove(arguments[0], null)){
+                            if (TournamentsController.tournamentRemove(arguments[0], null)){
                                 System.out.println("\nJUGADOR BORRADO DEL TORNEO");
                             } else System.out.println("\nNO SE HA PODIDO BORRAR AL JUGADOR");
                         }
@@ -198,11 +198,11 @@ public class I_O {
                     break;
                 case "statistics-show":
                     if (reviewArguments(arguments, 1)) {
-                        if(!Control.statisticsShow(arguments[0])) System.out.println("\nARGUMENTO INVALIDO");
+                        if(!UserController.statisticsShow(arguments[0])) System.out.println("\nARGUMENTO INVALIDO");
                     }
                     break;
                 case "tournament-list":
-                    System.out.println(Control.tournamentList());
+                    System.out.println(TournamentsController.listTournaments(authentication.getUserType()));
                     break;
                 case "logout":
                     authentication.logOut();
