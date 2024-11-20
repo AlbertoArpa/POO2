@@ -59,7 +59,7 @@ public class Player extends User implements Participant{
         boolean updated = false;
         Stat stat = getStat(category);
         if (stat!=null){
-            stat.setValue(value);
+            stat.setValue(stat.getValue()+value);
             updated = true;
         }
         return updated;
