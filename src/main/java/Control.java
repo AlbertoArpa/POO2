@@ -1,69 +1,69 @@
 public class Control {
     //Clase Facade
-    private static final UserLogic userLogic = new UserLogic();
-    private static final TournamentLogic tournamentLogic = new TournamentLogic();
+    private static final UserLogic USER_LOGIC = new UserLogic();
+    private static final TournamentLogic TOURNAMENT_LOGIC = new TournamentLogic();
 
     public static void initialUsers(){
-        userLogic.initialUsers();
+        USER_LOGIC.initialUsers();
     }
 
     public static boolean logIn(String username, String password){
-        return userLogic.logIn(username, password);
+        return USER_LOGIC.logIn(username, password);
     }
 
     public static String tournamentList(){
-        return tournamentLogic.tournamentList();
+        return TOURNAMENT_LOGIC.tournamentList();
     }
 
     public static boolean playerCreate(String username, String password, String name, String surname, String dni){
-        return userLogic.playerCreate(username, password, name, surname, dni);
+        return USER_LOGIC.playerCreate(username, password, name, surname, dni);
     }
 
     public static boolean teamCreate(String name){
-        return tournamentLogic.teamCreate(name);
+        return TOURNAMENT_LOGIC.teamCreate(name);
     }
 
     public static boolean playerDelete(String username){
-        return tournamentLogic.playerDelete(username);
+        return TOURNAMENT_LOGIC.playerDelete(username);
     }
 
     public static boolean teamDelete(String name){
-        return tournamentLogic.teamDelete(name);
+        return TOURNAMENT_LOGIC.teamDelete(name);
     }
 
     public static boolean teamAdd(String username, String team){
-        return tournamentLogic.teamAdd(username, team);
+        return TOURNAMENT_LOGIC.teamAdd(username, team);
     }
 
     public static boolean teamRemove(String username, String team){
-        return tournamentLogic.teamRemove(username, team);
+        return TOURNAMENT_LOGIC.teamRemove(username, team);
     }
 
     public static boolean tournamentCreate(String name, String startDate, String endDate, String league, String sport, String categoryRank){
-        return tournamentLogic.tournamentCreate(name, startDate, endDate, league, sport, categoryRank);
+        return TOURNAMENT_LOGIC.tournamentCreate(name, startDate, endDate, league, sport, categoryRank);
     }
 
     public static boolean tournamentDelete(String name){
-        return tournamentLogic.tournamentDelete(name);
+        return TOURNAMENT_LOGIC.tournamentDelete(name);
     }
 
     public static boolean tournamentMatchmakingM(String name, String participant1, String participant2){
-        return tournamentLogic.tournamentMatchmakingM(name, participant1, participant2);
+        return TOURNAMENT_LOGIC.tournamentMatchmakingM(name, participant1, participant2);
     }
 
     public static boolean tournamentMatchmakingA(String name){
-        return tournamentLogic.tournamentMatchmakingA(name);
+        return TOURNAMENT_LOGIC.tournamentMatchmakingA(name);
     }
 
     public static boolean tournamentAdd(String tournament, String team){
-        return tournamentLogic.tournamentAdd(tournament, team);
+        return TOURNAMENT_LOGIC.tournamentAdd(tournament, team);
     }
 
     public static boolean tournamentRemove(String tournament, String team){
-        return tournamentLogic.tournamentRemove(tournament, team);
+        return TOURNAMENT_LOGIC.tournamentRemove(tournament, team);
     }
 
     public static boolean statisticsShow(String option){
-        return userLogic.statisticsShow(option);
+        return USER_LOGIC.statisticsShow(option);
     }
 }
