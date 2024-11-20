@@ -1,3 +1,5 @@
+package upm.etsisi.poo.model;
+
 import java.io.Serial;
 
 public class ModelException extends Exception{

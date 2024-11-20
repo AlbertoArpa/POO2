@@ -1,3 +1,4 @@
+package upm.etsisi.poo.model;
 
 public class Date {
     private static final String ATTR_DAY_NAME = "day";

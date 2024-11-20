@@ -1,3 +1,9 @@
+package upm.etsisi.poo.view;
+
+import upm.etsisi.poo.controller.TournamentsController;
+import upm.etsisi.poo.controller.UserController;
+import upm.etsisi.poo.model.Authentication;
+
 import java.util.Scanner;
 
 public class I_O {

@@ -1,3 +1,8 @@
+package upm.etsisi.poo.controller;
+
+import upm.etsisi.poo.model.Admin;
+import upm.etsisi.poo.model.Team;
+
 import java.util.ArrayList;
 
 public class TeamsController {

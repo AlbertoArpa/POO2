@@ -1,3 +1,7 @@
+package upm.etsisi.poo.model;
+
+import upm.etsisi.poo.controller.MatchmakingController;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;

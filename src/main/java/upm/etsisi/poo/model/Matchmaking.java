@@ -1,3 +1,5 @@
+package upm.etsisi.poo.model;
+
 import java.util.ArrayList;
 
 public class Matchmaking {

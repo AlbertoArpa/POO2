@@ -1,3 +1,5 @@
+package upm.etsisi.poo.model;
+
 public class Categories {
     private enum categories {
         SCORED_POINTS, ASSIST_POINTS, WON_GAMES, WON_TOURNAMENTS, MONEY_GENERATED

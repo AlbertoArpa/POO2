@@ -1,3 +1,8 @@
+package upm.etsisi.poo.controller;
+
+import upm.etsisi.poo.model.Matchmaking;
+import upm.etsisi.poo.model.Participant;
+
 import java.util.ArrayList;
 
 public class MatchmakingController {

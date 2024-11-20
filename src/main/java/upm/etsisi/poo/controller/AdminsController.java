@@ -1,3 +1,7 @@
+package upm.etsisi.poo.controller;
+
+import upm.etsisi.poo.model.Admin;
+
 import java.util.ArrayList;
 
 public class AdminsController {

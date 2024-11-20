@@ -1,3 +1,7 @@
+package upm.etsisi.poo;
+
+import upm.etsisi.poo.view.I_O;
+
 public class App {
     public static void main(String[] args) {
         I_O.start();

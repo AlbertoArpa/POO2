@@ -1,3 +1,9 @@
+package upm.etsisi.poo.model;
+
+import Controller.AdminsController;
+import Controller.PlayersController;
+import Controller.TeamsController;
+
 public class Validations {
 
     public static boolean isUsernameValid(String username) {

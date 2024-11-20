@@ -1,3 +1,8 @@
+package upm.etsisi.poo.model;
+
+import upm.etsisi.poo.controller.AdminsController;
+import upm.etsisi.poo.controller.PlayersController;
+
 public class Authentication {
     private static final String ATTR_CURRENTUSER_NAME = "currentUser";
     private static final String ATTR_USERTYPE_NAME = "userType";

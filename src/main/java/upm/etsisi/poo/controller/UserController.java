@@ -1,3 +1,9 @@
+package upm.etsisi.poo.controller;
+
+import upm.etsisi.poo.model.Admin;
+import upm.etsisi.poo.model.Authentication;
+import upm.etsisi.poo.model.Player;
+
 public class UserController {
     private static final Authentication authentication = Authentication.getInstance();
 
