@@ -93,7 +93,7 @@ public class I_O {
                 case "add-points":
                     if (reviewArguments(arguments, 3)){
                         double point = Double.parseDouble(arguments[2]); //validar
-                        if (Control.addPoints(arguments[0], arguments[1], point)){
+                        if (UserController.addPoints(arguments[0], arguments[1], point)){
                             System.out.println("Puntos añadidos.");
                         } else System.out.println("No se ha podido añadir la puntuación.");
                     }

@@ -32,4 +32,9 @@ public class UserController {
             return true;
         } else return false;
     }
+    public static boolean addPoints(String username, String stat, double points){
+        PlayersController playersController = PlayersController.getInstance();
+        return playersController.addPoints(username, stat, points);
+    }
+
 }
