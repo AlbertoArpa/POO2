@@ -56,11 +56,11 @@ public class Control {
     }
 
     public static boolean tournamentAdd(String tournament, String team){
-        return tournamentAdd(tournament, team);
+        return tournamentLogic.tournamentAdd(tournament, team);
     }
 
     public static boolean tournamentRemove(String tournament, String team){
-        return tournamentRemove(tournament, team);
+        return tournamentLogic.tournamentRemove(tournament, team);
     }
 
     public static boolean statisticsShow(String option){
