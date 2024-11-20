@@ -31,6 +31,10 @@ public class Control {
         return TOURNAMENT_LOGIC.teamDelete(name);
     }
 
+    public static boolean addPoints(String username, String stat, double points){
+        return USER_LOGIC.addPoints(username, stat, points);
+
+    }
     public static boolean teamAdd(String username, String team){
         return TOURNAMENT_LOGIC.teamAdd(username, team);
     }

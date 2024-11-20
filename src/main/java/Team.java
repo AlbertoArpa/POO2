@@ -29,6 +29,7 @@ public class Team implements Participant{
 
     @Override
     public Stat getStat(String category){
+        updateStats();
         Stat stat = null;
         for (int i = 0; i<stats.size(); i++){
             if (stats.get(i).getCategory().equals(Categories.getCategory(category))){
@@ -53,6 +54,7 @@ public class Team implements Participant{
     }
 
     public ArrayList<Stat> getStats() {
+        updateStats();
         return stats;
     }
 

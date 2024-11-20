@@ -48,6 +48,7 @@ public class I_O {
                     "> team-create [name]\n" +
                     "> player-delete [username]\n" +
                     "> team-delete [name]\n" +
+                    "> add-points [player username;category;points]\n" +
                     "> team-add [player username;team]\n" +
                     "> team-remove [player username;team]\n" +
                     "> tournament-create [name;startDate;endDate;league;sport;categoryRank]\n" +
@@ -87,6 +88,14 @@ public class I_O {
                         if (Control.teamDelete(arguments[0])){
                             System.out.println("\nEQUIPO " + arguments[0].toUpperCase() + " ELIMINADO");
                         } else System.out.println("\nNO EXISTE EL EQUIPO " + arguments[0].toUpperCase() + " O ESTÁ ACTIVO");
+                    }
+                    break;
+                case "add-points":
+                    if (reviewArguments(arguments, 3)){
+                        double point = Double.parseDouble(arguments[2]); //validar
+                        if (Control.addPoints(arguments[0], arguments[1], point)){
+                            System.out.println("Puntos añadidos.");
+                        } else System.out.println("No se ha podido añadir la puntuación.");
                     }
                     break;
                 case "team-add":

@@ -20,6 +20,10 @@ public class UserLogic {
         } else return false;
     }
 
+    public boolean addPoints(String username, String stat, double points){
+        return PLAYERS_CONTROLLER.addPoints(username, stat, points);
+    }
+
     public boolean statisticsShow(String option){
         if (option.equals("-csv")){
             ((Player) AUTHENTICATION.getCurrentUser()).showStatsCsv();

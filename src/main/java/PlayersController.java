@@ -45,4 +45,12 @@ public class PlayersController {
         return result;
     }
 
+    public boolean addPoints(String username, String stat, double points){
+        boolean result = false;
+        if (getPlayer(username) != null) {
+            return getPlayer(username).updateStat(stat, points);
+        }
+        return result;
+    }
+
 }
