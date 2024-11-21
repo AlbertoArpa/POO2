@@ -19,11 +19,12 @@ public class Player extends User implements Participant{
         usernameValidate(username);
         Validations.isNotNull(ATTR_PASSWORD_NAME, password);
         Validations.isNotNull(ATTR_NAME_NAME, name);
+        Validations.isString(ATTR_NAME_NAME, name);
         Validations.isNotNull(ATTR_SURNAME_NAME, surname);
+        Validations.isString(ATTR_SURNAME_NAME, surname);
         Validations.isNotNull(ATTR_DNI_NAME, dni);
         Validations.isMinimum(ATTR_PASSWORD_NAME, password, 3);
         Validations.isMinimum(ATTR_NAME_NAME, name, 3);
-        Validations.isMinimum(ATTR_SURNAME_NAME, surname, 2);
         Validations.isMinimum(ATTR_DNI_NAME, dni, 9);
         Validations.isMaximum(ATTR_DNI_NAME, dni, 9);
         setUsername(username);

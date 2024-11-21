@@ -21,4 +21,10 @@ public class Validations {
             throw new ModelException(variable + " es mayor que la longitud maxima de " + maximum);
         }
     }
+
+    public static void isString(String variable, String string) throws ModelException{
+        if (!string.matches("[a-zA-Z]+")){
+            throw new ModelException("Formato incorrecto: " + variable + " debe contener solo letras.");
+        }
+    }
 }

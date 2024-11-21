@@ -29,7 +29,7 @@ public class User {
                 throw new ModelException("El email no tiene el formato válido.");
             }
         } catch (Exception e){
-            throw new ModelException("Formato incorrecto: El username debe de ser un email.");
+            throw new ModelException("Formato incorrecto: El username debe de ser un email de la UPM.");
         }
     }
 
