@@ -1,6 +1,7 @@
 package upm.etsisi.poo.controller;
 
 import upm.etsisi.poo.model.Admin;
+import upm.etsisi.poo.model.ModelException;
 import upm.etsisi.poo.model.Player;
 
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ public class PlayersController {
         return result;
     }
 
-    public boolean createPlayer(String username, String password, String name, String surname, String dni, Admin creator) {
+    public boolean createPlayer(String username, String password, String name, String surname, String dni, Admin creator) throws ModelException {
         boolean result = false;
         if (getPlayer(username) == null) {
             players.add(new Player(username, password, name, surname, dni, creator));

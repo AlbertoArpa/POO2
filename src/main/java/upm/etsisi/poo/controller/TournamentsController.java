@@ -1,13 +1,6 @@
 package upm.etsisi.poo.controller;
 
-import upm.etsisi.poo.model.Admin;
-import upm.etsisi.poo.model.Authentication;
-import upm.etsisi.poo.model.Categories;
-import upm.etsisi.poo.model.Date;
-import upm.etsisi.poo.model.Participant;
-import upm.etsisi.poo.model.Player;
-import upm.etsisi.poo.model.Team;
-import upm.etsisi.poo.model.Tournament;
+import upm.etsisi.poo.model.*;
 
 import java.util.ArrayList;
 
@@ -35,12 +28,12 @@ public class TournamentsController {
         return null;
     }
 
-    public static boolean createTournament(String name, Date startDate, Date endDate, String league, String sport, String categoryRank) {
+    public static boolean createTournament(String name, Date startDate, Date endDate, String league, String sport, String categoryRank) throws ModelException {
         boolean result = false;
         if (getTournament(name) == null) {
             if (startDate.greaterThan(new Date()) && endDate.greaterThan(startDate)){
                 if (Categories.getCategory(categoryRank)!=null){
-                    getInstance().tournaments.add(new Tournament(name, startDate, endDate, league, sport, categoryRank));
+                    getInstance().tournaments.add(new Tournament(name, startDate, endDate, league, sport, Categories.getCategory(categoryRank)));
                     result = true;
                 }
             }
@@ -122,7 +115,7 @@ public class TournamentsController {
     }
 
     // Métodos movidos de TournamentLogic
-    public static boolean teamCreate(String name) {
+    public static boolean teamCreate(String name) throws ModelException {
         TeamsController teamsController = TeamsController.getInstance();
         PlayersController playersController = PlayersController.getInstance();
         Authentication authentication = Authentication.getInstance();
@@ -179,7 +172,7 @@ public class TournamentsController {
         } else return false;
     }
 
-    public static boolean tournamentCreate(String name, String startDate, String endDate, String league, String sport, String categoryRank){
+    public static boolean tournamentCreate(String name, String startDate, String endDate, String league, String sport, String categoryRank) throws ModelException {
         if (getTournament(name)==null){
             if (Date.isCorrect(startDate)&& Date.isCorrect(endDate)){
                 if (Categories.getCategory(categoryRank)!=null){

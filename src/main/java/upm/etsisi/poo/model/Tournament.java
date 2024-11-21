@@ -8,13 +8,9 @@ import java.util.List;
 
 public class Tournament {
     private static final String ATTR_NAME_NAME = "name";
-    private static final String ATTR_STARTDATE_NAME = "startDate";
-    private static final String ATTR_ENDDATE_NAME = "endDate";
     private static final String ATTR_LEAGUE_NAME = "league";
     private static final String ATTR_SPORT_NAME = "sport";
     private static final String ATTR_CATEGORYRANK_NAME = "categoryRank";
-    private static final String ATTR_PARTICIPANTS_NAME = "participants";
-    private static final String ATTR_MATCHMAKING_NAME = "matchmaking";
     private String name;
     private Date startDate;
     private Date endDate;
@@ -24,7 +20,13 @@ public class Tournament {
     private ArrayList<Participant> participants;
     private MatchmakingController matchmaking;
 
-    public Tournament(String name, Date startDate, Date endDate, String league, String sport, String categoryRank) {
+    public Tournament(String name, Date startDate, Date endDate, String league, String sport, String categoryRank) throws ModelException {
+        Validations.isNotNull(ATTR_NAME_NAME, name);
+        Validations.isNotNull(ATTR_LEAGUE_NAME, league);
+        Validations.isNotNull(ATTR_SPORT_NAME, sport);
+        Validations.isNotNull(ATTR_CATEGORYRANK_NAME, categoryRank);
+        Validations.isMinimum(ATTR_NAME_NAME, name, 3);
+        Validations.isMinimum(ATTR_SPORT_NAME, sport, 2);
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;

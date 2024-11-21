@@ -3,6 +3,8 @@ package upm.etsisi.poo.view;
 import upm.etsisi.poo.controller.TournamentsController;
 import upm.etsisi.poo.controller.UserController;
 import upm.etsisi.poo.model.Authentication;
+import upm.etsisi.poo.model.ModelException;
+import upm.etsisi.poo.model.Validations;
 
 import java.util.Scanner;
 
@@ -10,13 +12,18 @@ public class I_O {
     private static final Scanner sc = new Scanner(System.in);
 
     public static void start(){
-        UserController.initialUsers();
-        System.out.println("SISTEMA DE GESTION DEPORTIVA INICIADO:");
-        boolean end = false;
-        while (!end) {
-            end = menu();
+        try{
+            UserController.initialUsers();
+            System.out.println("SISTEMA DE GESTION DEPORTIVA INICIADO:");
+            boolean end = false;
+            while (!end) {
+                end = menu();
+            }
+            sc.close();
+        } catch (ModelException modelException){
+            System.out.println(modelException.getMessage());
+            System.out.println("No se han podido iniciar los administradores iniciales");
         }
-        sc.close();
     }
 
     public static boolean menu(){
@@ -48,7 +55,7 @@ public class I_O {
         return false;
     }
 
-    public static void menuAdmin(Authentication authentication){
+    public static void menuAdmin(Authentication authentication) {
         while (authentication.isLoggedIn()) {
             System.out.print("Comandos:\n> player-create [username;password;name;surname;dni]\n" +
                     "> team-create [name]\n" +
@@ -70,16 +77,24 @@ public class I_O {
             switch (option.toLowerCase()) {
                 case "player-create":
                     if (reviewArguments(arguments, 5)) {
-                        if (UserController.playerCreate(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4])) {
-                            System.out.println("\nJUGADOR " + arguments[0].toUpperCase() + " CREADO");
-                        } else System.out.println("\nYA EXISTE UN USUARIO O UN EQUIPO CON EL NOMBRE: " + arguments[0].toUpperCase());
+                        try{
+                            if (UserController.playerCreate(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4])) {
+                                System.out.println("\nJUGADOR " + arguments[0].toUpperCase() + " CREADO");
+                            } else System.out.println("\nYA EXISTE UN USUARIO O UN EQUIPO CON EL NOMBRE: " + arguments[0].toUpperCase());
+                        } catch (ModelException modelException){
+                            System.out.println(modelException.getMessage());
+                        }
                     }
                     break;
                 case "team-create":
                     if (reviewArguments(arguments, 1)) {
-                        if (TournamentsController.teamCreate(arguments[0])) {
-                            System.out.println("\nEQUIPO " + arguments[0].toUpperCase() + " CREADO");
-                        } else System.out.println("\nEL EQUIPO O EL JUGADOR " + arguments[0].toUpperCase() + " YA EXISTE");
+                        try{
+                            if (TournamentsController.teamCreate(arguments[0])) {
+                                System.out.println("\nEQUIPO " + arguments[0].toUpperCase() + " CREADO");
+                            } else System.out.println("\nEL EQUIPO O EL JUGADOR " + arguments[0].toUpperCase() + " YA EXISTE");
+                        } catch (ModelException modelException){
+                            System.out.println(modelException.getMessage());
+                        }
                     }
                     break;
                 case "player-delete":
@@ -98,10 +113,14 @@ public class I_O {
                     break;
                 case "add-points":
                     if (reviewArguments(arguments, 3)){
-                        double point = Double.parseDouble(arguments[2]); //validar
-                        if (UserController.addPoints(arguments[0], arguments[1], point)){
-                            System.out.println("Puntos añadidos.");
-                        } else System.out.println("No se ha podido añadir la puntuación.");
+                        try{
+                            double point = Double.parseDouble(arguments[2]);
+                            if (UserController.addPoints(arguments[0], arguments[1], point)){
+                                System.out.println("Puntos añadidos.");
+                            } else System.out.println("No se ha podido añadir la puntuación.");
+                        } catch (Exception e){
+                            System.out.println("Los puntos no están en un formato correcto");
+                        }
                     }
                     break;
                 case "team-add":
@@ -120,9 +139,13 @@ public class I_O {
                     break;
                 case "tournament-create":
                     if (reviewArguments(arguments, 6)) {
-                        if (TournamentsController.tournamentCreate(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4], arguments[5])) {
-                            System.out.println("\nTORNEO " + arguments[0].toUpperCase() + " CREADO");
-                        } else System.out.println("\nNO SE HA PODIDO CREAR EL TORNEO. ASEGURATE DE QUE LA FECHA SEA CORRECTA Y LA CATEGORIA EXISTA.");
+                        try{
+                            if (TournamentsController.tournamentCreate(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4], arguments[5])) {
+                                System.out.println("\nTORNEO " + arguments[0].toUpperCase() + " CREADO");
+                            } else System.out.println("\nNO SE HA PODIDO CREAR EL TORNEO. ASEGURATE DE QUE LA FECHA SEA CORRECTA Y LA CATEGORIA EXISTA.");
+                        } catch (ModelException modelException){
+                            System.out.println(modelException.getMessage());
+                        }
                     }
                     break;
                 case "tournament-delete":

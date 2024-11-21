@@ -1,6 +1,7 @@
 package upm.etsisi.poo.controller;
 
 import upm.etsisi.poo.model.Admin;
+import upm.etsisi.poo.model.ModelException;
 import upm.etsisi.poo.model.Team;
 
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ public class TeamsController {
         return result;
     }
 
-    public boolean createTeam(String name, Admin creator) {
+    public boolean createTeam(String name, Admin creator) throws ModelException {
         boolean result = false;
         if (getTeam(name) == null) {
             teams.add(new Team(name, creator));

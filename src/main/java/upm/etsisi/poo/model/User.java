@@ -3,8 +3,6 @@ package upm.etsisi.poo.model;
 import java.util.Objects;
 
 public class User {
-    private static final String ATTR_USERNAME_NAME = "username";
-    private static final String ATTR_PASSWORD_NAME = "password";
     private String username;
     private String password;
 
@@ -22,6 +20,17 @@ public class User {
 
     public String getPassword() {
         return password;
+    }
+
+    public void usernameValidate(String username) throws ModelException {
+        try{
+            String[] user = username.split("@");
+            if (user[0].isEmpty() || !user[1].equals("alumnos.upm.es")){
+                throw new ModelException("El email no tiene el formato válido.");
+            }
+        } catch (Exception e){
+            throw new ModelException("Formato incorrecto: El username debe de ser un email.");
+        }
     }
 
     @Override

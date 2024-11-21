@@ -3,18 +3,29 @@ package upm.etsisi.poo.model;
 import java.util.ArrayList;
 
 public class Player extends User implements Participant{
+    private static final String ATTR_USERNAME_NAME = "username";
+    private static final String ATTR_PASSWORD_NAME = "password";
     private static final String ATTR_NAME_NAME = "name";
     private static final String ATTR_SURNAME_NAME = "surname";
     private static final String ATTR_DNI_NAME = "dni";
-    private static final String ATTR_STATS_NAME = "stats";
-    private static final String ATTR_CREATOR_NAME = "creator";
     private String name;
     private String surname;
     private String dni;
     private ArrayList<Stat> stats;
     private Admin creator;
 
-    public Player(String username, String password, String name, String surname, String dni, Admin creator){
+    public Player(String username, String password, String name, String surname, String dni, Admin creator) throws ModelException {
+        Validations.isNotNull(ATTR_USERNAME_NAME, username);
+        usernameValidate(username);
+        Validations.isNotNull(ATTR_PASSWORD_NAME, password);
+        Validations.isNotNull(ATTR_NAME_NAME, name);
+        Validations.isNotNull(ATTR_SURNAME_NAME, surname);
+        Validations.isNotNull(ATTR_DNI_NAME, dni);
+        Validations.isMinimum(ATTR_PASSWORD_NAME, password, 3);
+        Validations.isMinimum(ATTR_NAME_NAME, name, 3);
+        Validations.isMinimum(ATTR_SURNAME_NAME, surname, 2);
+        Validations.isMinimum(ATTR_DNI_NAME, dni, 9);
+        Validations.isMaximum(ATTR_DNI_NAME, dni, 9);
         setUsername(username);
         setPassword(password);
         this.name = name;

@@ -5,15 +5,14 @@ import java.util.Objects;
 
 public class Team implements Participant{
     private static final String ATTR_NAME_NAME = "name";
-    private static final String ATTR_PLAYERS_NAME = "players";
-    private static final String ATTR_STATS_NAME = "stats";
-    private static final String ATTR_CREATOR_NAME = "creator";
     private String name;
     private ArrayList<Player> players;
     private ArrayList<Stat> stats;
     private Admin creator;
 
-    public Team (String name, Admin creator){
+    public Team (String name, Admin creator) throws ModelException {
+        Validations.isNotNull(ATTR_NAME_NAME, name);
+        Validations.isMinimum(ATTR_NAME_NAME, name, 2);
         this.name = name;
         this.players = new ArrayList<>();
         this.stats = initialStats();
