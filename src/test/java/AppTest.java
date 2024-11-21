@@ -1,4 +1,5 @@
 import org.junit.Test;
+import upm.etsisi.poo.App;
 
 public class AppTest {
 
