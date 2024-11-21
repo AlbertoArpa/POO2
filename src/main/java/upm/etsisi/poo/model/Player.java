@@ -27,6 +27,7 @@ public class Player extends User implements Participant{
         Validations.isMinimum(ATTR_NAME_NAME, name, 3);
         Validations.isMinimum(ATTR_DNI_NAME, dni, 9);
         Validations.isMaximum(ATTR_DNI_NAME, dni, 9);
+        dniValidation(dni);
         setUsername(username);
         setPassword(password);
         this.name = name;
@@ -34,6 +35,21 @@ public class Player extends User implements Participant{
         this.dni = dni;
         this.stats = initialStats();
         this.creator = creator;
+    }
+
+    private void dniValidation(String dni) throws ModelException{
+        String[] dnis = dni.split("");
+        boolean correct = true;
+        if (dnis[8].matches("[a-zA-Z]")){
+            for (int i = 0; i< dnis.length-1; i++){
+                if (!dnis[i].matches("\\d")){
+                    correct = false;
+                }
+            }
+        } else correct = false;
+        if (!correct){
+            throw new ModelException("Formato del DNI incorrecto.");
+        }
     }
 
     private ArrayList<Stat> initialStats(){
