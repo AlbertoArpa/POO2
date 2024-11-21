@@ -1,8 +1,16 @@
 package upm.etsisi.poo.controller;
 
-import upm.etsisi.poo.model.*;
-
 import java.util.ArrayList;
+
+import upm.etsisi.poo.model.Admin;
+import upm.etsisi.poo.model.Authentication;
+import upm.etsisi.poo.model.Categories;
+import upm.etsisi.poo.model.Date;
+import upm.etsisi.poo.model.ModelException;
+import upm.etsisi.poo.model.Participant;
+import upm.etsisi.poo.model.Player;
+import upm.etsisi.poo.model.Team;
+import upm.etsisi.poo.model.Tournament;
 
 public class TournamentsController {
     private static TournamentsController uniqueInstance;
@@ -172,7 +180,7 @@ public class TournamentsController {
         } else return false;
     }
 
-    public static boolean tournamentCreate(String name, String startDate, String endDate, String league, String sport, String categoryRank) throws ModelException {
+    public static boolean createTournament(String name, String startDate, String endDate, String league, String sport, String categoryRank) throws ModelException {
         if (getTournament(name)==null){
             if (Date.isCorrect(startDate)&& Date.isCorrect(endDate)){
                 if (Categories.getCategory(categoryRank)!=null){

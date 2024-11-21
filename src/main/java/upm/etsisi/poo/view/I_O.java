@@ -1,12 +1,11 @@
 package upm.etsisi.poo.view;
 
+import java.util.Scanner;
+
 import upm.etsisi.poo.controller.TournamentsController;
 import upm.etsisi.poo.controller.UserController;
 import upm.etsisi.poo.model.Authentication;
 import upm.etsisi.poo.model.ModelException;
-import upm.etsisi.poo.model.Validations;
-
-import java.util.Scanner;
 
 public class I_O {
     private static final Scanner sc = new Scanner(System.in);
@@ -140,7 +139,7 @@ public class I_O {
                 case "tournament-create":
                     if (reviewArguments(arguments, 6)) {
                         try{
-                            if (TournamentsController.tournamentCreate(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4], arguments[5])) {
+                            if (TournamentsController.createTournament(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4], arguments[5])) {
                                 System.out.println("\nTORNEO " + arguments[0].toUpperCase() + " CREADO");
                             } else System.out.println("\nNO SE HA PODIDO CREAR EL TORNEO. ASEGURATE DE QUE LA FECHA SEA CORRECTA Y LA CATEGORIA EXISTA.");
                         } catch (ModelException modelException){
