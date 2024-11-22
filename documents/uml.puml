@@ -1,4 +1,4 @@
-@startuml
+@startuml uml
 
 App ..> I_O
 I_O ...> TournamentsController
@@ -33,48 +33,31 @@ class App{
 }
 
 class User{
-        - String username
+    - String username
     - String password
-    + void setUsername(String username)
-    + void setPassword(String password)
-    + String getUsername()
-    + String getPassword()
-    + void usernameValidate(String username) throws ModelException
-    + boolean equals(Object o)
+    + void usernameValidate(String) throws ModelException
+    + boolean equals(Object)
     + int hashCode()
 }
 
 class Player{
-        - static final String ATTR_USERNAME_NAME
-    - static final String ATTR_PASSWORD_NAME
-    - static final String ATTR_NAME_NAME
-    - static final String ATTR_SURNAME_NAME
-    - static final String ATTR_DNI_NAME
     - String name
     - String surname
     - String dni
     - ArrayList<Stat> stats
     - Admin creator
-    + Player(String username, String password, String name, String surname, String dni, Admin creator) throws ModelException
-    - void dniValidation(String dni) throws ModelException
+    + Player(String,String,String,String,String,Admin) throws ModelException
+    - void dniValidation(String) throws ModelException
     - ArrayList<Stat> initialStats()
     + void showStatsJson()
     + void showStatsCsv()
-    + Stat getStat(String category)
-    + boolean updateStat(String category, double value)
-    + String getName()
-    + String getName1()
-    + String getSurname()
-    + String getDni()
-    + Admin getCreator()
+    + boolean updateStat(String,value)
     + ArrayList<Stat> getStats()
     + String toString()
 }
 
 class Admin{
-    - static final String ATTR_USERNAME_NAME
-    - static final String ATTR_PASSWORD_NAME
-    + Admin(String username, String password) throws ModelException
+    + Admin(String ,String) throws ModelException
 }
 
 class Categories{
@@ -83,49 +66,38 @@ class Categories{
 }
 
 class Stat{
-    - static final String ATTR_CATEGORY_NAME
-    - static final String ATTR_VALUE_NAME
     - String category
     - double value
-    + Stat(String category)
+    + Stat(String)
     + String getCategory()
-    + void setCategory(String category)
+    + void setCategory(String)
     + double getValue()
-    + void setValue(double value)
+    + void setValue(double)
     + String toString()
 }
 
 class Team{
-    - static final String ATTR_NAME_NAME
     - String name
     - ArrayList<Player> players
     - ArrayList<Stat> stats
     - Admin creator
-    + Team(String name, Admin creator) throws ModelException
+    + Team(String,Admin) throws ModelException
     - ArrayList<Stat> initialStats()
-    + Stat getStat(String category)
     + void updateStats()
-    + ArrayList<Stat> getStats()
     + String getName()
-    + Player getPlayer(String username)
-    + boolean addPlayer(Player player)
-    + boolean removePlayer(String username)
-    + boolean equals(Object o)
+    + boolean addPlayer(Player)
+    + boolean removePlayer(String)
+    + boolean equals(Object)
     + int hashCode()
 }
 
 class Matchmaking{
-    - static final String ATTR_PARTICIPANTS_NAME
     - ArrayList<Participant> participants
-    + Matchmaking(Participant participant1, Participant participant2)
-    + boolean isMatchmaked(Participant participant)
+    + Matchmaking(Participant, Participant )
+    + boolean isMatchmaked(Participant)
 }
 
 class Tournament{
-    - static final String ATTR_NAME_NAME
-    - static final String ATTR_LEAGUE_NAME
-    - static final String ATTR_SPORT_NAME
-    - static final String ATTR_CATEGORYRANK_NAME
     - String name
     - Date startDate
     - Date endDate
@@ -134,24 +106,11 @@ class Tournament{
     - String categoryRank
     - ArrayList<Participant> participants
     - MatchmakingController matchmaking
-    + Tournament(String name, Date startDate, Date endDate, String league, String sport, String categoryRank) throws ModelException
-    + Participant getParticipant(Participant participant)
-    + boolean addParticipant(Participant participant)
-    + boolean removeParticipant(Participant participant)
+    + Tournament(String , Date, Date , String , String , String) throws ModelException
+    + boolean addParticipant(Participant)
+    + boolean removeParticipant(Participant)
     + ArrayList<Participant> getRandomizedParticipants()
     + ArrayList<Participant> getParticipantsRanked()
-    + String getName()
-    + void setName(String name)
-    + Date getStartDate()
-    + void setStartDate(Date startDate)
-    + Date getEndDate()
-    + void setEndDate(Date endDate)
-    + String getLeague()
-    + void setLeague(String league)
-    + String getSport()
-    + void setSport(String sport)
-    + String getCategoryRank()
-    + void setCategoryRank(String categoryRank)
     + ArrayList<Participant> getParticipants()
     + MatchmakingController getMatchmaking()
 }
@@ -160,7 +119,7 @@ class AdminsController{
     - static AdminsController uniqueInstance
     - static ArrayList<Admin> admins
     + AdminsController()
-    + static Admin getAdmin(String username)
+    + static Admin getAdmin(String)
     + static AdminsController getInstance()
     + static void addAdmin(Admin admin)
 }
@@ -170,22 +129,20 @@ class PlayersController{
     - static ArrayList<Player> players
     + PlayersController()
     + static PlayersController getInstance()
-    + static Player getPlayer(String username)
-    + static boolean createPlayer(String username, String password, String name, String surname, String dni, Admin creator) throws ModelException
-    + static boolean deletePlayer(String username)
-    + static boolean addPoints(String username, String stat, double points)
-    + static boolean statisticsShow(String option)
+    + static Player getPlayer(String)
+    + static boolean createPlayer(String, String, String, String, String, Admin) throws ModelException
+    + static boolean deletePlayer(String)
+    + static boolean addPoints(String, String, double)
+    + static boolean statisticsShow(String)
 }
 
 class Authentication{
-    - static final String ATTR_CURRENTUSER_NAME
-    - static final String ATTR_USERTYPE_NAME
     - static Authentication uniqueInstance
     - static User currentUser
     - static UserType userType
     + Authentication()
     + static Authentication getInstance()
-    + static boolean logIn(String username, String password)
+    + static boolean logIn(String , String)
     + static void logOut()
     + static boolean isLoggedIn()
     + static String getUserType()
@@ -200,16 +157,15 @@ class TournamentsController{
     - ArrayList<Tournament> tournaments
     + TournamentsController()
     + static TournamentsController getInstance()
-    + static Tournament getTournament(String name)
-    + static boolean deleteTournament(String name)
+    + static boolean deleteTournament(String)
     + static boolean deletePastTournaments()
-    + static Tournament isParticipant(Participant participant)
+    + static Tournament isParticipant(Participant)
     + static String listTournaments(String type)
-    + static boolean createTournament(String name, String startDate, String endDate, String league, String sport, String categoryRank) throws ModelException
-    + static boolean tournamentMatchmakingM(String name, String participant1, String participant2)
-    + static boolean tournamentMatchmakingA(String name)
-    + static boolean tournamentAdd(String tournament, String team)
-    + static boolean tournamentRemove(String tournament, String team)
+    + static boolean createTournament(String, String, String, String, String , String) throws ModelException
+    + static boolean tournamentMatchmakingM(String , String , String)
+    + static boolean tournamentMatchmakingA(String)
+    + static boolean tournamentAdd(String, String)
+    + static boolean tournamentRemove(String, String)
 }
 
 class TeamsController{
@@ -217,12 +173,11 @@ class TeamsController{
     - static ArrayList<Team> teams
     + TeamsController()
     + static TeamsController getInstance()
-    + static Team getTeam(String name)
-    + static boolean createTeam(String name, Admin creator) throws ModelException
-    + static boolean deleteTeam(String name)
-    + static Team isInTeam(String username)
-    + static boolean teamAdd(String username, String team)
-    + static boolean teamRemove(String username, String team)
+    + static boolean createTeam(String, Admin) throws ModelException
+    + static boolean deleteTeam(String)
+    + static Team isInTeam(String)
+    + static boolean teamAdd(String, String)
+    + static boolean teamRemove(String, String)
 }
 
 interface Participant{
@@ -234,21 +189,15 @@ class ModelException{
 }
 
 class Date{
-    - static final String ATTR_DAY_NAME
-    - static final String ATTR_MONTH_NAME
-    - static final String ATTR_YEAR_NAME
     - int year
     - int month
     - int day
-    + Date(int day, int month, int year)
-    + Date(String date)
+    + Date(int , int , int)
+    + Date(String)
     + Date()
-    + int getYear()
-    + int getMonth()
-    + int getDay()
-    + boolean greaterThan(Date date)
-    + boolean lowerThan(Date date)
-    + static boolean isCorrect(String date)
+    + boolean greaterThan(Date)
+    + boolean lowerThan(Date)
+    + static boolean isCorrect(String)
     + String toString()
 }
 
@@ -257,27 +206,27 @@ class I_O{
     + static void initialUsers() throws ModelException
     + static void start()
     + static boolean menu()
-    + static void menuAdmin(Authentication authentication)
-    + static void menuPlayer(Authentication authentication)
-    + static boolean reviewArguments(String[] arguments, int number)
+    + static void menuAdmin(Authentication)
+    + static void menuPlayer(Authentication )
+    + static boolean reviewArguments(String[], int)
 }
 
 class MatchmakingController{
     - ArrayList<Matchmaking> matchmaking
     + MatchmakingController()
-    + boolean createMatchmake(Participant participant1, Participant participant2)
-    + boolean randomMatchmake(ArrayList<Participant> participants)
-    + boolean isMatchmaked(Participant participant)
-    + void removeMatchmaking(Participant participant)
+    + boolean createMatchmake(Participant, Participant)
+    + boolean randomMatchmake(ArrayList<Participant>)
+    + boolean isMatchmaked(Participant)
+    + void removeMatchmaking(Participant)
 }
 
 class Validations{
     - ArrayList<Matchmaking> matchmaking
     + MatchmakingController()
-    + boolean createMatchmake(Participant participant1, Participant participant2)
-    + boolean randomMatchmake(ArrayList<Participant> participants)
-    + boolean isMatchmaked(Participant participant)
-    + void removeMatchmaking(Participant participant)
+    + boolean createMatchmake(Participant, Participant)
+    + boolean randomMatchmake(ArrayList<Participant>)
+    + boolean isMatchmaked(Participant)
+    + void removeMatchmaking(Participant)
 }
 
 @enduml
