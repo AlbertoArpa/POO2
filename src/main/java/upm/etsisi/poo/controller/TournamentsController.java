@@ -112,11 +112,8 @@ public class TournamentsController {
 
     // Métodos movidos de TournamentLogic
     public static boolean teamCreate(String name) throws ModelException {
-        TeamsController teamsController = TeamsController.getInstance();
-        PlayersController playersController = PlayersController.getInstance();
-        Authentication authentication = Authentication.getInstance();
-        if (teamsController.getTeam(name) == null && playersController.getPlayer(name) == null) {
-            return teamsController.createTeam(name, (Admin) authentication.getCurrentUser());
+        if (TeamsController.getTeam(name) == null && PlayersController.getPlayer(name) == null) {
+            return TeamsController.createTeam(name, (Admin) Authentication.getCurrentUser());
         } else return false;
     }
 
