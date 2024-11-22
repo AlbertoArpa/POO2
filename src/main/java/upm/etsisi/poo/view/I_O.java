@@ -9,6 +9,7 @@ import upm.etsisi.poo.controller.TournamentsController;
 import upm.etsisi.poo.model.Admin;
 import upm.etsisi.poo.model.Authentication;
 import upm.etsisi.poo.model.ModelException;
+import upm.etsisi.poo.model.Team;
 
 public class I_O {
     private static final Scanner sc = new Scanner(System.in);
@@ -104,7 +105,7 @@ public class I_O {
                 case "team-create":
                     if (reviewArguments(arguments, 1)) {
                         try{
-                            if (TournamentsController.teamCreate(arguments[0])) {
+                            if (TeamsController.createTeam(arguments[0], (Admin) Authentication.getCurrentUser())) {
                                 System.out.println("\nEQUIPO " + arguments[0].toUpperCase() + " CREADO");
                             } else System.out.println("\nEL EQUIPO O EL JUGADOR " + arguments[0].toUpperCase() + " YA EXISTE");
                         } catch (ModelException modelException){
