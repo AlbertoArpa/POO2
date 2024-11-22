@@ -60,6 +60,9 @@ public class PlayersController {
     public static boolean addPoints(String username, String stat, double points) {
         boolean result = false;
         if (getPlayer(username) != null) {
+            if (TeamsController.isInTeam(username)!=null){
+                TeamsController.isInTeam(username).updateStats();
+            }
             return getPlayer(username).updateStat(stat, points);
         }
         return result;
