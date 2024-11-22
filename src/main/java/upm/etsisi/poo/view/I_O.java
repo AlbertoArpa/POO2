@@ -108,14 +108,14 @@ public class I_O {
                     break;
                 case "player-delete":
                     if (reviewArguments(arguments, 1)) {
-                        if (TournamentsController.playerDelete(arguments[0])){
+                        if (PlayersController.deletePlayer(arguments[0])){
                             System.out.println("\nJUGADOR BORRADO CORRECTAMENTE");
                         } else System.out.println("\nNO EXISTE EL JUGADOR " + arguments[0].toUpperCase() + " O ESTÁ EN ACTIVO.");
                     }
                     break;
                 case "team-delete":
                     if (reviewArguments(arguments, 1)) {
-                        if (TournamentsController.teamDelete(arguments[0])){
+                        if (TeamsController.deleteTeam(arguments[0])){
                             System.out.println("\nEQUIPO " + arguments[0].toUpperCase() + " ELIMINADO");
                         } else System.out.println("\nNO EXISTE EL EQUIPO " + arguments[0].toUpperCase() + " O ESTÁ ACTIVO");
                     }
@@ -134,14 +134,14 @@ public class I_O {
                     break;
                 case "team-add":
                     if (reviewArguments(arguments, 2)) {
-                        if (TournamentsController.teamAdd(arguments[0], arguments[1])) {
+                        if (TeamsController.teamAdd(arguments[0], arguments[1])) {
                             System.out.println("\nJUGADOR " + arguments[0].toUpperCase() + " ANADIDO AL EQUIPO " + arguments[1].toUpperCase());
                         } else System.out.println("\nEL EQUIPO O EL JUGADOR " + arguments[0].toUpperCase() + " NO EXISTE O YA SE ENCUENTRA EN UN EQUIPO.");
                     }
                     break;
                 case "team-remove":
                     if (reviewArguments(arguments, 2)) {
-                        if (TournamentsController.teamRemove(arguments[0], arguments[1])) {
+                        if (TeamsController.teamRemove(arguments[0], arguments[1])) {
                             System.out.println("\nJUGADOR " + arguments[0].toUpperCase() + " BORRADO DEL EQUIPO " + arguments[1].toUpperCase());
                         } else System.out.println("\nNO EXISTE EL EQUIPO " + arguments[1].toUpperCase() + " O NO EXISTE EL JUGADOR " + arguments[0].toUpperCase() +  " DENTRO DEL EQUIPO");
                     }

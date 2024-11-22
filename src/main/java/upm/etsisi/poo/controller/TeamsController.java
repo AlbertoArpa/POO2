@@ -43,12 +43,11 @@ public class TeamsController {
     }
 
     public static boolean deleteTeam(String name) {
-        boolean result = false;
-        if (getTeam(name) != null) {
-            teams.remove(getTeam(name));
-            result = true;
-        }
-        return result;
+        if (getTeam(name)!=null){
+            if (TournamentsController.isParticipant(getTeam(name))==null){
+                return teams.remove(getTeam(name));
+            } else return false;
+        } else return false;
     }
 
     public static Team isInTeam(String username){
@@ -59,5 +58,26 @@ public class TeamsController {
             }
         }
         return team;
+    }
+
+    public static boolean teamAdd(String username, String team){
+        if (PlayersController.getPlayer(username)!=null){
+            if (getTeam(team)!=null){
+                if (isInTeam(username)==null){
+                    return getTeam(team).addPlayer(PlayersController.getPlayer(username));
+                } else return false;
+            } else return false;
+        } else return false;
+    }
+
+
+    public static boolean teamRemove(String username, String team){
+        if (PlayersController.getPlayer(username)!=null){
+            if (getTeam(team)!=null){
+                if (isInTeam(username).equals(getTeam(team))){
+                    return getTeam(team).removePlayer(username);
+                } else return false;
+            } else return false;
+        } else return false;
     }
 }

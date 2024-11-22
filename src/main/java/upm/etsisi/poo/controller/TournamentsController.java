@@ -109,48 +109,6 @@ public class TournamentsController {
         return result.toString();
     }
 
-    // Métodos movidos de TournamentLogic
-
-    public static boolean playerDelete(String username) {
-        if (PlayersController.getPlayer(username) != null) {
-            if (TeamsController.isInTeam(username) != null) {
-                if (isParticipant(TeamsController.isInTeam(username)) == null) {
-                    TeamsController.isInTeam(username).removePlayer(username);
-                    return PlayersController.deletePlayer(username);
-                } else return false;
-            } else if (isParticipant(PlayersController.getPlayer(username)) == null) {
-                return PlayersController.deletePlayer(username);
-            } else return false;
-        } else return false;
-    }
-
-    public static boolean teamDelete(String name){
-        if (TeamsController.getTeam(name)!=null){
-            if (isParticipant(TeamsController.getTeam(name))==null){
-                return TeamsController.deleteTeam(name);
-            } else return false;
-        } else return false;
-    }
-
-    public static boolean teamAdd(String username, String team){
-        if (PlayersController.getPlayer(username)!=null){
-            if (TeamsController.getTeam(team)!=null){
-                if (TeamsController.isInTeam(username)==null){
-                    return TeamsController.getTeam(team).addPlayer(PlayersController.getPlayer(username));
-                } else return false;
-            } else return false;
-        } else return false;
-    }
-
-    public static boolean teamRemove(String username, String team){
-        if (PlayersController.getPlayer(username)!=null){
-            if (TeamsController.getTeam(team)!=null){
-                if (TeamsController.isInTeam(username).equals(TeamsController.getTeam(team))){
-                    return TeamsController.getTeam(team).removePlayer(username);
-                } else return false;
-            } else return false;
-        } else return false;
-    }
 
     public static boolean createTournament(String name, String startDate, String endDate, String league, String sport, String categoryRank) throws ModelException {
         if (getTournament(name)==null){

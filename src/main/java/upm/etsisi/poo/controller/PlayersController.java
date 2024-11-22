@@ -42,12 +42,18 @@ public class PlayersController {
     }
 
     public static boolean deletePlayer(String username) {
-        boolean result = false;
         if (getPlayer(username) != null) {
-            players.remove(getPlayer(username));
-            result = true;
-        }
-        return result;
+            if (TeamsController.isInTeam(username) != null) {
+                if (TournamentsController.isParticipant(TeamsController.isInTeam(username)) == null) {
+                    TeamsController.isInTeam(username).removePlayer(username);
+                    players.remove(getPlayer(username));
+                    return true;
+                } else return false;
+            } else if (TournamentsController.isParticipant(getPlayer(username)) == null) {
+                players.remove(getPlayer(username));
+                return true;
+            } else return false;
+        } else return false;
     }
 
     public static boolean addPoints(String username, String stat, double points){
