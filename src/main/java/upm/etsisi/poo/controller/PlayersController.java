@@ -1,6 +1,7 @@
 package upm.etsisi.poo.controller;
 
 import upm.etsisi.poo.model.Admin;
+import upm.etsisi.poo.model.Authentication;
 import upm.etsisi.poo.model.ModelException;
 import upm.etsisi.poo.model.Player;
 
@@ -8,7 +9,7 @@ import java.util.ArrayList;
 
 public class PlayersController {
     private static PlayersController uniqueInstance;
-    private ArrayList<Player> players;
+    private static ArrayList<Player> players;
 
     private PlayersController(){
         this.players = new ArrayList<>();
@@ -21,7 +22,7 @@ public class PlayersController {
         return uniqueInstance;
     }
 
-    public Player getPlayer(String username) {
+    public static Player getPlayer(String username) {
         Player result = null;
         int i = 0;
         if (!players.isEmpty()) {
@@ -33,16 +34,14 @@ public class PlayersController {
         return result;
     }
 
-    public boolean createPlayer(String username, String password, String name, String surname, String dni, Admin creator) throws ModelException {
-        boolean result = false;
-        if (getPlayer(username) == null) {
+    public static boolean createPlayer(String username, String password, String name, String surname, String dni, Admin creator) throws ModelException {
+        if (AdminsController.getAdmin(username) == null && getPlayer(username) == null && TeamsController.getTeam(username) == null) {
             players.add(new Player(username, password, name, surname, dni, creator));
-            result = true;
-        }
-        return result;
+            return true;
+        } return false;
     }
 
-    public boolean deletePlayer(String username) {
+    public static boolean deletePlayer(String username) {
         boolean result = false;
         if (getPlayer(username) != null) {
             players.remove(getPlayer(username));
@@ -51,12 +50,22 @@ public class PlayersController {
         return result;
     }
 
-    public boolean addPoints(String username, String stat, double points){
+    public static boolean addPoints(String username, String stat, double points){
         boolean result = false;
         if (getPlayer(username) != null) {
             return getPlayer(username).updateStat(stat, points);
         }
         return result;
+    }
+
+    public static boolean statisticsShow(String option) {
+        if (option.equals("-csv")) {
+            ((Player) Authentication.getCurrentUser()).showStatsCsv();
+            return true;
+        } else if (option.equals("-json")) {
+            ((Player) Authentication.getCurrentUser()).showStatsJson();
+            return true;
+        } else return false;
     }
 
 }

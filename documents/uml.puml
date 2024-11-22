@@ -3,13 +3,10 @@
 App ..> I_O
 I_O ...> TournamentsController
 I_O ...> TeamsController
-I_O ...> UserController
+I_O ...> PlayersController
+I_O ...> AdminsController
 I_O .> Authentication
 TournamentsController <.> TeamsController
-TeamsController <.> UserController
-TournamentsController <.> UserController
-UserController ..> PlayersController
-UserController ..> AdminsController
 TournamentsController *-- Tournament
 Tournament o-- MatchmakingController
 MatchmakingController *-- Matchmaking
@@ -88,9 +85,6 @@ class MatchmakingController{
 }
 
 class Validations{
-}
-
-class UserController{
 }
 
 @enduml

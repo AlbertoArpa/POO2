@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class TeamsController {
     private static TeamsController uniqueInstance;
-    private ArrayList<Team> teams;
+    private static ArrayList<Team> teams;
 
     private TeamsController() {
         this.teams = new ArrayList<>();
@@ -21,7 +21,7 @@ public class TeamsController {
         return uniqueInstance;
     }
 
-    public Team getTeam(String name) {
+    public static Team getTeam(String name) {
         Team result = null;
         int i = 0;
         while (i < teams.size() && result == null) {
@@ -33,7 +33,7 @@ public class TeamsController {
         return result;
     }
 
-    public boolean createTeam(String name, Admin creator) throws ModelException {
+    public static boolean createTeam(String name, Admin creator) throws ModelException {
         boolean result = false;
         if (getTeam(name) == null) {
             teams.add(new Team(name, creator));
@@ -42,7 +42,7 @@ public class TeamsController {
         return result;
     }
 
-    public boolean deleteTeam(String name) {
+    public static boolean deleteTeam(String name) {
         boolean result = false;
         if (getTeam(name) != null) {
             teams.remove(getTeam(name));
@@ -51,7 +51,7 @@ public class TeamsController {
         return result;
     }
 
-    public Team isInTeam(String username){
+    public static Team isInTeam(String username){
         Team team = null;
         for (int i = 0; i<teams.size(); i++){
             if (teams.get(i).getPlayer(username)!=null){

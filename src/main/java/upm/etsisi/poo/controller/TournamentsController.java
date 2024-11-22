@@ -182,31 +182,29 @@ public class TournamentsController {
     }
 
     public static boolean tournamentMatchmakingM(String name, String participant1, String participant2){
-        PlayersController playersController = PlayersController.getInstance();
-        TeamsController teamsController = TeamsController.getInstance();
         if (getTournament(name)!=null){
-            if (playersController.getPlayer(participant1)!=null){
-                if (playersController.getPlayer(participant2)!=null){
-                    if (getTournament(name).getParticipant(playersController.getPlayer(participant1)) != null &&
-                            getTournament(name).getParticipant(playersController.getPlayer(participant2)) != null){
-                        return getTournament(name).getMatchmaking().createMatchmake(playersController.getPlayer(participant1), playersController.getPlayer(participant2));
+            if (PlayersController.getPlayer(participant1)!=null){
+                if (PlayersController.getPlayer(participant2)!=null){
+                    if (getTournament(name).getParticipant(PlayersController.getPlayer(participant1)) != null &&
+                            getTournament(name).getParticipant(PlayersController.getPlayer(participant2)) != null){
+                        return getTournament(name).getMatchmaking().createMatchmake(PlayersController.getPlayer(participant1), PlayersController.getPlayer(participant2));
                     } else return false;
-                } else if (teamsController.getTeam(participant2)!=null){
-                    if (getTournament(name).getParticipant(playersController.getPlayer(participant1)) != null &&
-                            getTournament(name).getParticipant(teamsController.getTeam(participant2)) != null){
-                        return getTournament(name).getMatchmaking().createMatchmake(playersController.getPlayer(participant1), teamsController.getTeam(participant2));
+                } else if (TeamsController.getTeam(participant2)!=null){
+                    if (getTournament(name).getParticipant(PlayersController.getPlayer(participant1)) != null &&
+                            getTournament(name).getParticipant(TeamsController.getTeam(participant2)) != null){
+                        return getTournament(name).getMatchmaking().createMatchmake(PlayersController.getPlayer(participant1), TeamsController.getTeam(participant2));
                     } else return false;
                 } else return false;
-            } else if (teamsController.getTeam(participant1)!=null){
-                if (playersController.getPlayer(participant2)!=null){
-                    if (getTournament(name).getParticipant(teamsController.getTeam(participant1)) != null &&
-                            getTournament(name).getParticipant(playersController.getPlayer(participant2)) != null){
-                        return getTournament(name).getMatchmaking().createMatchmake(teamsController.getTeam(participant1), playersController.getPlayer(participant2));
+            } else if (TeamsController.getTeam(participant1)!=null){
+                if (PlayersController.getPlayer(participant2)!=null){
+                    if (getTournament(name).getParticipant(TeamsController.getTeam(participant1)) != null &&
+                            getTournament(name).getParticipant(PlayersController.getPlayer(participant2)) != null){
+                        return getTournament(name).getMatchmaking().createMatchmake(TeamsController.getTeam(participant1), PlayersController.getPlayer(participant2));
                     } else return false;
-                } else if (teamsController.getTeam(participant2)!=null){
-                    if (getTournament(name).getParticipant(teamsController.getTeam(participant1)) != null &&
-                            getTournament(name).getParticipant(teamsController.getTeam(participant2)) != null){
-                        return getTournament(name).getMatchmaking().createMatchmake(teamsController.getTeam(participant1), teamsController.getTeam(participant2));
+                } else if (TeamsController.getTeam(participant2)!=null){
+                    if (getTournament(name).getParticipant(TeamsController.getTeam(participant1)) != null &&
+                            getTournament(name).getParticipant(TeamsController.getTeam(participant2)) != null){
+                        return getTournament(name).getMatchmaking().createMatchmake(TeamsController.getTeam(participant1), TeamsController.getTeam(participant2));
                     } else return false;
                 } else return false;
             } else return false;

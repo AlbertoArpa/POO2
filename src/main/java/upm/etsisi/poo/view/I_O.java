@@ -2,8 +2,10 @@ package upm.etsisi.poo.view;
 
 import java.util.Scanner;
 
+import upm.etsisi.poo.controller.AdminsController;
+import upm.etsisi.poo.controller.PlayersController;
 import upm.etsisi.poo.controller.TournamentsController;
-import upm.etsisi.poo.controller.UserController;
+import upm.etsisi.poo.model.Admin;
 import upm.etsisi.poo.model.Authentication;
 import upm.etsisi.poo.model.ModelException;
 
@@ -12,7 +14,7 @@ public class I_O {
 
     public static void start(){
         try{
-            UserController.initialUsers();
+            AdminsController.initialUsers();
             System.out.println("SISTEMA DE GESTION DEPORTIVA INICIADO:");
             boolean end = false;
             while (!end) {
@@ -36,7 +38,7 @@ public class I_O {
         switch (option.toLowerCase()) {
             case "login":
                 if (reviewArguments(arguments, 2)) {
-                    if (UserController.logIn(arguments[0], arguments[1])) {
+                    if (authentication.logIn(arguments[0], arguments[1])) {
                         System.out.println("\nBIENVENIDO, " + authentication.getCurrentUser().getUsername());
                         if (authentication.getUserType().equals("ADMIN")) {
                             menuAdmin(authentication);
@@ -77,7 +79,7 @@ public class I_O {
                 case "player-create":
                     if (reviewArguments(arguments, 5)) {
                         try{
-                            if (UserController.playerCreate(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4])) {
+                            if (PlayersController.createPlayer(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4], (Admin) Authentication.getCurrentUser())) {
                                 System.out.println("\nJUGADOR " + arguments[0].toUpperCase() + " CREADO");
                             } else System.out.println("\nYA EXISTE UN USUARIO O UN EQUIPO CON EL NOMBRE: " + arguments[0].toUpperCase());
                         } catch (ModelException modelException){
@@ -114,7 +116,7 @@ public class I_O {
                     if (reviewArguments(arguments, 3)){
                         try{
                             double point = Double.parseDouble(arguments[2]);
-                            if (UserController.addPoints(arguments[0], arguments[1], point)){
+                            if (PlayersController.addPoints(arguments[0], arguments[1], point)){
                                 System.out.println("Puntos añadidos.");
                             } else System.out.println("No se ha podido añadir la puntuación.");
                         } catch (Exception e){
@@ -237,7 +239,7 @@ public class I_O {
                     break;
                 case "statistics-show":
                     if (reviewArguments(arguments, 1)) {
-                        if(!UserController.statisticsShow(arguments[0])) System.out.println("\nARGUMENTO INVALIDO");
+                        if(!PlayersController.statisticsShow(arguments[0])) System.out.println("\nARGUMENTO INVALIDO");
                     }
                     break;
                 case "tournament-list":

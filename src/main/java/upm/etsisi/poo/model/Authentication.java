@@ -7,8 +7,8 @@ public class Authentication {
     private static final String ATTR_CURRENTUSER_NAME = "currentUser";
     private static final String ATTR_USERTYPE_NAME = "userType";
     private static Authentication uniqueInstance;
-    private User currentUser;
-    private UserType userType;
+    private static User currentUser;
+    private static UserType userType;
 
     public enum UserType {
         ADMIN, PLAYER
@@ -26,19 +26,19 @@ public class Authentication {
         return uniqueInstance;
     }
 
-    public boolean logIn(AdminsController admins, PlayersController players, String username, String password) {
+    public static boolean logIn(String username, String password) {
         boolean result = false;
         if (!isLoggedIn()) {
-            if (admins.getAdmin(username) != null) {
-                if (admins.getAdmin(username).getPassword().equals(password)) {
-                    this.currentUser = admins.getAdmin(username);
+            if (AdminsController.getAdmin(username) != null) {
+                if (AdminsController.getAdmin(username).getPassword().equals(password)) {
+                    currentUser = AdminsController.getAdmin(username);
                     userType = UserType.ADMIN;
                     result = true;
                 }
             } else {
-                if (players.getPlayer(username) != null) {
-                    if (players.getPlayer(username).getPassword().equals(password)) {
-                        this.currentUser = players.getPlayer(username);
+                if (PlayersController.getPlayer(username) != null) {
+                    if (PlayersController.getPlayer(username).getPassword().equals(password)) {
+                        currentUser = PlayersController.getPlayer(username);
                         userType = UserType.PLAYER;
                         result = true;
                     }
@@ -48,21 +48,21 @@ public class Authentication {
         return result;
     }
 
-    public void logOut() {
+    public static void logOut() {
         userType = null;
         currentUser = null;
     }
 
-    public boolean isLoggedIn() {
+    public static boolean isLoggedIn() {
         return currentUser != null;
     }
 
-    public String getUserType() {
+    public static String getUserType() {
         if (userType != null) return userType.name();
         else return null;
     }
 
-    public User getCurrentUser() {
+    public static User getCurrentUser() {
         return currentUser;
     }
 }
