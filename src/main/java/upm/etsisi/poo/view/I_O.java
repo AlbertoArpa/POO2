@@ -45,7 +45,7 @@ public class I_O {
     public static boolean menu(){
         Authentication authentication = Authentication.getInstance();
         System.out.print("Comandos:\n> login [username;password]\n> tournament-list\n----------\n\t> ");
-        String[] arguments = sc.nextLine().split(" ", 2);
+        String[] arguments = sc.nextLine().toLowerCase().split(" ", 2);
         String option = arguments[0];
         if (!option.equals("tournament-list")) {
             if (arguments.length>1) arguments = arguments[1].split(";");
@@ -84,7 +84,7 @@ public class I_O {
                     "> tournament-delete [tournament name]\n" +
                     "> tournament-matchmaking [-m/-a;tournament name(;team1;team2)]\n" +
                     "> tournament-list\n" + "> logout\n----------\n\t> ");
-            String[] arguments = sc.nextLine().split(" ", 2);
+            String[] arguments = sc.nextLine().toLowerCase().split(" ", 2);
             String option = arguments[0];
             if (!option.equals("logout") && !option.equals("tournament-list")) {
                 if (arguments.length>1)
@@ -219,7 +219,7 @@ public class I_O {
                     "> tournament-remove [tournament name(;team)]\n" +
                     "> statistics-show [-csv/-json]\n" +
                     "> tournament-list\n" + "> logout\n----------\n\t> ");
-            String[] arguments = sc.nextLine().split(" ", 2);
+            String[] arguments = sc.nextLine().toLowerCase().split(" ", 2);
             String option = arguments[0];
             if (!option.equals("logout") && !option.equals("tournament-list")) {
                 if (arguments.length>1)
