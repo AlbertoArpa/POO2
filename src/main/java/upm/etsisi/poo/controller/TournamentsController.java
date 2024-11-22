@@ -2,7 +2,6 @@ package upm.etsisi.poo.controller;
 
 import java.util.ArrayList;
 
-import upm.etsisi.poo.model.Admin;
 import upm.etsisi.poo.model.Authentication;
 import upm.etsisi.poo.model.Categories;
 import upm.etsisi.poo.model.Date;
@@ -113,48 +112,41 @@ public class TournamentsController {
     // Métodos movidos de TournamentLogic
 
     public static boolean playerDelete(String username) {
-        PlayersController playersController = PlayersController.getInstance();
-        TeamsController teamsController = TeamsController.getInstance();
-        if (playersController.getPlayer(username) != null) {
-            if (teamsController.isInTeam(username) != null) {
-                if (isParticipant(teamsController.isInTeam(username)) == null) {
-                    teamsController.isInTeam(username).removePlayer(username);
-                    return playersController.deletePlayer(username);
+        if (PlayersController.getPlayer(username) != null) {
+            if (TeamsController.isInTeam(username) != null) {
+                if (isParticipant(TeamsController.isInTeam(username)) == null) {
+                    TeamsController.isInTeam(username).removePlayer(username);
+                    return PlayersController.deletePlayer(username);
                 } else return false;
-            } else if (isParticipant(playersController.getPlayer(username)) == null) {
-                return playersController.deletePlayer(username);
+            } else if (isParticipant(PlayersController.getPlayer(username)) == null) {
+                return PlayersController.deletePlayer(username);
             } else return false;
         } else return false;
     }
 
     public static boolean teamDelete(String name){
-        TeamsController teamsController = TeamsController.getInstance();
-        if (teamsController.getTeam(name)!=null){
-            if (isParticipant(teamsController.getTeam(name))==null){
-                return teamsController.deleteTeam(name);
+        if (TeamsController.getTeam(name)!=null){
+            if (isParticipant(TeamsController.getTeam(name))==null){
+                return TeamsController.deleteTeam(name);
             } else return false;
         } else return false;
     }
 
     public static boolean teamAdd(String username, String team){
-        PlayersController playersController = PlayersController.getInstance();
-        TeamsController teamsController = TeamsController.getInstance();
-        if (playersController.getPlayer(username)!=null){
-            if (teamsController.getTeam(team)!=null){
-                if (teamsController.isInTeam(username)==null){
-                    return teamsController.getTeam(team).addPlayer(playersController.getPlayer(username));
+        if (PlayersController.getPlayer(username)!=null){
+            if (TeamsController.getTeam(team)!=null){
+                if (TeamsController.isInTeam(username)==null){
+                    return TeamsController.getTeam(team).addPlayer(PlayersController.getPlayer(username));
                 } else return false;
             } else return false;
         } else return false;
     }
 
     public static boolean teamRemove(String username, String team){
-        PlayersController playersController = PlayersController.getInstance();
-        TeamsController teamsController = TeamsController.getInstance();
-        if (playersController.getPlayer(username)!=null){
-            if (teamsController.getTeam(team)!=null){
-                if (teamsController.isInTeam(username).equals(teamsController.getTeam(team))){
-                    return teamsController.getTeam(team).removePlayer(username);
+        if (PlayersController.getPlayer(username)!=null){
+            if (TeamsController.getTeam(team)!=null){
+                if (TeamsController.isInTeam(username).equals(TeamsController.getTeam(team))){
+                    return TeamsController.getTeam(team).removePlayer(username);
                 } else return false;
             } else return false;
         } else return false;
@@ -210,27 +202,25 @@ public class TournamentsController {
     }
 
     public static boolean tournamentAdd(String tournament, String team){
-        TeamsController teamsController = TeamsController.getInstance();
-        Authentication authentication = Authentication.getInstance();
         if (getTournament(tournament)!=null){
             if (getTournament(tournament).getStartDate().greaterThan(new Date())){
                 if (team!=null){
-                    if (teamsController.getTeam(team)!=null){
-                        if (teamsController.isInTeam(authentication.getCurrentUser().getUsername()).equals(teamsController.getTeam(team))){
-                            if(getTournament(tournament).getParticipant((Player) authentication.getCurrentUser())==null){
-                                if (getTournament(tournament).getParticipant(teamsController.getTeam(team))==null){
-                                    return getTournament(tournament).addParticipant(teamsController.getTeam(team));
+                    if (TeamsController.getTeam(team)!=null){
+                        if (TeamsController.isInTeam(Authentication.getCurrentUser().getUsername()).equals(TeamsController.getTeam(team))){
+                            if(getTournament(tournament).getParticipant((Player) Authentication.getCurrentUser())==null){
+                                if (getTournament(tournament).getParticipant(TeamsController.getTeam(team))==null){
+                                    return getTournament(tournament).addParticipant(TeamsController.getTeam(team));
                                 } else return false;
                             } else return false;
                         } else return false;
                     } else return false;
                 } else {
-                    if (getTournament(tournament).getParticipant((Player) authentication.getCurrentUser())==null){
-                        if (teamsController.isInTeam(authentication.getCurrentUser().getUsername())!=null){
-                            if (getTournament(tournament).getParticipant(teamsController.isInTeam(authentication.getCurrentUser().getUsername()))==null){
-                                return getTournament(tournament).addParticipant((Player) authentication.getCurrentUser());
+                    if (getTournament(tournament).getParticipant((Player) Authentication.getCurrentUser())==null){
+                        if (TeamsController.isInTeam(Authentication.getCurrentUser().getUsername())!=null){
+                            if (getTournament(tournament).getParticipant(TeamsController.isInTeam(Authentication.getCurrentUser().getUsername()))==null){
+                                return getTournament(tournament).addParticipant((Player) Authentication.getCurrentUser());
                             } else return false;
-                        } else return getTournament(tournament).addParticipant((Player) authentication.getCurrentUser());
+                        } else return getTournament(tournament).addParticipant((Player) Authentication.getCurrentUser());
                     } else return false;
                 }
             } else return false;
@@ -238,20 +228,18 @@ public class TournamentsController {
     }
 
     public static boolean tournamentRemove(String tournament, String team){
-        TeamsController teamsController = TeamsController.getInstance();
-        Authentication authentication = Authentication.getInstance();
         if (getTournament(tournament)!=null){
             if (team!=null){
-                if (teamsController.getTeam(team)!=null){
-                    if (teamsController.isInTeam(authentication.getCurrentUser().getUsername()).equals(teamsController.getTeam(team))){
-                        if (getTournament(tournament).getParticipant(teamsController.getTeam(team))!=null){
-                            return getTournament(tournament).removeParticipant(teamsController.getTeam(team));
+                if (TeamsController.getTeam(team)!=null){
+                    if (TeamsController.isInTeam(Authentication.getCurrentUser().getUsername()).equals(TeamsController.getTeam(team))){
+                        if (getTournament(tournament).getParticipant(TeamsController.getTeam(team))!=null){
+                            return getTournament(tournament).removeParticipant(TeamsController.getTeam(team));
                         } else return false;
                     } else return false;
                 } else return false;
             } else {
-                if (getTournament(tournament).getParticipant((Player) authentication.getCurrentUser())!=null){
-                    return getTournament(tournament).removeParticipant((Player) authentication.getCurrentUser());
+                if (getTournament(tournament).getParticipant((Player) Authentication.getCurrentUser())!=null){
+                    return getTournament(tournament).removeParticipant((Player) Authentication.getCurrentUser());
                 } else return false;
             }
         } else return false;
