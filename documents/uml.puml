@@ -6,6 +6,8 @@ I_O ...> TeamsController
 I_O ...> PlayersController
 I_O ...> AdminsController
 I_O .> Authentication
+TeamsController <.> PlayersController
+PlayersController <.> AdminsController
 TournamentsController <.> TeamsController
 TournamentsController *-- Tournament
 Tournament o-- MatchmakingController
