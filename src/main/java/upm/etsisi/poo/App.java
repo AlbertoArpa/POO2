@@ -4,8 +4,6 @@ import upm.etsisi.poo.controller.AdminsController;
 import upm.etsisi.poo.controller.PlayersController;
 import upm.etsisi.poo.controller.TeamsController;
 import upm.etsisi.poo.controller.TournamentsController;
-import upm.etsisi.poo.model.Admin;
-import upm.etsisi.poo.model.ModelException;
 import upm.etsisi.poo.view.I_O;
 
 public class App {
