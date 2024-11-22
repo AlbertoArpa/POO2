@@ -83,7 +83,7 @@ public class TournamentsController {
                         .append("\nDEPORTE: ").append(randomTournaments.get(i).getSport())
                         .append("\nCATEGORIA DE ORDEN: ").append(randomTournaments.get(i).getCategoryRank()).append("\n");
                 for (int j = 0; j < randomizedParticipants.size(); j++) {
-                    result.append("\t- ").append(randomTournaments.get(i).getParticipants()).append("\n");
+                    result.append("\t- ").append(randomTournaments.get(i).getParticipants().get(j).getName()).append("\n");
                 }
             }
         } else {

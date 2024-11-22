@@ -63,6 +63,7 @@ class Admin{
 }
 
 class Categories{
+    -enum Categories
     +String getCategory(String category)
     +String[] getCategories()
 }
@@ -183,6 +184,7 @@ class TeamsController{
 }
 
 interface Participant{
+    + String getName()
     + Stat getStat(String category)
 }
 

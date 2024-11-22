@@ -46,7 +46,9 @@ public class Team implements Participant {
         }
         for (int i = 0; i < players.size(); i++) {
             for (int d = 0; d < stats.size(); d++) {
-                stats.get(i).setValue(stats.get(i).getValue() * players.get(i).getStats().get(i).getValue());
+                if (stats.get(d).getValue()==0){
+                    stats.get(d).setValue(players.get(i).getStats().get(d).getValue());
+                } else stats.get(d).setValue(stats.get(d).getValue() * players.get(i).getStats().get(d).getValue());
             }
         }
         for (int i = 0; i < stats.size(); i++) {
