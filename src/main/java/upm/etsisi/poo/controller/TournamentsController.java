@@ -36,18 +36,6 @@ public class TournamentsController {
         return null;
     }
 
-    public static boolean createTournament(String name, Date startDate, Date endDate, String league, String sport, String categoryRank) throws ModelException {
-        boolean result = false;
-        if (getTournament(name) == null) {
-            if (startDate.greaterThan(new Date()) && endDate.greaterThan(startDate)){
-                if (Categories.getCategory(categoryRank)!=null){
-                    getInstance().tournaments.add(new Tournament(name, startDate, endDate, league, sport, Categories.getCategory(categoryRank)));
-                    result = true;
-                }
-            }
-        }
-        return result;
-    }
 
     public static boolean deleteTournament(String name) {
         boolean result = false;
@@ -183,16 +171,13 @@ public class TournamentsController {
     public static boolean createTournament(String name, String startDate, String endDate, String league, String sport, String categoryRank) throws ModelException {
         if (getTournament(name)==null){
             if (Date.isCorrect(startDate)&& Date.isCorrect(endDate)){
-                if (Categories.getCategory(categoryRank)!=null){
-                    return createTournament(name, new Date(startDate), new Date(endDate), league, sport, Categories.getCategory(categoryRank));
+                Date date1 = new Date(startDate);
+                Date date2 = new Date(endDate);
+                if (date1.greaterThan(new Date()) && date2.greaterThan(date1) && Categories.getCategory(categoryRank)!=null){
+                    getInstance().tournaments.add(new Tournament(name, date1, date2, league, sport, Categories.getCategory(categoryRank)));
+                    return true;
                 } else return false;
             } else return false;
-        } else return false;
-    }
-
-    public static boolean tournamentDelete(String name){
-        if (getTournament(name)!=null){
-            return deleteTournament(name);
         } else return false;
     }
 

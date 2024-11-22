@@ -149,7 +149,7 @@ public class I_O {
                     break;
                 case "tournament-delete":
                     if (reviewArguments(arguments, 1)) {
-                        if (TournamentsController.tournamentDelete(arguments[0])) {
+                        if (TournamentsController.deleteTournament(arguments[0])) {
                             System.out.println("\nTORNEO " + arguments[0].toUpperCase() + " BORRADO");
                         } else System.out.println("\nNO EXISTE EL TORNEO " + arguments[0].toUpperCase());
                     }

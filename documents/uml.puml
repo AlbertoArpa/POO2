@@ -1,34 +1,33 @@
 @startuml
 
-App -- I_O
-I_O -- Control
-Control -- UserLogic
-Authentication - UserLogic
-Control -- TournamentLogic
-TournamentLogic - Authentication
-UserLogic -- PlayersController
-UserLogic -- AdminsController
-TournamentLogic -- TournamentsController
-TournamentLogic -- TeamsController
-TournamentLogic -- PlayersController
-TournamentsController -- Tournament
-Tournament -- MatchmakingController
-MatchmakingController -- Matchmaking
-AdminsController -- Admin
-PlayersController -- Player
-Player -- Stat
-Stat -- Categories
-TeamsController -- Team
-Team - Player
-Tournament - Participant
-Date - Tournament
-Tournament -- Categories
-Team -- Participant
-Player -- Participant
-Player -- User
-Admin -- User
-Participant --- Matchmaking
-Validations - ModelException
+App ..> I_O
+I_O ...> TournamentsController
+I_O ...> TeamsController
+I_O ...> UserController
+I_O .> Authentication
+TournamentsController <.> TeamsController
+TeamsController <.> UserController
+TournamentsController <.> UserController
+UserController ..> PlayersController
+UserController ..> AdminsController
+TournamentsController *-- Tournament
+Tournament o-- MatchmakingController
+MatchmakingController *-- Matchmaking
+AdminsController *-- Admin
+PlayersController *-- Player
+Player o-- Stat
+Stat ..> Categories
+TeamsController *-- Team
+Team o- Player
+Tournament o- Participant
+Date <- Tournament
+Tournament ..> Categories
+Team ..|> Participant
+Player ..|> Participant
+Player --|> User
+Admin --|> User
+Participant ---* Matchmaking
+Validations .> ModelException
 
 
 class App{
@@ -79,9 +78,6 @@ interface Participant{
 class ModelException{
 }
 
-class Control{
-}
-
 class Date{
 }
 
@@ -94,10 +90,7 @@ class MatchmakingController{
 class Validations{
 }
 
-class UserLogic{
-}
-
-class TournamentLogic{
+class UserController{
 }
 
 @enduml
