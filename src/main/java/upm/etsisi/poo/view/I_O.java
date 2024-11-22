@@ -14,9 +14,22 @@ import upm.etsisi.poo.model.Team;
 public class I_O {
     private static final Scanner sc = new Scanner(System.in);
 
+    public static void initialitation(){
+        AdminsController.getInstance();
+        TournamentsController.getInstance();
+        TeamsController.getInstance();
+        PlayersController.getInstance();
+    }
+    public static void initialUsers() throws ModelException {
+        AdminsController.addAdmin(new Admin("a.arpa@alumnos.upm.es", "4321"));
+        AdminsController.addAdmin(new Admin("javier@alumnos.upm.es", "1234"));
+        AdminsController.addAdmin(new Admin("adrian@alumnos.upm.es", "1432"));
+    }
+
     public static void start(){
         try{
-            AdminsController.initialUsers();
+            initialitation();
+            initialUsers();
             System.out.println("SISTEMA DE GESTION DEPORTIVA INICIADO:");
             boolean end = false;
             while (!end) {
