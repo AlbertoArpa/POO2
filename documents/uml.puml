@@ -61,8 +61,8 @@ class Admin{
 }
 
 class Categories{
-    +static String getCategory(String category)
-    + static String[] getCategories()
+    +String getCategory(String category)
+    +String[] getCategories()
 }
 
 class Stat{
@@ -116,68 +116,68 @@ class Tournament{
 }
 
 class AdminsController{
-    - static AdminsController uniqueInstance
-    - static ArrayList<Admin> admins
+    - AdminsController uniqueInstance
+    - ArrayList<Admin> admins
     + AdminsController()
-    + static Admin getAdmin(String)
-    + static AdminsController getInstance()
-    + static void addAdmin(Admin admin)
+    + Admin getAdmin(String)
+    + AdminsController getInstance()
+    + void addAdmin(Admin admin)
 }
 
 class PlayersController{
-    - static PlayersController uniqueInstance
-    - static ArrayList<Player> players
+    - PlayersController uniqueInstance
+    - ArrayList<Player> players
     + PlayersController()
-    + static PlayersController getInstance()
-    + static Player getPlayer(String)
-    + static boolean createPlayer(String, String, String, String, String, Admin) throws ModelException
-    + static boolean deletePlayer(String)
-    + static boolean addPoints(String, String, double)
-    + static boolean statisticsShow(String)
+    + PlayersController getInstance()
+    + Player getPlayer(String)
+    + boolean createPlayer(String, String, String, String, String, Admin) throws ModelException
+    + boolean deletePlayer(String)
+    + boolean addPoints(String, String, double)
+    + boolean statisticsShow(String)
 }
 
 class Authentication{
-    - static Authentication uniqueInstance
-    - static User currentUser
-    - static UserType userType
+    - Authentication uniqueInstance
+    - User currentUser
+    - UserType userType
     + Authentication()
-    + static Authentication getInstance()
-    + static boolean logIn(String , String)
-    + static void logOut()
-    + static boolean isLoggedIn()
-    + static String getUserType()
-    + static User getCurrentUser()
+    + Authentication getInstance()
+    + boolean logIn(String , String)
+    + void logOut()
+    + boolean isLoggedIn()
+    + String getUserType()
+    + User getCurrentUser()
 
     enum UserType {
         ADMIN, PLAYER
 }
 
 class TournamentsController{
-    - static TournamentsController uniqueInstance
+    - TournamentsController uniqueInstance
     - ArrayList<Tournament> tournaments
     + TournamentsController()
-    + static TournamentsController getInstance()
-    + static boolean deleteTournament(String)
-    + static boolean deletePastTournaments()
-    + static Tournament isParticipant(Participant)
-    + static String listTournaments(String type)
-    + static boolean createTournament(String, String, String, String, String , String) throws ModelException
-    + static boolean tournamentMatchmakingM(String , String , String)
-    + static boolean tournamentMatchmakingA(String)
-    + static boolean tournamentAdd(String, String)
-    + static boolean tournamentRemove(String, String)
+    + TournamentsController getInstance()
+    + boolean deleteTournament(String)
+    + boolean deletePastTournaments()
+    + Tournament isParticipant(Participant)
+    + String listTournaments(String type)
+    + boolean createTournament(String, String, String, String, String , String) throws ModelException
+    + boolean tournamentMatchmakingM(String , String , String)
+    + boolean tournamentMatchmakingA(String)
+    + boolean tournamentAdd(String, String)
+    + boolean tournamentRemove(String, String)
 }
 
 class TeamsController{
-    - static TeamsController uniqueInstance
-    - static ArrayList<Team> teams
+    - TeamsController uniqueInstance
+    - ArrayList<Team> teams
     + TeamsController()
-    + static TeamsController getInstance()
-    + static boolean createTeam(String, Admin) throws ModelException
-    + static boolean deleteTeam(String)
-    + static Team isInTeam(String)
-    + static boolean teamAdd(String, String)
-    + static boolean teamRemove(String, String)
+    + TeamsController getInstance()
+    + boolean createTeam(String, Admin) throws ModelException
+    + boolean deleteTeam(String)
+    + Team isInTeam(String)
+    + boolean teamAdd(String, String)
+    + boolean teamRemove(String, String)
 }
 
 interface Participant{
@@ -197,18 +197,18 @@ class Date{
     + Date()
     + boolean greaterThan(Date)
     + boolean lowerThan(Date)
-    + static boolean isCorrect(String)
+    + boolean isCorrect(String)
     + String toString()
 }
 
 class I_O{
-    - static final Scanner sc
-    + static void initialUsers() throws ModelException
-    + static void start()
-    + static boolean menu()
-    + static void menuAdmin(Authentication)
-    + static void menuPlayer(Authentication )
-    + static boolean reviewArguments(String[], int)
+    - final Scanner sc
+    + void initialUsers() throws ModelException
+    + void start()
+    + boolean menu()
+    + void menuAdmin(Authentication)
+    + void menuPlayer(Authentication )
+    + boolean reviewArguments(String[], int)
 }
 
 class MatchmakingController{
