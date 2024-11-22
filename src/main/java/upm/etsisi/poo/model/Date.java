@@ -1,9 +1,6 @@
 package upm.etsisi.poo.model;
 
 public class Date {
-    private static final String ATTR_DAY_NAME = "day";
-    private static final String ATTR_MONTH_NAME = "month";
-    private static final String ATTR_YEAR_NAME = "year";
     private int year;
     private int month;
     private int day;

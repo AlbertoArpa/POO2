@@ -3,14 +3,14 @@ package upm.etsisi.poo.model;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Team implements Participant{
+public class Team implements Participant {
     private static final String ATTR_NAME_NAME = "name";
     private String name;
     private ArrayList<Player> players;
     private ArrayList<Stat> stats;
     private Admin creator;
 
-    public Team (String name, Admin creator) throws ModelException {
+    public Team(String name, Admin creator) throws ModelException {
         Validations.isNotNull(ATTR_NAME_NAME, name);
         Validations.isMinimum(ATTR_NAME_NAME, name, 2);
         this.name = name;
@@ -19,9 +19,9 @@ public class Team implements Participant{
         this.creator = creator;
     }
 
-    private ArrayList<Stat> initialStats(){
+    private ArrayList<Stat> initialStats() {
         ArrayList<Stat> statList = new ArrayList<>();
-        for (int i = 0; i< Categories.getCategories().length; i++){
+        for (int i = 0; i < Categories.getCategories().length; i++) {
             Stat stat = new Stat(Categories.getCategories()[i]);
             statList.add(stat);
         }
@@ -29,28 +29,28 @@ public class Team implements Participant{
     }
 
     @Override
-    public Stat getStat(String category){
+    public Stat getStat(String category) {
         updateStats();
         Stat stat = null;
-        for (int i = 0; i<stats.size(); i++){
-            if (stats.get(i).getCategory().equals(Categories.getCategory(category))){
+        for (int i = 0; i < stats.size(); i++) {
+            if (stats.get(i).getCategory().equals(Categories.getCategory(category))) {
                 stat = stats.get(i);
             }
         }
         return stat;
     }
 
-    public void updateStats(){
-        for (int i = 0; i<stats.size(); i++){
+    public void updateStats() {
+        for (int i = 0; i < stats.size(); i++) {
             stats.get(i).setValue(0);
         }
-        for (int i = 0; i<players.size(); i++){
-            for( int d = 0; d<stats.size(); d++){
-                stats.get(i).setValue(stats.get(i).getValue()*players.get(i).getStats().get(i).getValue());
+        for (int i = 0; i < players.size(); i++) {
+            for (int d = 0; d < stats.size(); d++) {
+                stats.get(i).setValue(stats.get(i).getValue() * players.get(i).getStats().get(i).getValue());
             }
         }
-        for (int i = 0; i<stats.size(); i++){
-            stats.get(i).setValue(Math.pow(stats.get(i).getValue(), 1.0/players.size()));
+        for (int i = 0; i < stats.size(); i++) {
+            stats.get(i).setValue(Math.pow(stats.get(i).getValue(), 1.0 / players.size()));
         }
     }
 
@@ -75,7 +75,7 @@ public class Team implements Participant{
 
     public boolean addPlayer(Player player) {
         boolean result = false;
-        if(player == null) {
+        if (player == null) {
             return false;
         }
         if (getPlayer(player.getUsername()) == null) {

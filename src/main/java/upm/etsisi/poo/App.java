@@ -12,7 +12,7 @@ public class App {
         I_O.start();
     }
 
-    public static void initialitation(){
+    public static void initialitation() {
         AdminsController.getInstance();
         TournamentsController.getInstance();
         TeamsController.getInstance();

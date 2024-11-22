@@ -8,12 +8,12 @@ import java.util.ArrayList;
 public class MatchmakingController {
     private ArrayList<Matchmaking> matchmaking;
 
-    public MatchmakingController(){
+    public MatchmakingController() {
         this.matchmaking = new ArrayList<>();
     }
 
     public boolean createMatchmake(Participant participant1, Participant participant2) {
-        if (!isMatchmaked(participant1)&&!isMatchmaked(participant2)){
+        if (!isMatchmaked(participant1) && !isMatchmaked(participant2)) {
             Matchmaking matchmaking1 = new Matchmaking(participant1, participant2);
             matchmaking.add(matchmaking1);
             return true;
@@ -23,11 +23,11 @@ public class MatchmakingController {
 
     public boolean randomMatchmake(ArrayList<Participant> participants) {
         boolean result = false;
-        if (participants.size() % 2 == 0 && matchmaking.size()!=participants.size()/2) {
+        if (participants.size() % 2 == 0 && matchmaking.size() != participants.size() / 2) {
             for (int i = 0; i < participants.size(); i++) {
                 if (!isMatchmaked(participants.get(i))) {
-                    if (i+1< participants.size() && !isMatchmaked(participants.get(i+1))){
-                        Matchmaking matchmaking1 = new Matchmaking(participants.get(i), participants.get(i+1));
+                    if (i + 1 < participants.size() && !isMatchmaked(participants.get(i + 1))) {
+                        Matchmaking matchmaking1 = new Matchmaking(participants.get(i), participants.get(i + 1));
                         matchmaking.add(matchmaking1);
                         i++;
                     }
@@ -35,7 +35,7 @@ public class MatchmakingController {
             }
             result = true;
             for (int i = 0; i < participants.size(); i++) {
-                if(!isMatchmaked(participants.get(i))){
+                if (!isMatchmaked(participants.get(i))) {
                     result = false;
                 }
             }
@@ -45,7 +45,7 @@ public class MatchmakingController {
 
     public boolean isMatchmaked(Participant participant) {
         for (int i = 0; i < matchmaking.size(); i++) {
-            if (matchmaking.get(i).isMatchmaked(participant)){
+            if (matchmaking.get(i).isMatchmaked(participant)) {
                 return true;
             }
         }

@@ -63,7 +63,7 @@ public class Player extends User implements Participant{
 
     public void showStatsJson(){
         for (int i = 0; i<stats.size(); i++){
-            System.out.println(stats.get(i).getCategory() + " \t\t" + stats.get(i).getValue());
+            System.out.println(stats.get(i).getCategory() + " ".repeat(20 - stats.get(i).getCategory().length()) + stats.get(i).getValue());
         }
     }
 

@@ -41,7 +41,7 @@ public class Tournament {
         Participant result = null;
         int i = 0;
         while (i < participants.size() && result == null) {
-            if (participants.get(i).equals(participant)){
+            if (participants.get(i).equals(participant)) {
                 result = participants.get(i);
             }
             i++;
@@ -50,7 +50,7 @@ public class Tournament {
     }
 
     public boolean addParticipant(Participant participant) {
-        if (getParticipant(participant)==null) {
+        if (getParticipant(participant) == null) {
             participants.add(participant);
             return true;
         } else return false;
@@ -58,7 +58,7 @@ public class Tournament {
 
     public boolean removeParticipant(Participant participant) {
         boolean result = false;
-        if (getParticipant(participant)!=null) {
+        if (getParticipant(participant) != null) {
             if (matchmaking.isMatchmaked(participant)) {
                 matchmaking.removeMatchmaking(participant);
             }

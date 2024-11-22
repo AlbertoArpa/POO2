@@ -11,7 +11,7 @@ public class PlayersController {
     private static PlayersController uniqueInstance;
     private static ArrayList<Player> players;
 
-    private PlayersController(){
+    private PlayersController() {
         this.players = new ArrayList<>();
     }
 
@@ -38,7 +38,8 @@ public class PlayersController {
         if (AdminsController.getAdmin(username) == null && getPlayer(username) == null && TeamsController.getTeam(username) == null) {
             players.add(new Player(username, password, name, surname, dni, creator));
             return true;
-        } return false;
+        }
+        return false;
     }
 
     public static boolean deletePlayer(String username) {
@@ -56,7 +57,7 @@ public class PlayersController {
         } else return false;
     }
 
-    public static boolean addPoints(String username, String stat, double points){
+    public static boolean addPoints(String username, String stat, double points) {
         boolean result = false;
         if (getPlayer(username) != null) {
             return getPlayer(username).updateStat(stat, points);

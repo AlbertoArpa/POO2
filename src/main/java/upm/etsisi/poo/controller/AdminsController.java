@@ -9,14 +9,14 @@ public class AdminsController {
     private static AdminsController uniqueInstance;
     private static ArrayList<Admin> admins;
 
-    private AdminsController(){
+    private AdminsController() {
         this.admins = new ArrayList<>();
     }
 
     public static Admin getAdmin(String username) {
         Admin result = null;
-        for (int i = 0; i<admins.size(); i++){
-            if (admins.get(i).getUsername().equalsIgnoreCase(username)){
+        for (int i = 0; i < admins.size(); i++) {
+            if (admins.get(i).getUsername().equalsIgnoreCase(username)) {
                 result = admins.get(i);
             }
         }
@@ -30,8 +30,8 @@ public class AdminsController {
         return uniqueInstance;
     }
 
-    public static void addAdmin(Admin admin){
-        if (getAdmin(admin.getUsername())==null) {
+    public static void addAdmin(Admin admin) {
+        if (getAdmin(admin.getUsername()) == null) {
             admins.add(admin);
         }
     }

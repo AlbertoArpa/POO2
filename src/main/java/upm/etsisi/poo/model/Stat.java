@@ -6,7 +6,7 @@ public class Stat {
     private String category;
     private double value;
 
-    public Stat (String category){
+    public Stat(String category) {
         this.category = Categories.getCategory(category);
         this.value = 0.0;
     }

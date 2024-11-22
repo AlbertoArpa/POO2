@@ -43,27 +43,27 @@ public class TeamsController {
     }
 
     public static boolean deleteTeam(String name) {
-        if (getTeam(name)!=null){
-            if (TournamentsController.isParticipant(getTeam(name))==null){
+        if (getTeam(name) != null) {
+            if (TournamentsController.isParticipant(getTeam(name)) == null) {
                 return teams.remove(getTeam(name));
             } else return false;
         } else return false;
     }
 
-    public static Team isInTeam(String username){
+    public static Team isInTeam(String username) {
         Team team = null;
-        for (int i = 0; i<teams.size(); i++){
-            if (teams.get(i).getPlayer(username)!=null){
+        for (int i = 0; i < teams.size(); i++) {
+            if (teams.get(i).getPlayer(username) != null) {
                 team = teams.get(i);
             }
         }
         return team;
     }
 
-    public static boolean teamAdd(String username, String team){
-        if (PlayersController.getPlayer(username)!=null){
-            if (getTeam(team)!=null){
-                if (isInTeam(username)==null){
+    public static boolean teamAdd(String username, String team) {
+        if (PlayersController.getPlayer(username) != null) {
+            if (getTeam(team) != null) {
+                if (isInTeam(username) == null) {
                     return getTeam(team).addPlayer(PlayersController.getPlayer(username));
                 } else return false;
             } else return false;
@@ -71,10 +71,10 @@ public class TeamsController {
     }
 
 
-    public static boolean teamRemove(String username, String team){
-        if (PlayersController.getPlayer(username)!=null){
-            if (getTeam(team)!=null){
-                if (isInTeam(username).equals(getTeam(team))){
+    public static boolean teamRemove(String username, String team) {
+        if (PlayersController.getPlayer(username) != null) {
+            if (getTeam(team) != null) {
+                if (isInTeam(username).equals(getTeam(team))) {
                     return getTeam(team).removePlayer(username);
                 } else return false;
             } else return false;

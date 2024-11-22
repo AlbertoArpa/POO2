@@ -100,7 +100,7 @@ public class TournamentsController {
                 ArrayList rankedParticipants = getInstance().tournaments.get(i).getParticipantsRanked();
                 for (int j = 0; j < rankedParticipants.size(); j++) {
                     if (rankedParticipants.get(j) instanceof Player) result.append("\n\t\tNOMBRE: ").append(((Player) rankedParticipants.get(j)).getName());
-                    if (rankedParticipants.get(j) instanceof Team) result.append("\n\t\tNOMBRE: (team) ").append(((Team) rankedParticipants.get(j)).getName());
+                    if (rankedParticipants.get(j) instanceof Team) result.append("\n\t\tNOMBRE (team); ").append(((Team) rankedParticipants.get(j)).getName());
                     if (rankedParticipants.get(j) instanceof Player) result.append("\n\t\t").append(getInstance().tournaments.get(i).getCategoryRank()).append(": ").append(((Player) rankedParticipants.get(j)).getStat(getInstance().tournaments.get(i).getCategoryRank()).getValue());
                     if (rankedParticipants.get(j) instanceof Team) result.append("\n\t\t").append(getInstance().tournaments.get(i).getCategoryRank()).append(": ").append(((Team) rankedParticipants.get(j)).getStat(getInstance().tournaments.get(i).getCategoryRank()).getValue()).append("\n");
                 }

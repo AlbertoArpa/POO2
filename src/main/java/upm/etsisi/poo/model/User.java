@@ -23,12 +23,12 @@ public class User {
     }
 
     public void usernameValidate(String username) throws ModelException {
-        try{
+        try {
             String[] user = username.split("@");
-            if (user[0].isEmpty() || !user[1].equals("alumnos.upm.es")){
+            if (user[0].isEmpty() || !user[1].equals("alumnos.upm.es")) {
                 throw new ModelException("El email no tiene el formato válido.");
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new ModelException("Formato incorrecto: El username debe de ser un email de la UPM.");
         }
     }
