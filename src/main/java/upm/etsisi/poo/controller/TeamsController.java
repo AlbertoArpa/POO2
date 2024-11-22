@@ -35,7 +35,7 @@ public class TeamsController {
 
     public static boolean createTeam(String name, Admin creator) throws ModelException {
         boolean result = false;
-        if (getTeam(name) == null) {
+        if (getTeam(name) == null && PlayersController.getPlayer(name) == null) {
             teams.add(new Team(name, creator));
             result = true;
         }
