@@ -9,17 +9,11 @@ import upm.etsisi.poo.controller.TournamentsController;
 import upm.etsisi.poo.model.Admin;
 import upm.etsisi.poo.model.Authentication;
 import upm.etsisi.poo.model.ModelException;
-import upm.etsisi.poo.model.Team;
 
 public class I_O {
     private static final Scanner sc = new Scanner(System.in);
 
-    public static void initialitation(){
-        AdminsController.getInstance();
-        TournamentsController.getInstance();
-        TeamsController.getInstance();
-        PlayersController.getInstance();
-    }
+
     public static void initialUsers() throws ModelException {
         AdminsController.addAdmin(new Admin("a.arpa@alumnos.upm.es", "4321"));
         AdminsController.addAdmin(new Admin("javier@alumnos.upm.es", "1234"));
@@ -28,7 +22,6 @@ public class I_O {
 
     public static void start(){
         try{
-            initialitation();
             initialUsers();
             System.out.println("SISTEMA DE GESTION DEPORTIVA INICIADO:");
             boolean end = false;
