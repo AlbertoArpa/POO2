@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import upm.etsisi.poo.controller.AdminsController;
 import upm.etsisi.poo.controller.PlayersController;
+import upm.etsisi.poo.controller.TeamsController;
 import upm.etsisi.poo.controller.TournamentsController;
 import upm.etsisi.poo.model.Admin;
 import upm.etsisi.poo.model.Authentication;
@@ -12,16 +13,29 @@ import upm.etsisi.poo.model.ModelException;
 public class I_O {
     private static final Scanner sc = new Scanner(System.in);
 
+    public static void initialitation(){
+        AdminsController.getInstance();
+        TournamentsController.getInstance();
+        TeamsController.getInstance();
+        PlayersController.getInstance();
+    }
+    public static void initialUsers() throws ModelException {
+        AdminsController.addAdmin(new Admin("a.arpa@alumnos.upm.es", "4321"));
+        AdminsController.addAdmin(new Admin("javier@alumnos.upm.es", "1234"));
+        AdminsController.addAdmin(new Admin("adrian@alumnos.upm.es", "1432"));
+    }
+
     public static void start(){
         try{
-            AdminsController.initialUsers();
+            initialitation();
+            initialUsers();
             System.out.println("SISTEMA DE GESTION DEPORTIVA INICIADO:");
             boolean end = false;
             while (!end) {
                 end = menu();
             }
             sc.close();
-        } catch (ModelException modelException){
+        } catch (Exception modelException){
             System.out.println(modelException.getMessage());
             System.out.println("No se han podido iniciar los administradores iniciales");
         }

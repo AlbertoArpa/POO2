@@ -13,12 +13,6 @@ public class AdminsController {
         this.admins = new ArrayList<>();
     }
 
-    public static void initialUsers() throws ModelException {
-        addAdmin(new Admin("a.arpa@alumnos.upm.es", "4321"));
-        addAdmin(new Admin("javier@alumnos.upm.es", "1234"));
-        addAdmin(new Admin("adrian@alumnos.upm.es", "1432"));
-    }
-
     public static Admin getAdmin(String username) {
         Admin result = null;
         for (int i = 0; i<admins.size(); i++){
