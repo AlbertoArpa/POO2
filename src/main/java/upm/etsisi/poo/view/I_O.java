@@ -49,8 +49,8 @@ public class I_O {
                     if (Authentication.logIn(arguments[0], arguments[1])) {
                         System.out.println("\nBIENVENIDO, " + Authentication.getCurrentUser().getUsername().toUpperCase());
                         if (Authentication.getUserType().equals("ADMIN")) {
-                            menuAdmin(authentication);
-                        } else menuPlayer(authentication);
+                            menuAdmin();
+                        } else menuPlayer();
                     } else System.out.println("\nNO SE HA PODIDO INICIAR SESION");
                 }
                 break;
@@ -64,7 +64,7 @@ public class I_O {
         return false;
     }
 
-    public static void menuAdmin(Authentication authentication) {
+    public static void menuAdmin() {
         while (Authentication.isLoggedIn()) {
             System.out.print("Comandos:\n> player-create [username;password;name;surname;dni]\n" +
                     "> team-create [name]\n" +
@@ -214,7 +214,7 @@ public class I_O {
         }
     }
 
-    public static void menuPlayer(Authentication authentication) {
+    public static void menuPlayer() {
         while (Authentication.isLoggedIn()) {
             System.out.print("Comandos:\n> tournament-add [tournament name(;team)]\n" +
                     "> tournament-remove [tournament name(;team)]\n" +

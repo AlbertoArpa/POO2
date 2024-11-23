@@ -6,6 +6,10 @@ I_O ...> TeamsController
 I_O ...> PlayersController
 I_O ...> AdminsController
 I_O .> Authentication
+Authentication <.. AdminsController
+Authentication <.. PlayersController
+Authentication <.. TeamsController
+Authentication <.. TournamentsController
 TeamsController <.> PlayersController
 PlayersController <.> AdminsController
 TournamentsController <.> TeamsController
@@ -26,6 +30,10 @@ Player ..|> Participant
 Player --|> User
 Admin --|> User
 Participant ---* Matchmaking
+Player ..> Validations
+Admin ..> Validations
+Team ..> Validations
+Tournament ..> Validations
 Validations .> ModelException
 
 
@@ -121,16 +129,16 @@ class Tournament{
 class AdminsController{
     - AdminsController uniqueInstance
     - ArrayList<Admin> admins
-    + AdminsController()
+    - AdminsController()
     + Admin getAdmin(String)
     + AdminsController getInstance()
-    + void addAdmin(Admin admin)
+    + void addAdmin(Admin)
 }
 
 class PlayersController{
     - PlayersController uniqueInstance
     - ArrayList<Player> players
-    + PlayersController()
+    - PlayersController()
     + PlayersController getInstance()
     + Player getPlayer(String)
     + boolean createPlayer(String, String, String, String, String, Admin) throws ModelException
@@ -143,7 +151,7 @@ class Authentication{
     - Authentication uniqueInstance
     - User currentUser
     - UserType userType
-    + Authentication()
+    - Authentication()
     + Authentication getInstance()
     + boolean logIn(String , String)
     + void logOut()
@@ -158,7 +166,7 @@ class Authentication{
 class TournamentsController{
     - TournamentsController uniqueInstance
     - ArrayList<Tournament> tournaments
-    + TournamentsController()
+    - TournamentsController()
     + TournamentsController getInstance()
     + boolean deleteTournament(String)
     + boolean deletePastTournaments()
@@ -174,7 +182,7 @@ class TournamentsController{
 class TeamsController{
     - TeamsController uniqueInstance
     - ArrayList<Team> teams
-    + TeamsController()
+    - TeamsController()
     + TeamsController getInstance()
     + boolean createTeam(String, Admin) throws ModelException
     + boolean deleteTeam(String)
@@ -217,7 +225,7 @@ class I_O{
 
 class MatchmakingController{
     - ArrayList<Matchmaking> matchmaking
-    + MatchmakingController()
+    - MatchmakingController()
     + boolean createMatchmake(Participant, Participant)
     + boolean randomMatchmake(ArrayList<Participant>)
     + boolean isMatchmaked(Participant)
@@ -225,12 +233,10 @@ class MatchmakingController{
 }
 
 class Validations{
-    - ArrayList<Matchmaking> matchmaking
-    + MatchmakingController()
-    + boolean createMatchmake(Participant, Participant)
-    + boolean randomMatchmake(ArrayList<Participant>)
-    + boolean isMatchmaked(Participant)
-    + void removeMatchmaking(Participant)
+    + isMinimum(String, String, int) throws ModelException
+    + isNotNull(String, String) throws ModelException
+    + isMaximum(String, String, int) throws ModelException
+    + isString(String, String) throws ModelException
 }
 
 @enduml
