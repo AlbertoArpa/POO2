@@ -23,7 +23,7 @@ Stat ..> Categories
 TeamsController *-- Team
 Team o- Player
 Tournament o- Participant
-Date <- Tournament
+Date -o Tournament
 Tournament ..> Categories
 Team ..|> Participant
 Player ..|> Participant
