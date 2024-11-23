@@ -225,7 +225,7 @@ class I_O{
 
 class MatchmakingController{
     - ArrayList<Matchmaking> matchmaking
-    - MatchmakingController()
+    + MatchmakingController()
     + boolean createMatchmake(Participant, Participant)
     + boolean randomMatchmake(ArrayList<Participant>)
     + boolean isMatchmaked(Participant)
