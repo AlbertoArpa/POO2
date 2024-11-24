@@ -20,7 +20,7 @@ public class App {
     }
 
     /*login adrian@alumnos.upm.es;1432
-    player-create adri@alumnos.upm.es;123;adrian;largo;12345678F
+    player-create adri@alumnos.upm.es;123;adri;largo;87654321J
     player-create adria@alumnos.upm.es;123;adrian;largo;12345679F
     team-create god
     team-add adri@alumnos.upm.es;god

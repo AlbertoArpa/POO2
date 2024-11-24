@@ -41,7 +41,7 @@ public class I_O {
         String[] arguments = sc.nextLine().toLowerCase().split(" ", 2);
         String option = arguments[0];
         if (!option.equals("tournament-list")) {
-            if (arguments.length > 1) arguments = arguments[1].split(";");
+            if (reviewArguments(arguments, 2)) arguments = arguments[1].split(";");
         }
         switch (option.toLowerCase()) {
             case "login":
@@ -80,8 +80,9 @@ public class I_O {
             String[] arguments = sc.nextLine().toLowerCase().split(" ", 2);
             String option = arguments[0];
             if (!option.equals("logout") && !option.equals("tournament-list")) {
-                if (arguments.length > 1)
+                if (reviewArguments(arguments, 2))
                     arguments = arguments[1].split(";");
+                else arguments = new String[0];
             }
             switch (option.toLowerCase()) {
                 case "player-create":
@@ -198,8 +199,6 @@ public class I_O {
                                 }
                         }
                     }
-
-
                     break;
                 case "tournament-list":
                     System.out.println(TournamentsController.listTournaments(Authentication.getUserType()));
@@ -224,13 +223,14 @@ public class I_O {
             String[] arguments = sc.nextLine().toLowerCase().split(" ", 2);
             String option = arguments[0];
             if (!option.equals("logout") && !option.equals("tournament-list")) {
-                if (arguments.length > 1)
+                if (reviewArguments(arguments, 2))
                     arguments = arguments[1].split(";");
+                else arguments = new String[0];
             }
             switch (option.toLowerCase()) {
                 case "tournament-add":
                     if (reviewArguments(arguments, 1)) {
-                        if (arguments.length > 1) {
+                        if (arguments.length > 1){
                             if (TournamentsController.tournamentAdd(arguments[0], arguments[1])) {
                                 System.out.println("\nEQUIPO " + arguments[1].toUpperCase() + " ANADIDO A " + arguments[0].toUpperCase());
                             } else
@@ -244,7 +244,7 @@ public class I_O {
                     break;
                 case "tournament-remove":
                     if (reviewArguments(arguments, 1)) {
-                        if (arguments.length > 1) {
+                        if (arguments.length > 1){
                             if (TournamentsController.tournamentRemove(arguments[0], arguments[1])) {
                                 System.out.println("\nEQUIPO BORRADO DEL TORNEO");
                             } else System.out.println("\nNO SE HA PODIDO BORRAR EL EQUIPO.");
