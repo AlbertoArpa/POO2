@@ -16,6 +16,7 @@ public class MatchmakingController {
         if (!isMatchmaked(participant1) && !isMatchmaked(participant2)) {
             Matchmaking matchmaking1 = new Matchmaking(participant1, participant2);
             matchmaking.add(matchmaking1);
+            getMatchmakings();
             return true;
         }
         return false;
@@ -33,6 +34,7 @@ public class MatchmakingController {
                     }
                 }
             }
+            getMatchmakings();
             result = true;
             for (int i = 0; i < participants.size(); i++) {
                 if (!isMatchmaked(participants.get(i))) {
@@ -59,6 +61,16 @@ public class MatchmakingController {
                 matchmaking.remove(i);
             }
             i++;
+        }
+    }
+
+    public void getMatchmakings(){
+        if (matchmaking.isEmpty()){
+            System.out.println("No hay emparejamientos.");
+        } else {
+            for (int i = 0; i< matchmaking.size(); i++){
+                System.out.println(matchmaking.get(i));
+            }
         }
     }
 }

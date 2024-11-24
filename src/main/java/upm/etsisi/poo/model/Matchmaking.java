@@ -3,7 +3,6 @@ package upm.etsisi.poo.model;
 import java.util.ArrayList;
 
 public class Matchmaking {
-    private static final String ATTR_PARTICIPANTS_NAME = "participants";
     private ArrayList<Participant> participants;
 
     public Matchmaking(Participant participant1, Participant participant2) {
@@ -21,4 +20,8 @@ public class Matchmaking {
         return false;
     }
 
+    @Override
+    public String toString() {
+        return participants.get(0) + " vs " + participants.get(1);
+    }
 }
