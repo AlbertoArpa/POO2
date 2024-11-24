@@ -184,7 +184,7 @@ public class I_O {
                                     }
                                     if (TournamentsController.tournamentMatchmakingM(arguments[0], arguments[1], arguments[2])) {
                                         System.out.println("\nPARTICIPANTES " + arguments[1].toUpperCase() + " Y " + arguments[2].toUpperCase() + " EMPAREJADOS");
-                                    } else System.out.println("\nNO EXISTE EL TORNEO O ALGUNO DE LOS PARTICIPANTES");
+                                    } else System.out.println("\nASEGURATE DE QUE HA COMENZADO EL TORNEO Y DE QUE EXISTA EL TORNEO Y LOS PARTICIPANTES");
                                 }
                                 break;
                             case "-a":
@@ -193,7 +193,8 @@ public class I_O {
                                     if (TournamentsController.tournamentMatchmakingA(arguments[0])) {
                                         System.out.println("PARTICIPANTES DE " + arguments[0].toUpperCase() + " EMPAREJADOS");
                                     } else
-                                        System.out.println("\nNO EXISTE EL TORNEO O EL NUMERO DE PARTICIPANTES NO ES OPTIMO");
+                                        System.out.println("\nASEGURATE DE QUE HA COMENZADO EL TORNEO Y DE QUE EXISTA EL TORNEO Y LOS PARTICIPANTES. ESTOS ÚLTIMOS DEBEN DE TENER UN NUMERO" +
+                                                " OPTIMO DE DESEMPAREJADOS");
                                 }
                         }
                     }

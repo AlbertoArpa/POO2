@@ -124,7 +124,7 @@ public class TournamentsController {
     }
 
     public static boolean tournamentMatchmakingM(String name, String participant1, String participant2){
-        if (getTournament(name)!=null){
+        if (getTournament(name)!=null && getTournament(name).getStartDate().lowerThan(new Date())){
             if (PlayersController.getPlayer(participant1)!=null){
                 if (PlayersController.getPlayer(participant2)!=null){
                     if (getTournament(name).getParticipant(PlayersController.getPlayer(participant1)) != null &&
@@ -154,7 +154,7 @@ public class TournamentsController {
     }
 
     public static boolean tournamentMatchmakingA(String name){
-        if (getTournament(name)!=null){
+        if (getTournament(name)!=null && getTournament(name).getStartDate().lowerThan(new Date())){
             return getTournament(name).getMatchmaking().randomMatchmake(getTournament(name).getRandomizedParticipants());
         } else return false;
     }
@@ -163,7 +163,7 @@ public class TournamentsController {
         if (getTournament(tournament)!=null){
             if (getTournament(tournament).getStartDate().greaterThan(new Date())){
                 if (team!=null){
-                    if (TeamsController.getTeam(team)!=null){
+                    if (TeamsController.getTeam(team)!=null && TeamsController.isInTeam(Authentication.getCurrentUser().getUsername())!=null){
                         if (TeamsController.isInTeam(Authentication.getCurrentUser().getUsername()).equals(TeamsController.getTeam(team))){
                             if(getTournament(tournament).getParticipant((Player) Authentication.getCurrentUser())==null){
                                 if (getTournament(tournament).getParticipant(TeamsController.getTeam(team))==null){
