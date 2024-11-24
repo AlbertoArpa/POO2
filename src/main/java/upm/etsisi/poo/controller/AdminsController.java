@@ -1,7 +1,6 @@
 package upm.etsisi.poo.controller;
 
 import upm.etsisi.poo.model.Admin;
-import upm.etsisi.poo.model.ModelException;
 
 import java.util.ArrayList;
 
