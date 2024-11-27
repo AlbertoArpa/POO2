@@ -36,7 +36,6 @@ public class I_O {
     }
 
     public static boolean menu() {
-        Authentication authentication = Authentication.getInstance();
         System.out.print("Comandos:\n> login [username;password]\n> tournament-list\n----------\n\t> ");
         String[] arguments = sc.nextLine().toLowerCase().split(" ", 2);
         String option = arguments[0];
