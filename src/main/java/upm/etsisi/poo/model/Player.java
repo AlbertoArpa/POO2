@@ -1,6 +1,7 @@
 package upm.etsisi.poo.model;
-
 import java.util.ArrayList;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 public class Player extends User implements Participant{
     private static final String ATTR_USERNAME_NAME = "username";
@@ -62,9 +63,13 @@ public class Player extends User implements Participant{
     }
 
     public void showStatsJson(){
-        for (int i = 0; i<stats.size(); i++){
-            System.out.println(stats.get(i).getCategory() + " ".repeat(20 - stats.get(i).getCategory().length()) + stats.get(i).getValue());
+        JsonObject jsonObject = new JsonObject();
+        for (int i = 0; i< stats.size(); i++){
+            jsonObject.addProperty(stats.get(i).getCategory(), stats.get(i).getValue());
         }
+        Gson gson = new Gson();
+        String json = gson.toJson(jsonObject);
+        System.out.println(json);
     }
 
     public void showStatsCsv(){
