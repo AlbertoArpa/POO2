@@ -5,11 +5,11 @@ I_O ...> TournamentsController
 I_O ...> TeamsController
 I_O ...> PlayersController
 I_O ...> AdminsController
-I_O .> Authentication
-Authentication <.. AdminsController
-Authentication <.. PlayersController
-Authentication <.. TeamsController
-Authentication <.. TournamentsController
+Authentication <. I_O
+Authentication <... AdminsController
+Authentication <... PlayersController
+Authentication <... TeamsController
+Authentication <... TournamentsController
 TeamsController <.> PlayersController
 PlayersController <.> AdminsController
 TournamentsController <.> TeamsController
@@ -38,7 +38,6 @@ Validations .> ModelException
 
 
 class App{
-    +inicialitation()
     +main()
 }
 
@@ -70,8 +69,7 @@ class Admin{
     + Admin(String ,String) throws ModelException
 }
 
-class Categories{
-    -enum Categories
+enum Categories{
     +String getCategory(String category)
     +String[] getCategories()
 }
@@ -215,6 +213,7 @@ class Date{
 
 class I_O{
     - final Scanner sc
+    + void inicialitation()
     + void initialUsers() throws ModelException
     + void start()
     + boolean menu()

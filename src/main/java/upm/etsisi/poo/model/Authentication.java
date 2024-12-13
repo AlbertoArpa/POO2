@@ -2,6 +2,7 @@ package upm.etsisi.poo.model;
 
 import upm.etsisi.poo.controller.AdminsController;
 import upm.etsisi.poo.controller.PlayersController;
+import upm.etsisi.poo.view.PublicView;
 
 public class Authentication {
     private static final String ATTR_CURRENTUSER_NAME = "currentUser";
@@ -26,31 +27,29 @@ public class Authentication {
         return uniqueInstance;
     }
 
-    public static boolean logIn(String username, String password) {
-        boolean result = false;
+    public static void logIn(String username, String password) {
         if (!isLoggedIn()) {
             if (AdminsController.getAdmin(username) != null) {
                 if (AdminsController.getAdmin(username).getPassword().equals(password)) {
                     currentUser = AdminsController.getAdmin(username);
                     userType = UserType.ADMIN;
-                    result = true;
                 }
             } else {
                 if (PlayersController.getPlayer(username) != null) {
                     if (PlayersController.getPlayer(username).getPassword().equals(password)) {
                         currentUser = PlayersController.getPlayer(username);
                         userType = UserType.PLAYER;
-                        result = true;
                     }
                 }
             }
         }
-        return result;
+        PublicView.login(userType, username);
     }
 
     public static void logOut() {
         userType = null;
         currentUser = null;
+        PublicView.logout(userType);
     }
 
     public static boolean isLoggedIn() {

@@ -1,24 +1,10 @@
 package upm.etsisi.poo;
 
-import upm.etsisi.poo.controller.AdminsController;
-import upm.etsisi.poo.controller.PlayersController;
-import upm.etsisi.poo.controller.TeamsController;
-import upm.etsisi.poo.controller.TournamentsController;
-import upm.etsisi.poo.model.Authentication;
-import upm.etsisi.poo.view.I_O;
+import upm.etsisi.poo.controller.ComandController;
 
 public class App {
     public static void main(String[] args) {
-        initialitation();
-        I_O.start();
-    }
-
-    public static void initialitation() {
-        Authentication.getInstance();
-        AdminsController.getInstance();
-        TournamentsController.getInstance();
-        TeamsController.getInstance();
-        PlayersController.getInstance();
+        ComandController.start();
     }
 
     /*login adrian@alumnos.upm.es;1432

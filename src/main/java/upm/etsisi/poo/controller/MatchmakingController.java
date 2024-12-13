@@ -2,6 +2,7 @@ package upm.etsisi.poo.controller;
 
 import upm.etsisi.poo.model.Matchmaking;
 import upm.etsisi.poo.model.Participant;
+import upm.etsisi.poo.view.AdminView;
 
 import java.util.ArrayList;
 
@@ -65,12 +66,6 @@ public class MatchmakingController {
     }
 
     public void getMatchmakings(){
-        if (matchmaking.isEmpty()){
-            System.out.println("No hay emparejamientos.");
-        } else {
-            for (int i = 0; i< matchmaking.size(); i++){
-                System.out.println(matchmaking.get(i));
-            }
-        }
+        AdminView.listMatchmaking(this.matchmaking);
     }
 }

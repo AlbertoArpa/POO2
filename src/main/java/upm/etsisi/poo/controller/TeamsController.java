@@ -3,6 +3,7 @@ package upm.etsisi.poo.controller;
 import upm.etsisi.poo.model.Admin;
 import upm.etsisi.poo.model.ModelException;
 import upm.etsisi.poo.model.Team;
+import upm.etsisi.poo.view.AdminView;
 
 import java.util.ArrayList;
 
@@ -33,21 +34,19 @@ public class TeamsController {
         return result;
     }
 
-    public static boolean createTeam(String name, Admin creator) throws ModelException {
-        boolean result = false;
+    public static void createTeam(String name, Admin creator) throws ModelException {
         if (getTeam(name) == null && PlayersController.getPlayer(name) == null) {
             teams.add(new Team(name, creator));
-            result = true;
-        }
-        return result;
+            AdminView.team_create(true);
+        } else AdminView.team_create(false);
     }
 
-    public static boolean deleteTeam(String name) {
+    public static void deleteTeam(String name) {
         if (getTeam(name) != null) {
             if (TournamentsController.isParticipant(getTeam(name)) == null) {
-                return teams.remove(getTeam(name));
-            } else return false;
-        } else return false;
+                AdminView.team_delete(false, teams.remove(getTeam(name)));
+            } else AdminView.team_delete(true, false);
+        } else AdminView.team_delete(false, false);
     }
 
     public static Team isInTeam(String username) {
@@ -60,24 +59,24 @@ public class TeamsController {
         return team;
     }
 
-    public static boolean teamAdd(String username, String team) {
+    public static void teamAdd(String username, String team) {
         if (PlayersController.getPlayer(username) != null) {
             if (getTeam(team) != null) {
                 if (isInTeam(username) == null) {
-                    return getTeam(team).addPlayer(PlayersController.getPlayer(username));
-                } else return false;
-            } else return false;
-        } else return false;
+                    AdminView.team_add(false, false, getTeam(team).addPlayer(PlayersController.getPlayer(username)));
+                } else AdminView.team_add(true, false, false);
+            } else AdminView.team_add(false, true, false);
+        } else AdminView.team_add(false, false, false);
     }
 
 
-    public static boolean teamRemove(String username, String team) {
+    public static void teamRemove(String username, String team) {
         if (PlayersController.getPlayer(username) != null) {
             if (getTeam(team) != null) {
                 if (isInTeam(username).equals(getTeam(team))) {
-                    return getTeam(team).removePlayer(username);
-                } else return false;
-            } else return false;
-        } else return false;
+                    AdminView.team_remove(false, false, getTeam(team).removePlayer(username));
+                } else AdminView.team_remove(false, true, false);
+            } else AdminView.team_remove(true, false, false);
+        } else AdminView.team_remove(false, false, false);
     }
 }

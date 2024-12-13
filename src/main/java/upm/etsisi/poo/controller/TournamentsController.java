@@ -1,6 +1,7 @@
 package upm.etsisi.poo.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import upm.etsisi.poo.model.Authentication;
 import upm.etsisi.poo.model.Categories;
@@ -10,13 +11,18 @@ import upm.etsisi.poo.model.Participant;
 import upm.etsisi.poo.model.Player;
 import upm.etsisi.poo.model.Team;
 import upm.etsisi.poo.model.Tournament;
+import upm.etsisi.poo.view.AdminView;
+import upm.etsisi.poo.view.PlayerView;
+import upm.etsisi.poo.view.PublicView;
+
+import javax.swing.text.View;
 
 public class TournamentsController {
     private static TournamentsController uniqueInstance;
-    private ArrayList<Tournament> tournaments;
+    private static ArrayList<Tournament> tournaments;
 
     private TournamentsController() {
-        this.tournaments = new ArrayList<>();
+        tournaments = new ArrayList<>();
     }
 
     public static TournamentsController getInstance() {
@@ -27,7 +33,7 @@ public class TournamentsController {
     }
 
     public static Tournament getTournament(String name) {
-        for (Tournament tournament : getInstance().tournaments) {
+        for (Tournament tournament : tournaments) {
             if (tournament.getName().equals(name)) {
                 return tournament;
             }
@@ -36,130 +42,104 @@ public class TournamentsController {
     }
 
 
-    public static boolean deleteTournament(String name) {
-        boolean result = false;
+    public static void deleteTournament(String name) {
         if (getTournament(name) != null) {
-            getInstance().tournaments.remove(getTournament(name));
-            result = true;
-        }
-        return result;
+            tournaments.remove(getTournament(name));
+            AdminView.tournament_delete(true);
+        } else AdminView.tournament_delete(false);
     }
 
-    private static boolean deletePastTournaments() {
-        boolean result = false;
-        for (int i = getInstance().tournaments.size()-1; i >= 0; i--) {
-            if (getInstance().tournaments.get(i).getEndDate().lowerThan(new Date())) {
-                getInstance().tournaments.remove(i);
+    public static void deletePastTournaments() {
+        for (int i = tournaments.size()-1; i >= 0; i--) {
+            if (tournaments.get(i).getEndDate().lowerThan(new Date())) {
+                tournaments.remove(i);
                 i--;
-                result = true;
             }
         }
-        return result;
     }
 
     public static Tournament isParticipant(Participant participant){
         Tournament result = null;
-        for (int i = 0; i< getInstance().tournaments.size();i++){
-            if (getInstance().tournaments.get(i).getParticipant(participant)!=null){
-                result = getInstance().tournaments.get(i);
+        for (int i = 0; i< tournaments.size();i++){
+            if (tournaments.get(i).getParticipant(participant)!=null){
+                result = tournaments.get(i);
             }
         }
         return result;
     }
 
-    public static String listTournaments(String type) {
-        StringBuilder result = new StringBuilder();
-        if (type == null) {
-            ArrayList<Tournament> tournamentsAux = new ArrayList<>(), randomTournaments = new ArrayList<>();
-            for (int i = 0; i < getInstance().tournaments.size(); i++) tournamentsAux.add(getInstance().tournaments.get(i));
-            for (int i = 0; i < getInstance().tournaments.size(); i++) {
-                int random = (int) (Math.random() * tournamentsAux.size());
-                randomTournaments.add(tournamentsAux.get(random));
-                ArrayList<Participant> randomizedParticipants = randomTournaments.get(random).getRandomizedParticipants();
-                tournamentsAux.remove(random);
-                result.append("\nNOMBRE: ").append(randomTournaments.get(i).getName())
-                        .append("\nFECHA: ").append(randomTournaments.get(i).getStartDate()).append(" - ").append(randomTournaments.get(i).getEndDate())
-                        .append("\nLIGA: ").append(randomTournaments.get(i).getLeague())
-                        .append("\nDEPORTE: ").append(randomTournaments.get(i).getSport())
-                        .append("\nCATEGORIA DE ORDEN: ").append(randomTournaments.get(i).getCategoryRank()).append("\n");
-                for (int j = 0; j < randomizedParticipants.size(); j++) {
-                    result.append("\t- ").append(randomTournaments.get(i).getParticipants().get(j).getName()).append("\n");
-                }
-            }
-        } else {
-            if (type.equals("ADMIN")) {
-                if (deletePastTournaments()) result.append("\nTORNEOS PASADOS BORRADOS.\n");
-                else result.append("\nNO HAY TORNEOS PASADOS PARA BORRAR.\n");
-            }
-            for (int i = 0; i < getInstance().tournaments.size(); i++) {
-                result.append("\nNOMBRE: ").append(getInstance().tournaments.get(i).getName())
-                        .append("\nFECHA: ").append(getInstance().tournaments.get(i).getStartDate()).append(" - ").append(getInstance().tournaments.get(i).getEndDate())
-                        .append("\nLIGA: ").append(getInstance().tournaments.get(i).getLeague())
-                        .append("\nDEPORTE: ").append(getInstance().tournaments.get(i).getSport())
-                        .append("\nCATEGORIA DE ORDEN: ").append(getInstance().tournaments.get(i).getCategoryRank()).append("\n");
-                ArrayList rankedParticipants = getInstance().tournaments.get(i).getParticipantsRanked();
-                for (int j = 0; j < rankedParticipants.size(); j++) {
-                    if (rankedParticipants.get(j) instanceof Player) result.append("\n\t\tNOMBRE: ").append(((Player) rankedParticipants.get(j)).getName());
-                    if (rankedParticipants.get(j) instanceof Team) result.append("\n\t\tNOMBRE (team); ").append(((Team) rankedParticipants.get(j)).getName());
-                    if (rankedParticipants.get(j) instanceof Player) result.append("\n\t\t").append(getInstance().tournaments.get(i).getCategoryRank()).append(": ").append(((Player) rankedParticipants.get(j)).getStat(getInstance().tournaments.get(i).getCategoryRank()).getValue());
-                    if (rankedParticipants.get(j) instanceof Team) result.append("\n\t\t").append(getInstance().tournaments.get(i).getCategoryRank()).append(": ").append(((Team) rankedParticipants.get(j)).getStat(getInstance().tournaments.get(i).getCategoryRank()).getValue()).append("\n");
-                }
-            }
-        }
-        return result.toString();
-    }
 
-
-    public static boolean createTournament(String name, String startDate, String endDate, String league, String sport, String categoryRank) throws ModelException {
+    public static void createTournament(String name, String startDate, String endDate, String league, String sport, String categoryRank) throws ModelException {
         if (getTournament(name)==null){
             if (Date.isCorrect(startDate)&& Date.isCorrect(endDate)){
                 Date date1 = new Date(startDate);
                 Date date2 = new Date(endDate);
                 if (date1.greaterThan(new Date()) && date2.greaterThan(date1) && Categories.getCategory(categoryRank)!=null){
-                    getInstance().tournaments.add(new Tournament(name, date1, date2, league, sport, Categories.getCategory(categoryRank)));
-                    return true;
-                } else return false;
-            } else return false;
-        } else return false;
+                    tournaments.add(new Tournament(name, date1, date2, league, sport, Categories.getCategory(categoryRank)));
+                    AdminView.tournament_create(false, false, true);
+                } else AdminView.tournament_create(false, true, false);
+            } else AdminView.tournament_create(true, false, false);
+        } else AdminView.tournament_create(false, false, false);
     }
 
-    public static boolean tournamentMatchmakingM(String name, String participant1, String participant2){
+    public static void tournamentMatchmakingM(String name, String participant1, String participant2){
         if (getTournament(name)!=null && getTournament(name).getStartDate().lowerThan(new Date())){
             if (PlayersController.getPlayer(participant1)!=null){
                 if (PlayersController.getPlayer(participant2)!=null){
-                    if (getTournament(name).getParticipant(PlayersController.getPlayer(participant1)) != null &&
-                            getTournament(name).getParticipant(PlayersController.getPlayer(participant2)) != null){
-                        return getTournament(name).getMatchmaking().createMatchmake(PlayersController.getPlayer(participant1), PlayersController.getPlayer(participant2));
-                    } else return false;
+                    if (getTournament(name).getParticipant(PlayersController.getPlayer(participant1)) != null && getTournament(name).getParticipant(PlayersController.getPlayer(participant2)) != null){
+                        AdminView.tournament_matchmakingM(false, false, getTournament(name).getMatchmaking().createMatchmake(PlayersController.getPlayer(participant1), PlayersController.getPlayer(participant2)));
+                    } else AdminView.tournament_matchmakingM(true, false, false);
                 } else if (TeamsController.getTeam(participant2)!=null){
-                    if (getTournament(name).getParticipant(PlayersController.getPlayer(participant1)) != null &&
-                            getTournament(name).getParticipant(TeamsController.getTeam(participant2)) != null){
-                        return getTournament(name).getMatchmaking().createMatchmake(PlayersController.getPlayer(participant1), TeamsController.getTeam(participant2));
-                    } else return false;
-                } else return false;
+                    if (getTournament(name).getParticipant(PlayersController.getPlayer(participant1)) != null && getTournament(name).getParticipant(TeamsController.getTeam(participant2)) != null){
+                        AdminView.tournament_matchmakingM(false, false, getTournament(name).getMatchmaking().createMatchmake(PlayersController.getPlayer(participant1), TeamsController.getTeam(participant2)));
+                    } else AdminView.tournament_matchmakingM(true, false, false);
+                } else AdminView.tournament_matchmakingM(false, true, false);
             } else if (TeamsController.getTeam(participant1)!=null){
                 if (PlayersController.getPlayer(participant2)!=null){
-                    if (getTournament(name).getParticipant(TeamsController.getTeam(participant1)) != null &&
-                            getTournament(name).getParticipant(PlayersController.getPlayer(participant2)) != null){
-                        return getTournament(name).getMatchmaking().createMatchmake(TeamsController.getTeam(participant1), PlayersController.getPlayer(participant2));
-                    } else return false;
+                    if (getTournament(name).getParticipant(TeamsController.getTeam(participant1)) != null && getTournament(name).getParticipant(PlayersController.getPlayer(participant2)) != null){
+                        AdminView.tournament_matchmakingM(false, false, getTournament(name).getMatchmaking().createMatchmake(TeamsController.getTeam(participant1), PlayersController.getPlayer(participant2)));
+                    } else AdminView.tournament_matchmakingM(true, false, false);
                 } else if (TeamsController.getTeam(participant2)!=null){
-                    if (getTournament(name).getParticipant(TeamsController.getTeam(participant1)) != null &&
-                            getTournament(name).getParticipant(TeamsController.getTeam(participant2)) != null){
-                        return getTournament(name).getMatchmaking().createMatchmake(TeamsController.getTeam(participant1), TeamsController.getTeam(participant2));
-                    } else return false;
-                } else return false;
-            } else return false;
-        } else return false;
+                    if (getTournament(name).getParticipant(TeamsController.getTeam(participant1)) != null && getTournament(name).getParticipant(TeamsController.getTeam(participant2)) != null){
+                        AdminView.tournament_matchmakingM(false, false, getTournament(name).getMatchmaking().createMatchmake(TeamsController.getTeam(participant1), TeamsController.getTeam(participant2)));
+                    } else AdminView.tournament_matchmakingM(true, false, false);
+                } else AdminView.tournament_matchmakingM(false, true, false);
+            } else AdminView.tournament_matchmakingM(false, true, false);
+        } else AdminView.tournament_matchmakingM(false, false, false);
     }
 
-    public static boolean tournamentMatchmakingA(String name){
+    public static void tournamentMatchmakingA(String name){
         if (getTournament(name)!=null && getTournament(name).getStartDate().lowerThan(new Date())){
-            return getTournament(name).getMatchmaking().randomMatchmake(getTournament(name).getRandomizedParticipants());
-        } else return false;
+            AdminView.tournament_matchmakingA(getTournament(name).getMatchmaking().randomMatchmake(getTournament(name).getRandomizedParticipants()), true);
+        } else AdminView.tournament_matchmakingA(false, false);
     }
 
-    public static boolean tournamentAdd(String tournament, String team){
+    public static void tournament_list(String type){
+        HashMap<Tournament, ArrayList<Participant>> result = new HashMap<>();
+        if (!getTournaments().isEmpty()){
+            if (type == null) {
+                ArrayList<Tournament> tournamentsAux = new ArrayList<>();
+                for (int i = 0; i < getTournaments().size(); i++) tournamentsAux.add(getTournaments().get(i));
+                for (int i = 0; i < getTournaments().size(); i++) {
+                    int random = (int) (Math.random() * tournamentsAux.size());
+                    Tournament rando = tournamentsAux.get(random);
+                    ArrayList<Participant> randomizedParticipants = rando.getRandomizedParticipants();
+                    result.put(rando,randomizedParticipants);
+                    tournamentsAux.remove(random);
+                }
+            } else {
+                if (type.equals("ADMIN")) {
+                    TournamentsController.deletePastTournaments();
+                }
+                for (int i = 0; i < getTournaments().size(); i++) {
+                    ArrayList<Participant> rankedParticipants = getTournaments().get(i).getParticipantsRanked();
+                    result.put(tournaments.get(i), rankedParticipants);
+                }
+            }
+        }
+        PublicView.tournamentList(result);}
+
+    public static void tournamentAdd(String tournament, String team){
         if (getTournament(tournament)!=null){
             if (getTournament(tournament).getStartDate().greaterThan(new Date())){
                 if (team!=null){
@@ -167,39 +147,43 @@ public class TournamentsController {
                         if (TeamsController.isInTeam(Authentication.getCurrentUser().getUsername()).equals(TeamsController.getTeam(team))){
                             if(getTournament(tournament).getParticipant((Player) Authentication.getCurrentUser())==null){
                                 if (getTournament(tournament).getParticipant(TeamsController.getTeam(team))==null){
-                                    return getTournament(tournament).addParticipant(TeamsController.getTeam(team));
-                                } else return false;
-                            } else return false;
-                        } else return false;
-                    } else return false;
+                                    PlayerView.tournament_add(false, false, false, getTournament(tournament).addParticipant(TeamsController.getTeam(team)), true);
+                                } else PlayerView.tournament_add(true, false, false, false, true);
+                            } else PlayerView.tournament_add(true, false, false, false, true);
+                        } else PlayerView.tournament_add(false, true, false, false, true);
+                    } else PlayerView.tournament_add(false, true, false, false, true);
                 } else {
                     if (getTournament(tournament).getParticipant((Player) Authentication.getCurrentUser())==null){
                         if (TeamsController.isInTeam(Authentication.getCurrentUser().getUsername())!=null){
                             if (getTournament(tournament).getParticipant(TeamsController.isInTeam(Authentication.getCurrentUser().getUsername()))==null){
-                                return getTournament(tournament).addParticipant((Player) Authentication.getCurrentUser());
-                            } else return false;
-                        } else return getTournament(tournament).addParticipant((Player) Authentication.getCurrentUser());
-                    } else return false;
+                                PlayerView.tournament_add(false, false, false, getTournament(tournament).addParticipant((Player) Authentication.getCurrentUser()), false);
+                            } else PlayerView.tournament_add(true, false, false, false, false);
+                        } else PlayerView.tournament_add(false, false, false, getTournament(tournament).addParticipant((Player) Authentication.getCurrentUser()), false);
+                    } else PlayerView.tournament_add(true, false, false, false, false);
                 }
-            } else return false;
-        } else return false;
+            } else PlayerView.tournament_add(false, false, true, false, false);
+        } else PlayerView.tournament_add(false, false, false, false, false);
     }
 
-    public static boolean tournamentRemove(String tournament, String team){
+    public static void tournamentRemove(String tournament, String team){
         if (getTournament(tournament)!=null){
             if (team!=null){
                 if (TeamsController.getTeam(team)!=null){
                     if (TeamsController.isInTeam(Authentication.getCurrentUser().getUsername()).equals(TeamsController.getTeam(team))){
                         if (getTournament(tournament).getParticipant(TeamsController.getTeam(team))!=null){
-                            return getTournament(tournament).removeParticipant(TeamsController.getTeam(team));
-                        } else return false;
-                    } else return false;
-                } else return false;
+                            PlayerView.tournament_remove(false, false, getTournament(tournament).removeParticipant(TeamsController.getTeam(team)), true);
+                        } else PlayerView.tournament_remove(true, false, false, true);
+                    } else PlayerView.tournament_remove(false, true, false, true);
+                } else PlayerView.tournament_remove(false, true, false, true);
             } else {
                 if (getTournament(tournament).getParticipant((Player) Authentication.getCurrentUser())!=null){
-                    return getTournament(tournament).removeParticipant((Player) Authentication.getCurrentUser());
-                } else return false;
+                    PlayerView.tournament_remove(false, false, getTournament(tournament).removeParticipant((Player) Authentication.getCurrentUser()), false);
+                } else PlayerView.tournament_remove(true, false, false, false);
             }
-        } else return false;
+        } else PlayerView.tournament_remove(false, false, false, false);
+    }
+
+    public static ArrayList<Tournament> getTournaments() {
+        return tournaments;
     }
 }

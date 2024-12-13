@@ -4,6 +4,9 @@ import upm.etsisi.poo.model.Admin;
 import upm.etsisi.poo.model.Authentication;
 import upm.etsisi.poo.model.ModelException;
 import upm.etsisi.poo.model.Player;
+import upm.etsisi.poo.view.AdminView;
+import upm.etsisi.poo.view.PlayerView;
+import upm.etsisi.poo.view.PublicView;
 
 import java.util.ArrayList;
 
@@ -34,48 +37,43 @@ public class PlayersController {
         return result;
     }
 
-    public static boolean createPlayer(String username, String password, String name, String surname, String dni, Admin creator) throws ModelException {
+    public static void createPlayer(String username, String password, String name, String surname, String dni, Admin creator) throws ModelException {
         if (AdminsController.getAdmin(username) == null && getPlayer(username) == null && TeamsController.getTeam(username) == null) {
             players.add(new Player(username, password, name, surname, dni, creator));
-            return true;
-        }
-        return false;
+            AdminView.player_create(true);
+        } else AdminView.player_create(false);
     }
 
-    public static boolean deletePlayer(String username) {
+    public static void deletePlayer(String username) {
         if (getPlayer(username) != null) {
             if (TeamsController.isInTeam(username) != null) {
                 if (TournamentsController.isParticipant(TeamsController.isInTeam(username)) == null) {
                     TeamsController.isInTeam(username).removePlayer(username);
                     players.remove(getPlayer(username));
-                    return true;
-                } else return false;
+                    AdminView.player_delete(false, false, true);
+                } else AdminView.player_delete(true, false, false);;
             } else if (TournamentsController.isParticipant(getPlayer(username)) == null) {
                 players.remove(getPlayer(username));
-                return true;
-            } else return false;
-        } else return false;
+                AdminView.player_delete(false, false, true);;
+            } else AdminView.player_delete(false, true, false);;
+        } else AdminView.player_delete(false, false, false);;
     }
 
-    public static boolean addPoints(String username, String stat, double points) {
-        boolean result = false;
+    public static void addPoints(String username, String stat, double points) {
         if (getPlayer(username) != null) {
             if (TeamsController.isInTeam(username)!=null){
                 TeamsController.isInTeam(username).updateStats();
             }
-            return getPlayer(username).updateStat(stat, points);
-        }
-        return result;
+            AdminView.add_points(getPlayer(username).updateStat(stat, points));
+        } else AdminView.add_points(false);
     }
 
-    public static boolean statisticsShow(String option) {
+    public static void statisticsShow(String option) {
         if (option.equals("-csv")) {
-            ((Player) Authentication.getCurrentUser()).showStatsCsv();
-            return true;
+            PlayerView.statistics_showCSV(((Player) Authentication.getCurrentUser()).getStats());
         } else if (option.equals("-json")) {
-            ((Player) Authentication.getCurrentUser()).showStatsJson();
-            return true;
-        } else return false;
+            PlayerView.statistics_showJson(((Player) Authentication.getCurrentUser()).getStats());
+        } else PublicView.otherErrors("\nAsegurate de que la opcion sea valida");
     }
 
 }
