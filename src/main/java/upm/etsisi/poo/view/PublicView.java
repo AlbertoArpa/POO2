@@ -19,7 +19,7 @@ public class PublicView {
         } else if (Authentication.getUserType().equals("ADMIN")){
             menu.append("Comandos:\n > player-create [username;password;name;surname;dni]\n > team-create [name]\n > player-delete [username]\n > team-delete [name]\n > add-points [player username;category;points]\n > team-add [player username;team]\n > team-remove [player username;team]\n > tournament-create [name;startDate;endDate;league;sport;categoryRank]\n > tournament-delete [tournament name]\n > tournament-matchmaking [-m/-a;tournament name(;team1;team2)]\n > tournament-list\n > logout\n----------\n\t> ");
         } else if (Authentication.getUserType().equals("PLAYER")){
-            menu.append("Comandos:\n > tournament-add [tournament name(;team)]\n > tournament-remove [tournament name(;team)]\n > statistics-show [-csv/-json]\n > tournament-list\n" + "> logout\n----------\n\t> ");
+            menu.append("Comandos:\n > tournament-add [tournament name(;team)]\n > tournament-remove [tournament name(;team)]\n > statistics-show [-csv/-json]\n > tournament-list\n" + " > logout\n----------\n\t> ");
         } else menu.append("No existe ese tipo de usuario");
         System.out.print(menu);}
 
