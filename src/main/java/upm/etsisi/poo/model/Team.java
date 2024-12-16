@@ -22,7 +22,7 @@ public class Team implements Participant {
     private ArrayList<Stat> initialStats() {
         ArrayList<Stat> statList = new ArrayList<>();
         for (int i = 0; i < Categories.getCategories().length; i++) {
-            Stat stat = new Stat(Categories.getCategories()[i]);
+            Stat stat = new Stat(Categories.getCategories()[i].name());
             statList.add(stat);
         }
         return statList;

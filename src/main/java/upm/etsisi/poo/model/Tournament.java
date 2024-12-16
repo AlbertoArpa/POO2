@@ -1,22 +1,35 @@
 package upm.etsisi.poo.model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import upm.etsisi.poo.controller.MatchmakingController;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+@Entity
+@Table(name = "torneos")
 public class Tournament {
     private static final String ATTR_NAME_NAME = "name";
     private static final String ATTR_LEAGUE_NAME = "league";
     private static final String ATTR_SPORT_NAME = "sport";
     private static final String ATTR_CATEGORYRANK_NAME = "categoryRank";
+
+    @Id
+    @Column (name = "name", unique = true, nullable = false)
     private String name;
+    @Column(name = "startDate", nullable = false)
     private Date startDate;
+    @Column(name = "startDate", nullable = false)
     private Date endDate;
+    @Column(name = "startDate", nullable = false)
     private String league;
+    @Column(name = "startDate", nullable = false)
     private String sport;
-    private String categoryRank;
+    private Categories categoryRank;
     private ArrayList<Participant> participants;
     private MatchmakingController matchmaking;
 
@@ -140,11 +153,11 @@ public class Tournament {
         this.sport = sport;
     }
 
-    public String getCategoryRank() {
+    public Categories getCategoryRank() {
         return categoryRank;
     }
 
-    public void setCategoryRank(String categoryRank) {
+    public void setCategoryRank(Categories categoryRank) {
         this.categoryRank = categoryRank;
     }
 

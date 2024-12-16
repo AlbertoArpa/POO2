@@ -34,7 +34,7 @@ public class PlayerView {
     public static void statistics_showJson(ArrayList<Stat> stats){
         JsonObject jsonObject = new JsonObject();
         for (int i = 0; i< stats.size(); i++){
-            jsonObject.addProperty(stats.get(i).getCategory(), stats.get(i).getValue());
+            jsonObject.addProperty(stats.get(i).getCategory().name(), stats.get(i).getValue());
         }
         Gson gson = new Gson();
         String json = gson.toJson(jsonObject);

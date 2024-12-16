@@ -3,8 +3,8 @@ package upm.etsisi.poo.model;
 public enum Categories {
     SCORED_POINTS, ASSIST_POINTS, WON_GAMES, WON_TOURNAMENTS, MONEY_GENERATED;
 
-    public static String getCategory(String category) {
-        String categoryS = null;
+    public static Categories getCategory(String category) {
+        Categories categoryS = null;
         if (category!=null){
             category = category.toUpperCase();
             if (category.contains(" ")) {
@@ -13,19 +13,15 @@ public enum Categories {
             }
             for (Categories categoryA : Categories.values()) {
                 if (categoryA.name().equals(category)) {
-                    categoryS = category;
+                    categoryS = categoryA;
                 }
             }
         }
         return categoryS;
     }
 
-    public static String[] getCategories() {
-        String[] categoryS = new String[Categories.values().length];
-        for (Categories categoryA : Categories.values()) {
-            categoryS[categoryA.ordinal()] = categoryA.name();
-        }
-        return categoryS;
+    public static Categories[] getCategories() {
+        return Categories.values();
     }
 
 }

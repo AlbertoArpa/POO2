@@ -50,9 +50,9 @@ public class PublicView {
                 list.append("\nNOMBRE: ").append(tournament.getKey().getName()).append("\nFECHA: ").append(tournament.getKey().getStartDate()).append(" - ").append(tournament.getKey().getEndDate());
                 for (int i = 0; i<tournament.getValue().size(); i++){
                     if (tournament.getValue().get(i) instanceof Player){
-                        list.append("\n\t\tJugador: ").append(((Player) tournament.getValue().get(i)).getUsername()).append("\n\t\t").append(tournament.getValue().get(i).getStat(tournament.getKey().getCategoryRank()));
+                        list.append("\n\t\tJugador: ").append(((Player) tournament.getValue().get(i)).getUsername()).append("\n\t\t").append(tournament.getValue().get(i).getStat(tournament.getKey().getCategoryRank().name()));
                     } else if (tournament.getValue().get(i) instanceof Team) {
-                        list.append("\n\t\tEquipo: ").append(tournament.getValue().get(i).getName()).append("\n\t\t").append(tournament.getValue().get(i).getStat(tournament.getKey().getCategoryRank()));
+                        list.append("\n\t\tEquipo: ").append(tournament.getValue().get(i).getName()).append("\n\t\t").append(tournament.getValue().get(i).getStat(tournament.getKey().getCategoryRank().name()));
                     }
                 }
             }

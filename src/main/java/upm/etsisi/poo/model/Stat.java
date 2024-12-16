@@ -3,7 +3,7 @@ package upm.etsisi.poo.model;
 public class Stat {
     private static final String ATTR_CATEGORY_NAME = "category";
     private static final String ATTR_VALUE_NAME = "value";
-    private String category;
+    private Categories category;
     private double value;
 
     public Stat(String category) {
@@ -11,7 +11,7 @@ public class Stat {
         this.value = 0.0;
     }
 
-    public String getCategory() {
+    public Categories getCategory() {
         return category;
     }
 

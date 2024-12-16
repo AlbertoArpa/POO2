@@ -75,7 +75,7 @@ public class TournamentsController {
                 Date date1 = new Date(startDate);
                 Date date2 = new Date(endDate);
                 if (date1.greaterThan(new Date()) && date2.greaterThan(date1) && Categories.getCategory(categoryRank)!=null){
-                    tournaments.add(new Tournament(name, date1, date2, league, sport, Categories.getCategory(categoryRank)));
+                    tournaments.add(new Tournament(name, date1, date2, league, sport, Categories.getCategory(categoryRank).name()));
                     AdminView.tournament_create(false, false, true);
                 } else AdminView.tournament_create(false, true, false);
             } else AdminView.tournament_create(true, false, false);
