@@ -1,9 +1,6 @@
 package upm.etsisi.poo.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import upm.etsisi.poo.controller.MatchmakingController;
 
 import java.util.ArrayList;
@@ -11,7 +8,7 @@ import java.util.Comparator;
 import java.util.List;
 
 @Entity
-@Table(name = "torneos")
+@Table(name = "tournaments")
 public class Tournament {
     private static final String ATTR_NAME_NAME = "name";
     private static final String ATTR_LEAGUE_NAME = "league";
@@ -29,8 +26,12 @@ public class Tournament {
     private String league;
     @Column(name = "startDate", nullable = false)
     private String sport;
+    @Column(name = "categoryRank", nullable = false)
     private Categories categoryRank;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "participating")
     private ArrayList<Participant> participants;
+    @OneToOne(mappedBy = "tournaments", cascade = CascadeType.ALL)
     private MatchmakingController matchmaking;
 
     public Tournament(String name, Date startDate, Date endDate, String league, String sport, String categoryRank) throws ModelException {
