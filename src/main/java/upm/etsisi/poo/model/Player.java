@@ -1,16 +1,29 @@
 package upm.etsisi.poo.model;
 import java.util.ArrayList;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "players")
 public class Player extends User implements Participant{
     private static final String ATTR_USERNAME_NAME = "username";
     private static final String ATTR_PASSWORD_NAME = "password";
     private static final String ATTR_NAME_NAME = "name";
     private static final String ATTR_SURNAME_NAME = "surname";
     private static final String ATTR_DNI_NAME = "dni";
+    @Id 
+    @Column(name = "name", nullable = false)
     private String name;
+    @Column(name = "surname", nullable = false)
     private String surname;
+    @Column(name = "dni",unique = true, nullable = false)
     private String dni;
+    @Column(name = "stats", nullable = false)
     private ArrayList<Stat> stats;
+    @Column(name = "creator", nullable = false)
     private Admin creator;
 
     public Player(String username, String password, String name, String surname, String dni, Admin creator) throws ModelException {

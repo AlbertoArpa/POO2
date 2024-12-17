@@ -3,11 +3,23 @@ package upm.etsisi.poo.model;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "teams")
 public class Team implements Participant {
     private static final String ATTR_NAME_NAME = "name";
+    @Id
+    @Column(name = "name", unique = true, nullable = false)
     private String name;
+    @Column(name = "players", nullable = false)
     private ArrayList<Player> players;
+    @Column(name = "stats", nullable = false)
     private ArrayList<Stat> stats;
+    @Column(name = "creator", nullable = false)
     private Admin creator;
 
     public Team(String name, Admin creator) throws ModelException {
