@@ -33,7 +33,7 @@ enum Categories {
 }
 
 class Stat {
-    - String category
+    - Categories category
     - double value
     + Stat(String)
     + String getCategory()
@@ -70,7 +70,7 @@ class Tournament {
     - Date endDate
     - String league
     - String sport
-    - String categoryRank
+    - Categories categoryRank
     - ArrayList<Participant> participants
     - MatchmakingController matchmaking
     + Tournament(String , Date, Date , String , String , String) throws ModelException
@@ -257,12 +257,12 @@ MatchmakingController *-- Matchmaking
 AdminsController *-- Admin
 PlayersController *-- Player
 Player o-- Stat
-Stat ..> Categories
+Stat o-- Categories
 TeamsController *-- Team
 Team o- Player
 Tournament o- Participant
 Date -o Tournament
-Tournament ..> Categories
+Tournament o-- Categories
 Team ..|> Participant
 Player ..|> Participant
 Player --|> User
