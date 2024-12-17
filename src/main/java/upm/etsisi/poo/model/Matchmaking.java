@@ -1,8 +1,18 @@
 package upm.etsisi.poo.model;
 
-import java.util.ArrayList;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
+import java.util.ArrayList;
+@Entity
+@Table(name = "matchmaking")
 public class Matchmaking {
+    @Id
+    @Column(name = "id")
+    private long id;
+    @Column(name = "matchmaking")
     private ArrayList<Participant> participants;
 
     public Matchmaking(Participant participant1, Participant participant2) {

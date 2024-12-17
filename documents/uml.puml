@@ -199,6 +199,35 @@ class AdminView {
     + void listMatchmaking(ArrayList<Matchmaking>)
 }
 
+interface Participant {
+        + String getName()
+        + Stat getStat(String category)
+    }
+
+Exception ModelException{
+        + ModelException(String message)
+    }
+
+class Validations {
+        + isMinimum(String, String, int) throws ModelException
+        + isNotNull(String, String) throws ModelException
+        + isMaximum(String, String, int) throws ModelException
+        + isString(String, String) throws ModelException
+    }
+
+class Date {
+        - int year
+        - int month
+        - int day
+        + Date(int , int , int)
+        + Date(String)
+        + Date()
+        + boolean greaterThan(Date)
+        + boolean lowerThan(Date)
+        + boolean isCorrect(String)
+        + String toString()
+    }
+
 App --> CommandController
 CommandController ---> TournamentsController
 CommandController ---> TeamsController

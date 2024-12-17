@@ -1,12 +1,16 @@
 package upm.etsisi.poo.controller;
 
+import jakarta.persistence.*;
 import upm.etsisi.poo.model.Matchmaking;
 import upm.etsisi.poo.model.Participant;
 import upm.etsisi.poo.view.AdminView;
 
 import java.util.ArrayList;
-
+@Entity
 public class MatchmakingController {
+    @Id
+    private long id;
+    @OneToMany
     private ArrayList<Matchmaking> matchmaking;
 
     public MatchmakingController() {

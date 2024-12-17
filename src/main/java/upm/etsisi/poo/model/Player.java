@@ -1,10 +1,7 @@
 package upm.etsisi.poo.model;
 import java.util.ArrayList;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "players")
@@ -21,9 +18,11 @@ public class Player extends User implements Participant{
     private String surname;
     @Column(name = "dni",unique = true, nullable = false)
     private String dni;
-    @Column(name = "stats", nullable = false)
+    @ManyToMany
+    @JoinTable(name = "stats", joinColumns = @JoinColumn(name = "player_username"), inverseJoinColumns = @JoinColumn(name = "stat_category"))
     private ArrayList<Stat> stats;
-    @Column(name = "creator", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "admin")
     private Admin creator;
 
     public Player(String username, String password, String name, String surname, String dni, Admin creator) throws ModelException {

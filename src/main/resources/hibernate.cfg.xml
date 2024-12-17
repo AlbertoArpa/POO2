@@ -16,7 +16,7 @@
         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="connection.url">jdbc:mysql://localhost:3306/series</property>
         <property name="connection.username">root</property>
-        <property name="connection.password">root</property>
+        <property name="connection.password"></property>
 
         <property name="dialect">org.hibernate.dialect.MySQL8Dialect</property>
 
@@ -26,9 +26,11 @@
 
         <property name="hibernate.hbm2ddl.auto">update</property>
 
-        <mapping class="datamodel.Serie"/>
-        <mapping class="datamodel.Capitulo"/>
-        <mapping class="datamodel.Usuario"/>
+        <mapping class="upm.etsisi.poo.model.User"/>
+        <mapping class="upm.etsisi.poo.model.Tournament"/>
+        <mapping class="upm.etsisi.poo.controller.MatchmakingController"/>
+        <mapping class="upm.etsisi.poo.model.Participant"/>
+        <mapping class="upm.etsisi.poo.model.Matchmaking"/>
 
     </session-factory>
 

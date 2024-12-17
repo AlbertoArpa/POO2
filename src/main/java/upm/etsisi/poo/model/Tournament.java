@@ -28,10 +28,11 @@ public class Tournament {
     private String sport;
     @Column(name = "categoryRank", nullable = false)
     private Categories categoryRank;
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "participating")
+    @ManyToMany
+    @JoinTable(name = "participating", joinColumns = @JoinColumn(name = "tournament_name"), inverseJoinColumns = @JoinColumn(name = "participants_name"))
     private ArrayList<Participant> participants;
-    @OneToOne(mappedBy = "tournaments", cascade = CascadeType.ALL)
+    @OneToOne
+    @JoinColumn(name = "matchmakingController")
     private MatchmakingController matchmaking;
 
     public Tournament(String name, Date startDate, Date endDate, String league, String sport, String categoryRank) throws ModelException {
