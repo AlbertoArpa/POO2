@@ -34,6 +34,10 @@ public class DataController {
             for (Admin admin : admins){
                 AdminsController.addAdmin(admin);
             }
+            List<Team> teams = session.createQuery("SELECT DISTINCT t FROM Team t JOIN FETCH t.stats", Team.class).getResultList();
+            for (Team team : teams){
+                TeamsController.addTeam(team);
+            }
             List<Player> players = session.createQuery("SELECT DISTINCT p FROM Player p JOIN FETCH p.stats", Player.class).getResultList();
             for (Player player : players){
                 PlayersController.addPlayer(player);
