@@ -1,5 +1,6 @@
 package upm.etsisi.poo.model;
 import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.*;
 
@@ -11,22 +12,24 @@ public class Player extends User implements Participant{
     private static final String ATTR_NAME_NAME = "name";
     private static final String ATTR_SURNAME_NAME = "surname";
     private static final String ATTR_DNI_NAME = "dni";
-    @Id 
     @Column(name = "name", nullable = false)
     private String name;
+
     @Column(name = "surname", nullable = false)
     private String surname;
-    @Column(name = "dni",unique = true, nullable = false)
+
+    @Column(name = "dni", unique = true, nullable = false)
     private String dni;
-    @ManyToMany
-    @JoinTable(name = "stats", joinColumns = @JoinColumn(name = "player_username"), inverseJoinColumns = @JoinColumn(name = "stat_category"))
-    private ArrayList<Stat> stats;
+
+    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
+    private List<Stat> stats;
+
     @ManyToOne
-    @JoinColumn(name = "admin")
+    @JoinColumn(name = "creator_username", nullable = false)
     private Admin creator;
 
-    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("my-persistence-unit");
-    private static EntityManager em = emf.createEntityManager();
+    public Player(){
+    }
 
     public Player(String username, String password, String name, String surname, String dni, Admin creator) throws ModelException {
         Validations.isNotNull(ATTR_USERNAME_NAME, username);
@@ -49,9 +52,6 @@ public class Player extends User implements Participant{
         this.dni = dni;
         this.stats = initialStats();
         this.creator = creator;
-        em.getTransaction().begin();
-        em.persist(this);
-        em.getTransaction().commit();
     }
 
     private void dniValidation(String dni) throws ModelException{
@@ -72,7 +72,7 @@ public class Player extends User implements Participant{
     private ArrayList<Stat> initialStats(){
         ArrayList<Stat> statList = new ArrayList<>();
         for (int i = 0; i< Categories.getCategories().length; i++){
-            Stat stat = new Stat(Categories.getCategories()[i].name());
+            Stat stat = new Stat(Categories.getCategories()[i].name(), getUsername());
             statList.add(stat);
         }
         return statList;
@@ -120,8 +120,12 @@ public class Player extends User implements Participant{
         return creator;
     }
 
-    public ArrayList<Stat> getStats() {
+    public List<Stat> getStats() {
         return stats;
+    }
+
+    public void setStats(List<Stat> stats) {
+        this.stats = stats;
     }
 
     @Override

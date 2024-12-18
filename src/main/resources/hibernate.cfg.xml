@@ -14,7 +14,7 @@
     <session-factory>
 
         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="connection.url">jdbc:mysql://localhost:3306/series</property>
+        <property name="connection.url">jdbc:mysql://localhost:3306/poo</property>
         <property name="connection.username">root</property>
         <property name="connection.password"></property>
 
@@ -28,8 +28,10 @@
 
         <mapping class="upm.etsisi.poo.model.User"/>
         <mapping class="upm.etsisi.poo.model.Tournament"/>
-        <mapping class="upm.etsisi.poo.controller.MatchmakingController"/>
-        <mapping class="upm.etsisi.poo.model.Participant"/>
+        <mapping class="upm.etsisi.poo.model.Team"/>
+        <mapping class="upm.etsisi.poo.model.Player"/>
+        <mapping class="upm.etsisi.poo.model.Admin"/>
+        <mapping class="upm.etsisi.poo.model.Stat"/>
         <mapping class="upm.etsisi.poo.model.Matchmaking"/>
 
     </session-factory>

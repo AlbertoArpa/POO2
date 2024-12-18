@@ -6,11 +6,10 @@ import upm.etsisi.poo.model.Participant;
 import upm.etsisi.poo.view.AdminView;
 
 import java.util.ArrayList;
-@Entity
+@Embeddable
 public class MatchmakingController {
-    @Id
-    private long id;
-    @OneToMany
+    @ElementCollection
+    @CollectionTable(name = "tournament_matchmaking", joinColumns = @JoinColumn(name = "tournament_id"))
     private ArrayList<Matchmaking> matchmaking;
 
     public MatchmakingController() {

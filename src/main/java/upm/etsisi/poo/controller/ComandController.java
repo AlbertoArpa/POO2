@@ -9,32 +9,17 @@ import upm.etsisi.poo.view.PublicView;
 public class ComandController {
     private static final Scanner sc = new Scanner(System.in);
 
-    public static void initialitation() {
-        Authentication.getInstance();
-        AdminsController.getInstance();
-        TournamentsController.getInstance();
-        TeamsController.getInstance();
-        PlayersController.getInstance();
-    }
-
-    public static void initialUsers() throws ModelException {
-        AdminsController.addAdmin(new Admin("a.arpa@alumnos.upm.es", "4321"));
-        AdminsController.addAdmin(new Admin("javier@alumnos.upm.es", "1234"));
-        AdminsController.addAdmin(new Admin("adrian@alumnos.upm.es", "1432"));
-    }
-
     public static void start() {
-        try {
-            initialitation();
-            initialUsers();
-            PublicView.welcome(true);
-            boolean end = false;
-            while (!end) {
-                end = menu();
-            }
-            sc.close();
-        } catch (Exception modelException) {
-            PublicView.welcome(false);
+        boolean initialized = DataController.initialitation();
+        PublicView.welcome(initialized);
+        if (initialized){
+            boolean data = DataController.getData();
+            if (data){
+                boolean end = false;
+                while (!end) {
+                    end = menu();
+                }
+            } else PublicView.otherErrors("No se ha podido obtener los datos de la base de datos.");
         }
     }
 
@@ -71,7 +56,7 @@ public class ComandController {
             PublicView.menu();
             String[] arguments = sc.nextLine().toLowerCase().split(" ", 2);
             String option = arguments[0];
-            if (!option.equals("logout") && !option.equals("tournament-list")) {
+            if (!option.equals("logout") && !option.equals("tournament-list") && !option.equals("save-changes")) {
                 if (reviewArguments(arguments, 2))
                     arguments = arguments[1].split(";");
                 else arguments = new String[0];
@@ -168,6 +153,9 @@ public class ComandController {
                 case "tournament-list":
                     TournamentsController.tournament_list(Authentication.getUserType());
                     break;
+                case "save-changes":
+                    DataController.saveData();
+                    break;
                 case "logout":
                     Authentication.logOut();
                     break;
@@ -183,7 +171,7 @@ public class ComandController {
             PublicView.menu();
             String[] arguments = sc.nextLine().toLowerCase().split(" ", 2);
             String option = arguments[0];
-            if (!option.equals("logout") && !option.equals("tournament-list")) {
+            if (!option.equals("logout") && !option.equals("tournament-list") && !option.equals("save-changes")) {
                 if (reviewArguments(arguments, 2))
                     arguments = arguments[1].split(";");
                 else arguments = new String[0];
@@ -218,6 +206,9 @@ public class ComandController {
                     break;
                 case "tournament-list":
                     TournamentsController.tournament_list(Authentication.getUserType());
+                    break;
+                case "save-changes":
+                    DataController.saveData();
                     break;
                 case "logout":
                     Authentication.logOut();

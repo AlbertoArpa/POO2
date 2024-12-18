@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import upm.etsisi.poo.model.Stat;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class PlayerView {
     public static void tournament_add(boolean isP, boolean notT, boolean notC, boolean success, boolean team){
@@ -31,7 +31,7 @@ public class PlayerView {
             System.out.println("\nAsegurate de que perteneces al equipo y de que este existe");
         } else System.out.println("\nAsegurate de existe el torneo");
     }
-    public static void statistics_showJson(ArrayList<Stat> stats){
+    public static void statistics_showJson(List<Stat> stats){
         JsonObject jsonObject = new JsonObject();
         for (int i = 0; i< stats.size(); i++){
             jsonObject.addProperty(stats.get(i).getCategory().name(), stats.get(i).getValue());
@@ -41,7 +41,7 @@ public class PlayerView {
         System.out.println("JSON GENERADO: ");
         System.out.println(json);
     }
-    public static void statistics_showCSV(ArrayList<Stat> stats){
+    public static void statistics_showCSV(List<Stat> stats){
         for (int i = 0; i<stats.size(); i++){
             StringBuilder csv = new StringBuilder();
             csv.append(stats.get(i).getCategory()).append(";").append(stats.get(i).getValue());

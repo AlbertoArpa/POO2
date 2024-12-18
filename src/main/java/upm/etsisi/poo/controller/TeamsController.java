@@ -22,6 +22,10 @@ public class TeamsController {
         return uniqueInstance;
     }
 
+    public static void addTeam(Team team){
+        teams.add(team);
+    }
+
     public static Team getTeam(String name) {
         Team result = null;
         int i = 0;
@@ -78,5 +82,9 @@ public class TeamsController {
                 } else AdminView.team_remove(false, true, false);
             } else AdminView.team_remove(true, false, false);
         } else AdminView.team_remove(false, false, false);
+    }
+
+    public static ArrayList<Team> getTeams() {
+        return teams;
     }
 }

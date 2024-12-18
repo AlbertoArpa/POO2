@@ -1,18 +1,17 @@
 package upm.etsisi.poo.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.util.ArrayList;
 @Entity
-@Table(name = "matchmaking")
+@Table(name = "matchmakings")
 public class Matchmaking {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private long id;
-    @Column(name = "matchmaking")
+    private Long id;
+
     private ArrayList<Participant> participants;
 
     public Matchmaking(Participant participant1, Participant participant2) {

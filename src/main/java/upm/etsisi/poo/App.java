@@ -1,31 +1,9 @@
 package upm.etsisi.poo;
-
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import upm.etsisi.poo.model.Admin;
-import upm.etsisi.poo.model.ModelException;
+import upm.etsisi.poo.controller.ComandController;
 
 public class App {
     public static void main(String[] args) {
-        //PRUEBA
-        StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
-                .configure()
-                .build();
-        SessionFactory sessionFactory = new MetadataSources(registry)
-                .buildMetadata()
-                .buildSessionFactory();
-        Session session = sessionFactory.openSession();
-        try {
-            Admin admin1 = new Admin("a.arpa@alumnos.upm.es", "4321");
-            session.beginTransaction();
-            session.persist(admin1);
-            session.getTransaction().commit();
-        } catch (ModelException e){
-            System.out.println(e.getMessage());
-        }
+        ComandController.start();
     }
     /*login adrian@alumnos.upm.es;1432
     player-create adri@alumnos.upm.es;123;adri;largo;87654321J

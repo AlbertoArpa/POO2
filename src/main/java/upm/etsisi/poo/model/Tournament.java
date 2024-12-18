@@ -14,25 +14,20 @@ public class Tournament {
     private static final String ATTR_LEAGUE_NAME = "league";
     private static final String ATTR_SPORT_NAME = "sport";
     private static final String ATTR_CATEGORYRANK_NAME = "categoryRank";
-
     @Id
-    @Column (name = "name", unique = true, nullable = false)
+    @Column(name = "name", unique = true, nullable = false)
     private String name;
-    @Column(name = "startDate", nullable = false)
     private Date startDate;
-    @Column(name = "startDate", nullable = false)
     private Date endDate;
-    @Column(name = "startDate", nullable = false)
+    @Column(name = "league")
     private String league;
-    @Column(name = "startDate", nullable = false)
+    @Column(name = "sport")
     private String sport;
-    @Column(name = "categoryRank", nullable = false)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "category_rank")
     private Categories categoryRank;
-    @ManyToMany
-    @JoinTable(name = "participating", joinColumns = @JoinColumn(name = "tournament_name"), inverseJoinColumns = @JoinColumn(name = "participants_name"))
     private ArrayList<Participant> participants;
-    @OneToOne
-    @JoinColumn(name = "matchmakingController")
+    @Embedded
     private MatchmakingController matchmaking;
 
     private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("my-persistence-unit");

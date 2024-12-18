@@ -3,13 +3,7 @@ package upm.etsisi.poo.model;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Id;
-import jakarta.persistence.Persistence;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "teams")
@@ -18,15 +12,14 @@ public class Team implements Participant {
     @Id
     @Column(name = "name", unique = true, nullable = false)
     private String name;
-    @Column(name = "players", nullable = false)
+    @ManyToMany
+    @JoinTable(name = "players_T", joinColumns = @JoinColumn(name = "team_name"), inverseJoinColumns = @JoinColumn(name = "player_username"))
     private ArrayList<Player> players;
-    @Column(name = "stats", nullable = false)
+    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
     private ArrayList<Stat> stats;
-    @Column(name = "creator", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "creator_username", nullable = false)
     private Admin creator;
-
-    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("my-persistence-unit");
-    private static EntityManager em = emf.createEntityManager();
 
     public Team(String name, Admin creator) throws ModelException {
         Validations.isNotNull(ATTR_NAME_NAME, name);
@@ -35,15 +28,12 @@ public class Team implements Participant {
         this.players = new ArrayList<>();
         this.stats = initialStats();
         this.creator = creator;
-        em.getTransaction().begin();
-        em.persist(this);
-        em.getTransaction().commit();
     }
 
     private ArrayList<Stat> initialStats() {
         ArrayList<Stat> statList = new ArrayList<>();
         for (int i = 0; i < Categories.getCategories().length; i++) {
-            Stat stat = new Stat(Categories.getCategories()[i].name());
+            Stat stat = new Stat(Categories.getCategories()[i].name(), getName());
             statList.add(stat);
         }
         return statList;

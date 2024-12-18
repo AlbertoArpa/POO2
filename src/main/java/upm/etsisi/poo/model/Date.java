@@ -1,8 +1,13 @@
 package upm.etsisi.poo.model;
+import jakarta.persistence.*;
 
+@Embeddable
 public class Date {
+    @Column(name = "year", insertable = false, updatable = false)
     private int year;
+    @Column(name = "month", insertable = false, updatable = false)
     private int month;
+    @Column(name = "day", insertable = false, updatable = false)
     private int day;
 
     public Date(int day, int month, int year) {

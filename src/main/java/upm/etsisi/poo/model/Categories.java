@@ -1,5 +1,10 @@
 package upm.etsisi.poo.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "categories")
 public enum Categories {
     SCORED_POINTS, ASSIST_POINTS, WON_GAMES, WON_TOURNAMENTS, MONEY_GENERATED;
 

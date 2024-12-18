@@ -25,6 +25,10 @@ public class PlayersController {
         return uniqueInstance;
     }
 
+    public static void addPlayer(Player player){
+        players.add(player);
+    }
+
     public static Player getPlayer(String username) {
         Player result = null;
         int i = 0;
@@ -76,4 +80,7 @@ public class PlayersController {
         } else PublicView.otherErrors("\nAsegurate de que la opcion sea valida");
     }
 
+    public static ArrayList<Player> getPlayers() {
+        return players;
+    }
 }
