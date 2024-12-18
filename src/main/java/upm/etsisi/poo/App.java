@@ -21,7 +21,7 @@ public class App {
         try {
             Admin admin1 = new Admin("a.arpa@alumnos.upm.es", "4321");
             session.beginTransaction();
-            session.saveOrUpdate(admin1);
+            session.persist(admin1);
             session.getTransaction().commit();
         } catch (ModelException e){
             System.out.println(e.getMessage());

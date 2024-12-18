@@ -9,13 +9,11 @@ import upm.etsisi.poo.model.Date;
 import upm.etsisi.poo.model.ModelException;
 import upm.etsisi.poo.model.Participant;
 import upm.etsisi.poo.model.Player;
-import upm.etsisi.poo.model.Team;
 import upm.etsisi.poo.model.Tournament;
 import upm.etsisi.poo.view.AdminView;
 import upm.etsisi.poo.view.PlayerView;
 import upm.etsisi.poo.view.PublicView;
 
-import javax.swing.text.View;
 
 public class TournamentsController {
     private static TournamentsController uniqueInstance;
