@@ -38,6 +38,10 @@ public class DataController {
             for (Player player : players){
                 PlayersController.addPlayer(player);
             }
+            List<Team> teams = session.createQuery("FROM Team t", Team.class).getResultList();
+            for (Team team : teams){
+                TeamsController.addTeam(team);
+            }
             return true;
         } catch (Exception es){
             System.out.println("Error al obtener los datos de la base de datos de administradores y jugadores");
@@ -54,6 +58,12 @@ public class DataController {
                     session.persist(stat);
                 }
                 session.merge(player);
+            }
+            for (Admin admin : AdminsController.getAdmins()){
+                session.merge(admin);
+            }
+            for (Team team : TeamsController.getTeams()){
+                session.merge(team);
             }
             session.getTransaction().commit();
             session.close();

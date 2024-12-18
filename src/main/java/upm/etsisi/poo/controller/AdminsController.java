@@ -34,4 +34,8 @@ public class AdminsController {
             admins.add(admin);
         }
     }
+
+    public static ArrayList<Admin> getAdmins() {
+        return admins;
+    }
 }
