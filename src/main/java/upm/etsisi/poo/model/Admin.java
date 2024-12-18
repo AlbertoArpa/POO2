@@ -3,8 +3,6 @@ package upm.etsisi.poo.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
-import java.util.ArrayList;
-
 @Entity
 @Table(name = "admins")
 public class Admin extends User {

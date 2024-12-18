@@ -30,10 +30,6 @@ public class Tournament {
     @Embedded
     private MatchmakingController matchmaking;
 
-    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("my-persistence-unit");
-    private static EntityManager em = emf.createEntityManager();
-
-
     public Tournament(String name, Date startDate, Date endDate, String league, String sport, String categoryRank) throws ModelException {
         Validations.isNotNull(ATTR_NAME_NAME, name);
         Validations.isNotNull(ATTR_LEAGUE_NAME, league);
@@ -49,9 +45,6 @@ public class Tournament {
         this.categoryRank = Categories.getCategory(categoryRank);
         this.participants = new ArrayList<>();
         this.matchmaking = new MatchmakingController();
-        em.getTransaction().begin();
-        em.persist(this);
-        em.getTransaction().commit();
     }
 
     public Participant getParticipant(Participant participant) {
