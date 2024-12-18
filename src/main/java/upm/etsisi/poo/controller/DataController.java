@@ -51,15 +51,14 @@ public class DataController {
             for (Player player : PlayersController.getPlayers()){
                 for (Stat stat : player.getStats()){
                     stat.setPlayer(player);
-                    session.merge(stat);
+                    session.saveOrUpdate(stat);
                 }
-                session.persist(player);
+                session.saveOrUpdate(player);
             }
             session.getTransaction().commit();
             session.close();
             PublicView.saveData(true);
         } catch (Exception es){
-            System.out.println(es.getMessage());
             PublicView.saveData(false);
         }
     }
