@@ -25,6 +25,9 @@ public class Player extends User implements Participant{
     @JoinColumn(name = "admin")
     private Admin creator;
 
+    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("my-persistence-unit");
+    private static EntityManager em = emf.createEntityManager();
+
     public Player(String username, String password, String name, String surname, String dni, Admin creator) throws ModelException {
         Validations.isNotNull(ATTR_USERNAME_NAME, username);
         usernameValidate(username);
@@ -46,6 +49,9 @@ public class Player extends User implements Participant{
         this.dni = dni;
         this.stats = initialStats();
         this.creator = creator;
+        em.getTransaction().begin();
+        em.persist(this);
+        em.getTransaction().commit();
     }
 
     private void dniValidation(String dni) throws ModelException{

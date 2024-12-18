@@ -5,7 +5,10 @@ import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Id;
+import jakarta.persistence.Persistence;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,6 +25,9 @@ public class Team implements Participant {
     @Column(name = "creator", nullable = false)
     private Admin creator;
 
+    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("my-persistence-unit");
+    private static EntityManager em = emf.createEntityManager();
+
     public Team(String name, Admin creator) throws ModelException {
         Validations.isNotNull(ATTR_NAME_NAME, name);
         Validations.isMinimum(ATTR_NAME_NAME, name, 2);
@@ -29,6 +35,9 @@ public class Team implements Participant {
         this.players = new ArrayList<>();
         this.stats = initialStats();
         this.creator = creator;
+        em.getTransaction().begin();
+        em.persist(this);
+        em.getTransaction().commit();
     }
 
     private ArrayList<Stat> initialStats() {
