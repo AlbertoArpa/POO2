@@ -8,7 +8,6 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import upm.etsisi.poo.model.*;
 import upm.etsisi.poo.view.PublicView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DataController {
