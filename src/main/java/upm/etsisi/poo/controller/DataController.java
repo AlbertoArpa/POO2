@@ -51,9 +51,9 @@ public class DataController {
             for (Player player : PlayersController.getPlayers()){
                 for (Stat stat : player.getStats()){
                     stat.setPlayer(player);
-                    session.saveOrUpdate(stat);
+                    session.persist(stat);
                 }
-                session.saveOrUpdate(player);
+                session.merge(player);
             }
             session.getTransaction().commit();
             session.close();
