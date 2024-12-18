@@ -40,7 +40,7 @@ public class DataController {
             }
             return true;
         } catch (Exception es){
-            System.out.println(es);
+            System.out.println("Error al obtener los datos de la base de datos de administradores y jugadores");
             return false;
         }
     }
@@ -51,9 +51,9 @@ public class DataController {
             for (Player player : PlayersController.getPlayers()){
                 for (Stat stat : player.getStats()){
                     stat.setPlayer(player);
-                    session.saveOrUpdate(stat);
+                    session.merge(stat);
                 }
-                session.saveOrUpdate(player);
+                session.persist(player);
             }
             session.getTransaction().commit();
             session.close();
