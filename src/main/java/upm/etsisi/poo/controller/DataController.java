@@ -37,14 +37,12 @@ public class DataController {
             List<Player> players = session.createQuery("SELECT DISTINCT p FROM Player p JOIN FETCH p.stats", Player.class).getResultList();
             for (Player player : players){
                 PlayersController.addPlayer(player);
-            }
-            List<Team> teams = session.createQuery("FROM Team t", Team.class).getResultList();
-            for (Team team : teams){
-                TeamsController.addTeam(team);
+                if (player.getTeam()!=null){
+                    TeamsController.getTeam(player.getTeam().getName()).addPlayer(player);
+                }
             }
             return true;
         } catch (Exception es){
-            System.out.println("Error al obtener los datos de la base de datos de administradores y jugadores");
             return false;
         }
     }
@@ -52,24 +50,32 @@ public class DataController {
     public static void saveData(){
         try {
             session.beginTransaction();
+            for (Admin admin : AdminsController.getAdmins()){
+                session.saveOrUpdate(admin);
+            }
             for (Player player : PlayersController.getPlayers()){
                 for (Stat stat : player.getStats()){
                     stat.setPlayer(player);
-                    session.persist(stat);
+                    session.saveOrUpdate(stat);
                 }
-                session.merge(player);
-            }
-            for (Admin admin : AdminsController.getAdmins()){
-                session.merge(admin);
+                session.saveOrUpdate(player);
             }
             for (Team team : TeamsController.getTeams()){
-                session.merge(team);
+                for (Stat stat : team.getStats()){
+                    stat.setTeam(team);
+                    session.saveOrUpdate(stat);
+                }
+                session.saveOrUpdate(team);
             }
             session.getTransaction().commit();
-            session.close();
             PublicView.saveData(true);
         } catch (Exception es){
+            System.out.println(es.getMessage());
             PublicView.saveData(false);
         }
+    }
+
+    public static void close(){
+        session.close();
     }
 }

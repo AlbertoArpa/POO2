@@ -1,6 +1,7 @@
 package upm.etsisi.poo.model;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.*;
@@ -12,14 +13,17 @@ public class Team implements Participant {
     @Id
     @Column(name = "name", unique = true, nullable = false)
     private String name;
-    @ManyToMany
-    @JoinTable(name = "players_T", joinColumns = @JoinColumn(name = "team_name"), inverseJoinColumns = @JoinColumn(name = "player_username"))
-    private ArrayList<Player> players;
+    @OneToMany(mappedBy = "team")
+    private List<Player> players;
     @OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
-    private ArrayList<Stat> stats;
+    private List<Stat> stats;
     @ManyToOne
     @JoinColumn(name = "creator_username", nullable = false)
     private Admin creator;
+
+    public Team(){
+
+    }
 
     public Team(String name, Admin creator) throws ModelException {
         Validations.isNotNull(ATTR_NAME_NAME, name);
@@ -33,7 +37,7 @@ public class Team implements Participant {
     private ArrayList<Stat> initialStats() {
         ArrayList<Stat> statList = new ArrayList<>();
         for (int i = 0; i < Categories.getCategories().length; i++) {
-            Stat stat = new Stat(Categories.getCategories()[i].name(), getName());
+            Stat stat = new Stat(Categories.getCategories()[i].name());
             statList.add(stat);
         }
         return statList;
@@ -67,7 +71,7 @@ public class Team implements Participant {
         }
     }
 
-    public ArrayList<Stat> getStats() {
+    public List<Stat> getStats() {
         updateStats();
         return stats;
     }
@@ -93,6 +97,7 @@ public class Team implements Participant {
         }
         if (getPlayer(player.getUsername()) == null) {
             players.add(player);
+            player.setTeam(this);
             updateStats();
             result = true;
         }
@@ -120,5 +125,17 @@ public class Team implements Participant {
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(ArrayList<Player> players) {
+        this.players = players;
+    }
+
+    public void setStats(ArrayList<Stat> stats) {
+        this.stats = stats;
     }
 }

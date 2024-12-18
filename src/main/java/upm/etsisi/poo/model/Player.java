@@ -28,6 +28,10 @@ public class Player extends User implements Participant{
     @JoinColumn(name = "creator_username", nullable = false)
     private Admin creator;
 
+    @ManyToOne
+    @JoinColumn(name = "team_name", referencedColumnName = "name")
+    private Team team;
+
     public Player(){
     }
 
@@ -72,7 +76,7 @@ public class Player extends User implements Participant{
     private ArrayList<Stat> initialStats(){
         ArrayList<Stat> statList = new ArrayList<>();
         for (int i = 0; i< Categories.getCategories().length; i++){
-            Stat stat = new Stat(Categories.getCategories()[i].name(), getUsername());
+            Stat stat = new Stat(Categories.getCategories()[i].name());
             statList.add(stat);
         }
         return statList;
@@ -126,6 +130,14 @@ public class Player extends User implements Participant{
 
     public void setStats(List<Stat> stats) {
         this.stats = stats;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
     }
 
     @Override

@@ -28,10 +28,7 @@ public class Stat {
     public Stat(){
     }
 
-    public Stat(String category, String name) {
-        if (TeamsController.getTeam(name)!=null){
-            team = TeamsController.getTeam(name);
-        } else this.player = PlayersController.getPlayer(name);
+    public Stat(String category) {
         this.category = Categories.getCategory(category);
         this.value = 0.0;
     }

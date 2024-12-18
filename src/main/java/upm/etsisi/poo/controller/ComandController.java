@@ -19,6 +19,7 @@ public class ComandController {
                 while (!end) {
                     end = menu();
                 }
+                DataController.close();
             } else PublicView.otherErrors("No se ha podido obtener los datos de la base de datos.");
         }
     }
