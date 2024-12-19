@@ -17,7 +17,11 @@ public class Tournament {
     @Id
     @Column(name = "name", unique = true, nullable = false)
     private String name;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "startDate")
     private Date startDate;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "endDate")
     private Date endDate;
     @Column(name = "league")
     private String league;
@@ -29,6 +33,8 @@ public class Tournament {
     private ArrayList<Participant> participants;
     @Embedded
     private MatchmakingController matchmaking;
+
+    public Tournament(){}
 
     public Tournament(String name, Date startDate, Date endDate, String league, String sport, String categoryRank) throws ModelException {
         Validations.isNotNull(ATTR_NAME_NAME, name);

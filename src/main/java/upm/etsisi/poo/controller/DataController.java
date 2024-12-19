@@ -24,6 +24,7 @@ public class DataController {
             session = sessionFactory.openSession();
             return true;
         } catch (Exception es){
+            System.out.println(es.getMessage());
             return false;
         }
     }
@@ -44,10 +45,6 @@ public class DataController {
                 if (player.getTeam()!=null){
                     TeamsController.getTeam(player.getTeam().getName()).addPlayer(player);
                 }
-            }
-            List<Tournament> tournaments = session.createQuery("SELECT DISTINCT t FROM Tournament t JOIN FETCH t.participants", Tournament.class).getResultList();
-            for (Tournament tournament : tournaments){
-                TournamentsController.createTournament(tournament.getName(), tournament.getStartDate().toString(), tournament.getEndDate().toString(), tournament.getLeague(), tournament.getSport(), tournament.getCategoryRank().name());
             }
             return true;
         } catch (Exception es){
@@ -82,6 +79,9 @@ public class DataController {
                     } else if (participant instanceof Team){
                         session.saveOrUpdate(participant);
                     }
+                }
+                for (Matchmaking matchmaking : tournament.getMatchmaking().getMatchmaking()){
+                    session.saveOrUpdate(matchmaking);
                 }
                 session.saveOrUpdate(tournament);
             }

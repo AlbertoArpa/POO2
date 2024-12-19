@@ -68,6 +68,14 @@ public class MatchmakingController {
         }
     }
 
+    public ArrayList<Matchmaking> getMatchmaking() {
+        return matchmaking;
+    }
+
+    public void setMatchmaking(ArrayList<Matchmaking> matchmaking) {
+        this.matchmaking = matchmaking;
+    }
+
     public void getMatchmakings(){
         AdminView.listMatchmaking(this.matchmaking);
     }
