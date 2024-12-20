@@ -46,10 +46,6 @@ public class DataController {
                     TeamsController.getTeam(player.getTeam().getName()).addPlayer(player);
                 }
             }
-            List<Tournament> tournaments = session.createQuery("SELECT DISTINCT t FROM Tournament t JOIN FETCH t.participants JOIN FETCH t.matchmaking", Tournament.class).getResultList();
-            for (Tournament tournament : tournaments){
-                TournamentsController.addTournament(tournament);
-            }
             return true;
         } catch (Exception es){
             return false;
@@ -75,19 +71,6 @@ public class DataController {
                     session.merge(stat);
                 }
                 session.persist(team);
-            }
-            for (Tournament tournament : TournamentsController.getTournaments()){
-                for (Participant participant : tournament.getParticipants()){
-                    if (participant instanceof Player){
-                        session.persist(participant);
-                    } else if (participant instanceof Team){
-                        session.merge(participant);
-                    }
-                }
-                for (Matchmaking matchmaking : tournament.getMatchmaking().getMatchmaking()){
-                    session.persist(matchmaking);
-                }
-                session.persist(tournament);
             }
             session.getTransaction().commit();
             PublicView.saveData(true);

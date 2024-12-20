@@ -184,8 +184,5 @@ public class TournamentsController {
     public static ArrayList<Tournament> getTournaments() {
         return tournaments;
     }
-
-    public static void addTournament(Tournament tournament) {
-        tournaments.add(tournament);
-    }
+    
 }
