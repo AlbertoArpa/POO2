@@ -46,6 +46,10 @@ public class DataController {
                     TeamsController.getTeam(player.getTeam().getName()).addPlayer(player);
                 }
             }
+            List<Tournament> tournaments = session.createQuery("FROM Tournament t", Tournament.class).getResultList();
+            for (Tournament tournament : tournaments){
+                TournamentsController.addTournament(tournament);
+            }
             return true;
         } catch (Exception es){
             return false;
@@ -71,6 +75,9 @@ public class DataController {
                     session.merge(stat);
                 }
                 session.persist(team);
+            }
+            for (Tournament tournament : TournamentsController.getTournaments()){
+                session.persist(tournament);
             }
             session.getTransaction().commit();
             PublicView.saveData(true);
