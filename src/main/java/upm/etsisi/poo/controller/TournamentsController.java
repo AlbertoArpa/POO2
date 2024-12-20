@@ -16,6 +16,8 @@ import upm.etsisi.poo.view.PublicView;
 
 
 public class TournamentsController {
+    //Borra de la line 112 el codigo:  && getTournament(name).getStartDate().lowerThan(new Date())
+    //para que te deje añadir matchmaking automaticos sin que haya empezado el torneo
     private static TournamentsController uniqueInstance;
     private static ArrayList<Tournament> tournaments;
 

@@ -27,6 +27,7 @@
         <property name="hibernate.hbm2ddl.auto">update</property>
 
         <mapping class="upm.etsisi.poo.model.User"/>
+        <mapping class="upm.etsisi.poo.model.Date"/>
         <mapping class="upm.etsisi.poo.model.Tournament"/>
         <mapping class="upm.etsisi.poo.model.Team"/>
         <mapping class="upm.etsisi.poo.model.Player"/>

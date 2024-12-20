@@ -1,6 +1,7 @@
 package upm.etsisi.poo.model;
 
 import jakarta.persistence.*;
+import upm.etsisi.poo.controller.MatchmakingController;
 
 import java.util.ArrayList;
 @Entity
@@ -12,7 +13,15 @@ public class Matchmaking {
     @Column(name = "id")
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "tournament_name")
+    private Tournament tournament;
+
     private ArrayList<Participant> participants;
+
+    public Matchmaking(){
+
+    }
 
     public Matchmaking(Participant participant1, Participant participant2) {
         this.participants = new ArrayList<>();
@@ -27,6 +36,14 @@ public class Matchmaking {
             }
         }
         return false;
+    }
+
+    public Tournament getTournament() {
+        return tournament;
+    }
+
+    public void setTournament(Tournament tournament) {
+        this.tournament = tournament;
     }
 
     @Override

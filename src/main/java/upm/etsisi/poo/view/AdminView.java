@@ -3,6 +3,7 @@ package upm.etsisi.poo.view;
 import upm.etsisi.poo.model.Matchmaking;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AdminView {
 
@@ -100,7 +101,7 @@ public class AdminView {
             } else System.out.println("\nAsegurate de que el torneo cuenta con un numero optimo de participantes");
         } else System.out.println("\nAsegurate de que el torneo existe y esta en curso");
     }
-    public static void listMatchmaking(ArrayList<Matchmaking> matchmaking){
+    public static void listMatchmaking(List<Matchmaking> matchmaking){
         if (matchmaking.isEmpty()){
             System.out.println("\nNo hay emparejamientos.");
         } else {

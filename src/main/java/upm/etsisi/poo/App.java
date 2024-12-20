@@ -5,6 +5,10 @@ public class App {
     public static void main(String[] args) {
         ComandController.start();
     }
+    //Borra de la line 112 de TournamentsController el codigo:
+    // && getTournament(name).getStartDate().lowerThan(new Date())
+    // para que te deje añadir matchmaking automaticos sin que haya empezado el torneo
+
     /*login adrian@alumnos.upm.es;1432
     player-create adri@alumnos.upm.es;123;adri;largo;87654321J
     player-create adria@alumnos.upm.es;123;adrian;largo;12345679F

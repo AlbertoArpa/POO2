@@ -72,11 +72,17 @@ public class DataController {
             for (Team team : TeamsController.getTeams()){
                 for (Stat stat : team.getStats()){
                     stat.setTeam(team);
-                    session.merge(stat);
+                    session.persist(stat);
                 }
                 session.persist(team);
             }
             for (Tournament tournament : TournamentsController.getTournaments()){
+                session.persist(tournament.getStartDate());
+                session.persist(tournament.getEndDate());
+                for (Matchmaking matchmaking : tournament.getMatchmaking().getMatchmaking()){
+                    matchmaking.setTournament(tournament);
+                    session.persist(matchmaking);
+                }
                 session.persist(tournament);
             }
             session.getTransaction().commit();

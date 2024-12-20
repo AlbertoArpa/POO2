@@ -6,11 +6,12 @@ import upm.etsisi.poo.model.Participant;
 import upm.etsisi.poo.view.AdminView;
 
 import java.util.ArrayList;
+import java.util.List;
+
 @Embeddable
 public class MatchmakingController {
-    @ElementCollection
-    @CollectionTable(name = "tournament_matchmaking", joinColumns = @JoinColumn(name = "tournament_id"))
-    private ArrayList<Matchmaking> matchmaking;
+    @OneToMany(mappedBy = "tournament", cascade = CascadeType.ALL)
+    private List<Matchmaking> matchmaking;
 
     public MatchmakingController() {
         this.matchmaking = new ArrayList<>();
@@ -68,11 +69,11 @@ public class MatchmakingController {
         }
     }
 
-    public ArrayList<Matchmaking> getMatchmaking() {
+    public List<Matchmaking> getMatchmaking() {
         return matchmaking;
     }
 
-    public void setMatchmaking(ArrayList<Matchmaking> matchmaking) {
+    public void setMatchmaking(List<Matchmaking> matchmaking) {
         this.matchmaking = matchmaking;
     }
 

@@ -17,11 +17,11 @@ public class Tournament {
     @Id
     @Column(name = "name", unique = true, nullable = false)
     private String name;
-    @Temporal(TemporalType.DATE)
-    @Column(name = "startDate")
+    @OneToOne
+    @JoinColumn(name = "startDate", referencedColumnName = "id")
     private Date startDate;
-    @Temporal(TemporalType.DATE)
-    @Column(name = "endDate")
+    @OneToOne
+    @JoinColumn(name = "endDate", referencedColumnName = "id")
     private Date endDate;
     @Column(name = "league")
     private String league;
