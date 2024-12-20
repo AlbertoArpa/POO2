@@ -46,6 +46,10 @@ public class DataController {
                     TeamsController.getTeam(player.getTeam().getName()).addPlayer(player);
                 }
             }
+            List<Tournament> tournaments = session.createQuery("SELECT DISTINCT t FROM Tournament t JOIN FETCH t.participants JOIN FETCH t.matchmaking", Tournament.class).getResultList();
+            for (Tournament tournament : tournaments){
+                TournamentsController.addTournament(tournament);
+            }
             return true;
         } catch (Exception es){
             return false;
@@ -56,34 +60,34 @@ public class DataController {
         try {
             session.beginTransaction();
             for (Admin admin : AdminsController.getAdmins()){
-                session.saveOrUpdate(admin);
+                session.persist(admin);
             }
             for (Player player : PlayersController.getPlayers()){
                 for (Stat stat : player.getStats()){
                     stat.setPlayer(player);
-                    session.saveOrUpdate(stat);
+                    session.persist(stat);
                 }
-                session.saveOrUpdate(player);
+                session.persist(player);
             }
             for (Team team : TeamsController.getTeams()){
                 for (Stat stat : team.getStats()){
                     stat.setTeam(team);
-                    session.saveOrUpdate(stat);
+                    session.merge(stat);
                 }
-                session.saveOrUpdate(team);
+                session.persist(team);
             }
             for (Tournament tournament : TournamentsController.getTournaments()){
                 for (Participant participant : tournament.getParticipants()){
                     if (participant instanceof Player){
-                        session.saveOrUpdate(participant);
+                        session.persist(participant);
                     } else if (participant instanceof Team){
-                        session.saveOrUpdate(participant);
+                        session.merge(participant);
                     }
                 }
                 for (Matchmaking matchmaking : tournament.getMatchmaking().getMatchmaking()){
-                    session.saveOrUpdate(matchmaking);
+                    session.persist(matchmaking);
                 }
-                session.saveOrUpdate(tournament);
+                session.persist(tournament);
             }
             session.getTransaction().commit();
             PublicView.saveData(true);
