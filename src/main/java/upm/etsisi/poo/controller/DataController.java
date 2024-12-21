@@ -56,38 +56,45 @@ public class DataController {
         }
     }
 
-    public static void saveData(){
+    public static void saveData() {
         try {
             session.beginTransaction();
-            for (Admin admin : AdminsController.getAdmins()){
+            for (Admin admin : AdminsController.getAdmins()) {
                 session.persist(admin);
             }
-            for (Player player : PlayersController.getPlayers()){
-                for (Stat stat : player.getStats()){
+            for (Player player : PlayersController.getPlayers()) {
+                for (Stat stat : player.getStats()) {
                     stat.setPlayer(player);
                     session.persist(stat);
                 }
                 session.persist(player);
             }
-            for (Team team : TeamsController.getTeams()){
-                for (Stat stat : team.getStats()){
+            for (Team team : TeamsController.getTeams()) {
+                for (Stat stat : team.getStats()) {
                     stat.setTeam(team);
                     session.persist(stat);
                 }
                 session.persist(team);
             }
-            for (Tournament tournament : TournamentsController.getTournaments()){
+            for (Tournament tournament : TournamentsController.getTournaments()) {
                 session.persist(tournament.getStartDate());
                 session.persist(tournament.getEndDate());
-                for (Matchmaking matchmaking : tournament.getMatchmaking().getMatchmaking()){
+
+                for (Matchmaking matchmaking : tournament.getMatchmaking().getMatchmaking()) {
                     matchmaking.setTournament(tournament);
                     session.persist(matchmaking);
+                }
+                for (Participant participant : tournament.getParticipants()) {
+                    session.persist(participant);
                 }
                 session.persist(tournament);
             }
             session.getTransaction().commit();
             PublicView.saveData(true);
-        } catch (Exception es){
+        } catch (Exception es) {
+            if (session.getTransaction() != null) {
+                session.getTransaction().rollback();
+            }
             System.out.println(es.getMessage());
             PublicView.saveData(false);
         }
