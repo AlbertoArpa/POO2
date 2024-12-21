@@ -87,21 +87,21 @@ public class TournamentsController {
             if (PlayersController.getPlayer(participant1)!=null){
                 if (PlayersController.getPlayer(participant2)!=null){
                     if (getTournament(name).getParticipant(PlayersController.getPlayer(participant1)) != null && getTournament(name).getParticipant(PlayersController.getPlayer(participant2)) != null){
-                        AdminView.tournament_matchmakingM(false, false, getTournament(name).getMatchmaking().createMatchmake(PlayersController.getPlayer(participant1), PlayersController.getPlayer(participant2)));
+                        AdminView.tournament_matchmakingM(false, false, getTournament(name).getMatchmaking().createMatchmake(PlayersController.getPlayer(participant1), PlayersController.getPlayer(participant2), getTournament(name)));
                     } else AdminView.tournament_matchmakingM(true, false, false);
                 } else if (TeamsController.getTeam(participant2)!=null){
                     if (getTournament(name).getParticipant(PlayersController.getPlayer(participant1)) != null && getTournament(name).getParticipant(TeamsController.getTeam(participant2)) != null){
-                        AdminView.tournament_matchmakingM(false, false, getTournament(name).getMatchmaking().createMatchmake(PlayersController.getPlayer(participant1), TeamsController.getTeam(participant2)));
+                        AdminView.tournament_matchmakingM(false, false, getTournament(name).getMatchmaking().createMatchmake(PlayersController.getPlayer(participant1), TeamsController.getTeam(participant2), getTournament(name)));
                     } else AdminView.tournament_matchmakingM(true, false, false);
                 } else AdminView.tournament_matchmakingM(false, true, false);
             } else if (TeamsController.getTeam(participant1)!=null){
                 if (PlayersController.getPlayer(participant2)!=null){
                     if (getTournament(name).getParticipant(TeamsController.getTeam(participant1)) != null && getTournament(name).getParticipant(PlayersController.getPlayer(participant2)) != null){
-                        AdminView.tournament_matchmakingM(false, false, getTournament(name).getMatchmaking().createMatchmake(TeamsController.getTeam(participant1), PlayersController.getPlayer(participant2)));
+                        AdminView.tournament_matchmakingM(false, false, getTournament(name).getMatchmaking().createMatchmake(TeamsController.getTeam(participant1), PlayersController.getPlayer(participant2), getTournament(name)));
                     } else AdminView.tournament_matchmakingM(true, false, false);
                 } else if (TeamsController.getTeam(participant2)!=null){
                     if (getTournament(name).getParticipant(TeamsController.getTeam(participant1)) != null && getTournament(name).getParticipant(TeamsController.getTeam(participant2)) != null){
-                        AdminView.tournament_matchmakingM(false, false, getTournament(name).getMatchmaking().createMatchmake(TeamsController.getTeam(participant1), TeamsController.getTeam(participant2)));
+                        AdminView.tournament_matchmakingM(false, false, getTournament(name).getMatchmaking().createMatchmake(TeamsController.getTeam(participant1), TeamsController.getTeam(participant2), getTournament(name)));
                     } else AdminView.tournament_matchmakingM(true, false, false);
                 } else AdminView.tournament_matchmakingM(false, true, false);
             } else AdminView.tournament_matchmakingM(false, true, false);
@@ -109,8 +109,8 @@ public class TournamentsController {
     }
 
     public static void tournamentMatchmakingA(String name){
-        if (getTournament(name)!=null && getTournament(name).getStartDate().lowerThan(new Date())){
-            AdminView.tournament_matchmakingA(getTournament(name).getMatchmaking().randomMatchmake(getTournament(name).getRandomizedParticipants()), true);
+        if (getTournament(name)!=null){
+            AdminView.tournament_matchmakingA(getTournament(name).getMatchmaking().randomMatchmake(getTournament(name).getRandomizedParticipants(), getTournament(name)), true);
         } else AdminView.tournament_matchmakingA(false, false);
     }
 

@@ -30,7 +30,12 @@ public class Tournament {
     @Enumerated(EnumType.STRING)
     @Column(name = "category_rank")
     private Categories categoryRank;
-    private ArrayList<Participant> participants;
+    @Transient
+    private ArrayList<Participant> participants = new ArrayList<>();
+    @ManyToMany(mappedBy = "tournaments")
+    private List<Player> players;
+    @ManyToMany(mappedBy = "tournaments")
+    private List<Team> teams;
     @Embedded
     private MatchmakingController matchmaking;
 
@@ -49,7 +54,6 @@ public class Tournament {
         this.league = league;
         this.sport = sport;
         this.categoryRank = Categories.getCategory(categoryRank);
-        this.participants = new ArrayList<>();
         this.matchmaking = new MatchmakingController();
     }
 
@@ -67,6 +71,10 @@ public class Tournament {
 
     public boolean addParticipant(Participant participant) {
         if (getParticipant(participant) == null) {
+            participant.addTournament(this);
+            if (participant instanceof Player){
+                players.add((Player) participant);
+            } else teams.add((Team) participant);
             participants.add(participant);
             return true;
         } else return false;
@@ -90,6 +98,7 @@ public class Tournament {
         for (int i = 0; i < participants.size(); i++) {
             int random = (int) (Math.random() * aux.size());
             result.add(aux.get(random));
+            aux.remove(aux.get(random));
         }
         return result;
     }
@@ -162,6 +171,10 @@ public class Tournament {
 
     public void setCategoryRank(Categories categoryRank) {
         this.categoryRank = categoryRank;
+    }
+
+    public void setParticipants(ArrayList<Participant> participants) {
+        this.participants = participants;
     }
 
     public ArrayList<Participant> getParticipants() {

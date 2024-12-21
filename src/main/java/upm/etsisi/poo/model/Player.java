@@ -32,6 +32,21 @@ public class Player extends User implements Participant{
     @JoinColumn(name = "team_name", referencedColumnName = "name")
     private Team team;
 
+    @ManyToMany
+    @JoinTable(
+            name = "players_tournament",
+            joinColumns = @JoinColumn(name = "name", referencedColumnName = "username"),
+            inverseJoinColumns = @JoinColumn(name = "tournament_name")
+    )
+    private List<Tournament> tournaments;
+    @ManyToMany
+    @JoinTable(
+            name = "matchmaking_players",
+            joinColumns = @JoinColumn(name = "name", referencedColumnName = "username"),
+            inverseJoinColumns = @JoinColumn(name = "matchmaking_id")
+    )
+    private List<Matchmaking> matchmakings;
+
     public Player(){
     }
 
@@ -126,6 +141,23 @@ public class Player extends User implements Participant{
 
     public List<Stat> getStats() {
         return stats;
+    }
+
+    @Override
+    public void addTournament(Tournament tournament){
+        tournaments.add(tournament);
+    }
+    @Override
+    public void addMatch(Matchmaking matchmaking){
+        matchmakings.add(matchmaking);
+    }
+
+    public List<Tournament> getTournaments() {
+        return tournaments;
+    }
+
+    public void setTournaments(List<Tournament> tournaments) {
+        this.tournaments = tournaments;
     }
 
     public void setStats(List<Stat> stats) {

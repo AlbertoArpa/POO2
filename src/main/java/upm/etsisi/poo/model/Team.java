@@ -21,6 +21,21 @@ public class Team implements Participant {
     @JoinColumn(name = "creator_username", nullable = false)
     private Admin creator;
 
+    @ManyToMany
+    @JoinTable(
+            name = "teams_tournament",
+            joinColumns = @JoinColumn(name = "name"),
+            inverseJoinColumns = @JoinColumn(name = "tournament_name")
+    )
+    private List<Tournament> tournaments;
+    @ManyToMany
+    @JoinTable(
+            name = "matchmaking_teams",
+            joinColumns = @JoinColumn(name = "name"),
+            inverseJoinColumns = @JoinColumn(name = "matchmaking_id")
+    )
+    private List<Matchmaking> matchmakings;
+
     public Team(){
 
     }
@@ -41,6 +56,11 @@ public class Team implements Participant {
             statList.add(stat);
         }
         return statList;
+    }
+
+    @Override
+    public void addMatch(Matchmaking matchmaking){
+        matchmakings.add(matchmaking);
     }
 
     @Override
@@ -125,6 +145,19 @@ public class Team implements Participant {
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+
+    @Override
+    public void addTournament(Tournament tournament){
+        tournaments.add(tournament);
+    }
+
+    public List<Tournament> getTournaments() {
+        return tournaments;
+    }
+
+    public void setTournaments(List<Tournament> tournaments) {
+        this.tournaments = tournaments;
     }
 
     public List<Player> getPlayers() {

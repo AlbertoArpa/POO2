@@ -8,6 +8,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import upm.etsisi.poo.model.*;
 import upm.etsisi.poo.view.PublicView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DataController {
@@ -20,7 +21,7 @@ public class DataController {
         PlayersController.getInstance();
         try {
             StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
-            SessionFactory sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
+            SessionFactory sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();;
             session = sessionFactory.openSession();
             return true;
         } catch (Exception es){
@@ -48,10 +49,22 @@ public class DataController {
             }
             List<Tournament> tournaments = session.createQuery("FROM Tournament t", Tournament.class).getResultList();
             for (Tournament tournament : tournaments){
+                ArrayList<Participant> participants = new ArrayList<>();
+                List<Player> players1 = session.createQuery("SELECT p FROM Player p JOIN p.tournaments t WHERE t.name = :tournamentName", Player.class)
+                        .setParameter("tournamentName", tournament.getName()).getResultList();
+                List<Team> teams1 = session.createQuery("SELECT te FROM Team te JOIN te.tournaments t WHERE t.name = :tournamentName", Team.class)
+                        .setParameter("tournamentName", tournament.getName()).getResultList();
+                participants.addAll(players1);
+                participants.addAll(teams1);
+                tournament.setParticipants(participants);
+                for (Matchmaking matchmaking : tournament.getMatchmaking().getMatchmaking()){
+                    matchmaking.initializateParticipant();
+                }
                 TournamentsController.addTournament(tournament);
             }
             return true;
         } catch (Exception es){
+            System.out.println(es.getMessage());
             return false;
         }
     }
@@ -67,7 +80,6 @@ public class DataController {
                     stat.setPlayer(player);
                     session.persist(stat);
                 }
-                session.persist(player);
             }
             for (Team team : TeamsController.getTeams()) {
                 for (Stat stat : team.getStats()) {
@@ -79,14 +91,6 @@ public class DataController {
             for (Tournament tournament : TournamentsController.getTournaments()) {
                 session.persist(tournament.getStartDate());
                 session.persist(tournament.getEndDate());
-
-                for (Matchmaking matchmaking : tournament.getMatchmaking().getMatchmaking()) {
-                    matchmaking.setTournament(tournament);
-                    session.persist(matchmaking);
-                }
-                for (Participant participant : tournament.getParticipants()) {
-                    session.persist(participant);
-                }
                 session.persist(tournament);
             }
             session.getTransaction().commit();

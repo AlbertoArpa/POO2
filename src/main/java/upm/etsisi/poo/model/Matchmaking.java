@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import upm.etsisi.poo.controller.MatchmakingController;
 
 import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "matchmakings")
 public class Matchmaking {
@@ -16,17 +18,27 @@ public class Matchmaking {
     @ManyToOne
     @JoinColumn(name = "tournament_name")
     private Tournament tournament;
-
-    private ArrayList<Participant> participants;
+    @Transient
+    private ArrayList<Participant> participants = new ArrayList<>();
+    @ManyToMany(mappedBy = "matchmakings")
+    private List<Player> players = new ArrayList<>();
+    @ManyToMany(mappedBy = "matchmakings")
+    private List<Team> teams = new ArrayList<>();
 
     public Matchmaking(){
-
     }
 
     public Matchmaking(Participant participant1, Participant participant2) {
-        this.participants = new ArrayList<>();
         participants.add(participant1);
+        participant1.addMatch(this);
+        if (participant1 instanceof Player){
+            players.add((Player) participant1);
+        } else teams.add((Team) participant1);
         participants.add(participant2);
+        participant2.addMatch(this);
+        if (participant2 instanceof Player){
+            players.add((Player) participant2);
+        } else teams.add((Team) participant2);
     }
 
     public boolean isMatchmaked(Participant participant) {
@@ -36,6 +48,11 @@ public class Matchmaking {
             }
         }
         return false;
+    }
+
+    public void initializateParticipant(){
+        this.participants.addAll(players);
+        this.participants.addAll(teams);
     }
 
     public Tournament getTournament() {
