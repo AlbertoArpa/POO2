@@ -184,6 +184,13 @@ class PublicView {
     + void otherErrors(String)
 }
 
+class DataController{
+    +void inicialitation()
+    +boolean getData()
+    +void saveData()
+    +void close()
+}
+
 class AdminView {
     + void player_create(boolean)
     + void player_delete(boolean, boolean, boolean)
@@ -273,5 +280,10 @@ Admin ..> Validations
 Team ..> Validations
 Tournament ..> Validations
 Validations .> ModelException
+DataController ---> PlayersController
+DataController ---> AdminsController
+DataController ---> TeamsController
+DataController ---> TournamentsController
+DataController ---> Authentication
 
 @enduml
