@@ -28,7 +28,7 @@ public class Player extends User implements Participant{
     @JoinColumn(name = "creator_username", nullable = false)
     private Admin creator;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "team_name", referencedColumnName = "name")
     private Team team;
 
@@ -151,6 +151,14 @@ public class Player extends User implements Participant{
     public void addMatch(Matchmaking matchmaking){
         matchmakings.add(matchmaking);
     }
+    @Override
+    public void deleteMatch(Matchmaking matchmaking){
+        this.matchmakings.remove(matchmaking);
+    }
+    @Override
+    public void deleteTournament(Tournament tournament){
+        this.tournaments.remove(tournament);
+    }
 
     public List<Tournament> getTournaments() {
         return tournaments;
@@ -166,6 +174,10 @@ public class Player extends User implements Participant{
 
     public Team getTeam() {
         return team;
+    }
+
+    public List<Matchmaking> getMatchmakings() {
+        return matchmakings;
     }
 
     public void setTeam(Team team) {

@@ -62,6 +62,14 @@ public class Team implements Participant {
     public void addMatch(Matchmaking matchmaking){
         matchmakings.add(matchmaking);
     }
+    @Override
+    public void deleteMatch(Matchmaking matchmaking){
+        this.matchmakings.remove(matchmaking);
+    }
+    @Override
+    public void deleteTournament(Tournament tournament){
+        this.tournaments.remove(tournament);
+    }
 
     @Override
     public Stat getStat(String category) {
@@ -117,7 +125,6 @@ public class Team implements Participant {
         }
         if (getPlayer(player.getUsername()) == null) {
             players.add(player);
-            player.setTeam(this);
             updateStats();
             result = true;
         }
@@ -145,6 +152,10 @@ public class Team implements Participant {
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+
+    public List<Matchmaking> getMatchmakings() {
+        return matchmakings;
     }
 
     @Override

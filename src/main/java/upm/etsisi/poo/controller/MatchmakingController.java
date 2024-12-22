@@ -72,6 +72,17 @@ public class MatchmakingController {
         }
     }
 
+    public Matchmaking getMatch(Participant participant){
+        int i = 0;
+        while (i < matchmaking.size()) {
+            if (matchmaking.get(i).isMatchmaked(participant)) {
+                return matchmaking.get(i);
+            }
+            i++;
+        }
+        return null;
+    }
+
     public List<Matchmaking> getMatchmaking() {
         return matchmaking;
     }

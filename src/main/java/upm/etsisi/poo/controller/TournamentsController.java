@@ -3,20 +3,14 @@ package upm.etsisi.poo.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import upm.etsisi.poo.model.Authentication;
-import upm.etsisi.poo.model.Categories;
-import upm.etsisi.poo.model.Date;
-import upm.etsisi.poo.model.ModelException;
-import upm.etsisi.poo.model.Participant;
-import upm.etsisi.poo.model.Player;
-import upm.etsisi.poo.model.Tournament;
+import upm.etsisi.poo.model.*;
 import upm.etsisi.poo.view.AdminView;
 import upm.etsisi.poo.view.PlayerView;
 import upm.etsisi.poo.view.PublicView;
 
 
 public class TournamentsController {
-    //Borra de la line 112 el codigo:  && getTournament(name).getStartDate().lowerThan(new Date())
+    //Borra la linea 112 el codigo:  && getTournament(name).getStartDate().lowerThan(new Date())
     //para que te deje añadir matchmaking automaticos sin que haya empezado el torneo
     private static TournamentsController uniqueInstance;
     private static ArrayList<Tournament> tournaments;
@@ -44,6 +38,12 @@ public class TournamentsController {
 
     public static void deleteTournament(String name) {
         if (getTournament(name) != null) {
+            for (Participant participant : getTournament(name).getParticipants()){
+                participant.deleteTournament(getTournament(name));
+                for (Matchmaking matchmaking : getTournament(name).getMatchmaking().getMatchmaking()){
+                    participant.getMatchmakings().remove(matchmaking);
+                }
+            }
             tournaments.remove(getTournament(name));
             AdminView.tournament_delete(true);
         } else AdminView.tournament_delete(false);

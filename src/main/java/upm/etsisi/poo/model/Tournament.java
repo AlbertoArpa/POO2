@@ -17,10 +17,10 @@ public class Tournament {
     @Id
     @Column(name = "name", unique = true, nullable = false)
     private String name;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "startDate", referencedColumnName = "id")
     private Date startDate;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "endDate", referencedColumnName = "id")
     private Date endDate;
     @Column(name = "league")
@@ -33,9 +33,9 @@ public class Tournament {
     @Transient
     private ArrayList<Participant> participants = new ArrayList<>();
     @ManyToMany(mappedBy = "tournaments")
-    private List<Player> players;
+    private List<Player> players = new ArrayList<>();
     @ManyToMany(mappedBy = "tournaments")
-    private List<Team> teams;
+    private List<Team> teams = new ArrayList<>();
     @Embedded
     private MatchmakingController matchmaking;
 
@@ -85,7 +85,9 @@ public class Tournament {
         if (getParticipant(participant) != null) {
             if (matchmaking.isMatchmaked(participant)) {
                 matchmaking.removeMatchmaking(participant);
+                participant.deleteMatch(matchmaking.getMatch(participant));
             }
+            participant.deleteTournament(this);
             participants.remove(participant);
             result = true;
         }

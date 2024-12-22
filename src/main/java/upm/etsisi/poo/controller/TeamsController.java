@@ -2,6 +2,7 @@ package upm.etsisi.poo.controller;
 
 import upm.etsisi.poo.model.Admin;
 import upm.etsisi.poo.model.ModelException;
+import upm.etsisi.poo.model.Player;
 import upm.etsisi.poo.model.Team;
 import upm.etsisi.poo.view.AdminView;
 
@@ -48,6 +49,9 @@ public class TeamsController {
     public static void deleteTeam(String name) {
         if (getTeam(name) != null) {
             if (TournamentsController.isParticipant(getTeam(name)) == null) {
+                for (Player player : getTeam(name).getPlayers()){
+                    player.setTeam(null);
+                }
                 AdminView.team_delete(false, teams.remove(getTeam(name)));
             } else AdminView.team_delete(true, false);
         } else AdminView.team_delete(false, false);
