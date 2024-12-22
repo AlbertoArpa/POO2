@@ -21,15 +21,18 @@ public class App {
     tournament-create futbol;14/01/2025;15/01/2026;liga1;futbol7;money generated
     add-points adri@alumnos.upm.es;money generated;12
     save-changes
-    tournament-delete futbol
-    save-changes
     logout
     login adri@alumnos.upm.es;123
     tournament-add futbol;god
     tournament-add futbol
+    save-changes
     logout
     login adria@alumnos.upm.es;123
     tournament-add futbol;god
     tournament-add futbol
+    save-changes
+    login adrian@alumnos.upm.es;1432
+    tournament-delete futbol
+    save-changes
      */
 }

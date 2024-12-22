@@ -109,7 +109,7 @@ public class TournamentsController {
     }
 
     public static void tournamentMatchmakingA(String name){
-        if (getTournament(name)!=null){
+        if (getTournament(name)!=null && getTournament(name).getStartDate().lowerThan(new Date())){
             AdminView.tournament_matchmakingA(getTournament(name).getMatchmaking().randomMatchmake(getTournament(name).getRandomizedParticipants(), getTournament(name)), true);
         } else AdminView.tournament_matchmakingA(false, false);
     }
