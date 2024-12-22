@@ -1,6 +1,5 @@
 package upm.etsisi.poo;
 import upm.etsisi.poo.controller.ComandController;
-import upm.etsisi.poo.model.ModelException;
 
 public class App {
     public static void main(String[] args) {
