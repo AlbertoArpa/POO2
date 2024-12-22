@@ -22,7 +22,7 @@ public class Player extends User implements Participant{
     private String dni;
 
     @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
-    private List<Stat> stats;
+    private List<Stat> stats = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "creator_username", nullable = false)
@@ -38,14 +38,14 @@ public class Player extends User implements Participant{
             joinColumns = @JoinColumn(name = "name", referencedColumnName = "username"),
             inverseJoinColumns = @JoinColumn(name = "tournament_name")
     )
-    private List<Tournament> tournaments;
+    private List<Tournament> tournaments = new ArrayList<>();
     @ManyToMany
     @JoinTable(
             name = "matchmaking_players",
             joinColumns = @JoinColumn(name = "name", referencedColumnName = "username"),
             inverseJoinColumns = @JoinColumn(name = "matchmaking_id")
     )
-    private List<Matchmaking> matchmakings;
+    private List<Matchmaking> matchmakings = new ArrayList<>();
 
     public Player(){
     }

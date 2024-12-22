@@ -14,9 +14,9 @@ public class Team implements Participant {
     @Column(name = "name", unique = true, nullable = false)
     private String name;
     @OneToMany(mappedBy = "team")
-    private List<Player> players;
+    private List<Player> players = new ArrayList<>();
     @OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
-    private List<Stat> stats;
+    private List<Stat> stats = new ArrayList<>();
     @ManyToOne
     @JoinColumn(name = "creator_username", nullable = false)
     private Admin creator;
@@ -27,14 +27,14 @@ public class Team implements Participant {
             joinColumns = @JoinColumn(name = "name"),
             inverseJoinColumns = @JoinColumn(name = "tournament_name")
     )
-    private List<Tournament> tournaments;
+    private List<Tournament> tournaments = new ArrayList<>();
     @ManyToMany
     @JoinTable(
             name = "matchmaking_teams",
             joinColumns = @JoinColumn(name = "name"),
             inverseJoinColumns = @JoinColumn(name = "matchmaking_id")
     )
-    private List<Matchmaking> matchmakings;
+    private List<Matchmaking> matchmakings = new ArrayList<>();
 
     public Team(){
 
