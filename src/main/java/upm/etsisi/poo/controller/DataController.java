@@ -72,25 +72,35 @@ public class DataController {
     public static void saveData() {
         try {
             session.beginTransaction();
-            session.createNativeMutationQuery("SET FOREIGN_KEY_CHECKS = 0;").executeUpdate();
-            session.createNativeMutationQuery("TRUNCATE TABLE admins").executeUpdate();
-            session.createNativeMutationQuery("TRUNCATE TABLE dates").executeUpdate();
-            session.createNativeMutationQuery("TRUNCATE TABLE matchmakings").executeUpdate();
-            session.createNativeMutationQuery("TRUNCATE TABLE players").executeUpdate();
-            session.createNativeMutationQuery("TRUNCATE TABLE stats").executeUpdate();
-            session.createNativeMutationQuery("TRUNCATE TABLE tournaments").executeUpdate();
-            session.createNativeMutationQuery("TRUNCATE TABLE users").executeUpdate();
-            session.createNativeMutationQuery("TRUNCATE TABLE teams").executeUpdate();
-            session.createNativeMutationQuery("SET FOREIGN_KEY_CHECKS = 1;").executeUpdate();
+            List<Player> currentPlayers = session.createQuery("FROM Player", Player.class).getResultList();
+            for (Player currentPlayer : currentPlayers) {
+                if (!PlayersController.getPlayers().contains(currentPlayer)) {
+                    session.delete(currentPlayer);
+                }
+            }
+            session.getTransaction().commit();
+            session.beginTransaction();
+            List<Team> currentTeams = session.createQuery("FROM Team", Team.class).getResultList();
+            for (Team currentTeam : currentTeams) {
+                if (!TeamsController.getTeams().contains(currentTeam)) {
+                    session.delete(currentTeam);
+                }
+            }
+            session.getTransaction().commit();
+            session.beginTransaction();
+            List<Tournament> currentTournaments = session.createQuery("FROM Tournament", Tournament.class).getResultList();
+            for (Tournament currentTournament : currentTournaments) {
+                if (!TournamentsController.getTournaments().contains(currentTournament)) {
+                    session.delete(currentTournament);
+                }
+            }
+            session.getTransaction().commit();
+            session.beginTransaction();
             for (Admin admin : AdminsController.getAdmins()) {
                 session.persist(admin);
             }
-            for (Player player : PlayersController.getPlayers()) {
-                for (Stat stat : player.getStats()) {
-                    stat.setPlayer(player);
-                    session.persist(stat);
-                }
-            }
+            session.getTransaction().commit();
+            session.beginTransaction();
             for (Team team : TeamsController.getTeams()) {
                 for (Stat stat : team.getStats()) {
                     stat.setTeam(team);
@@ -98,6 +108,22 @@ public class DataController {
                 }
                 session.persist(team);
             }
+            session.getTransaction().commit();
+            session.beginTransaction();
+            for (Player player : PlayersController.getPlayers()) {
+                for (Team team : TeamsController.getTeams()) {
+                    if (team.getPlayers().contains(player)){
+                        player.setTeam(team);
+                    }
+                }
+                for (Stat stat : player.getStats()) {
+                    stat.setPlayer(player);
+                    session.persist(stat);
+                }
+                session.persist(player);
+            }
+            session.getTransaction().commit();
+            session.beginTransaction();
             for (Tournament tournament : TournamentsController.getTournaments()) {
                 session.persist(tournament.getStartDate());
                 session.persist(tournament.getEndDate());
@@ -109,7 +135,7 @@ public class DataController {
             if (session.getTransaction() != null) {
                 session.getTransaction().rollback();
             }
-            System.out.println(es.getMessage());
+            PublicView.otherErrors("\nMuchos datos en proceso. Intenta guardarlos de uno en uno para facilitar el trabajo.");
             PublicView.saveData(false);
         }
     }
