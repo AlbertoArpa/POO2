@@ -72,16 +72,16 @@ public class DataController {
     public static void saveData() {
         try {
             session.beginTransaction();
-            session.createNativeQuery("SET FOREIGN_KEY_CHECKS = 0;").executeUpdate();
-            session.createNativeQuery("TRUNCATE TABLE admins").executeUpdate();
-            session.createNativeQuery("TRUNCATE TABLE dates").executeUpdate();
-            session.createNativeQuery("TRUNCATE TABLE matchmakings").executeUpdate();
-            session.createNativeQuery("TRUNCATE TABLE players").executeUpdate();
-            session.createNativeQuery("TRUNCATE TABLE stats").executeUpdate();
-            session.createNativeQuery("TRUNCATE TABLE tournaments").executeUpdate();
-            session.createNativeQuery("TRUNCATE TABLE users").executeUpdate();
-            session.createNativeQuery("TRUNCATE TABLE teams").executeUpdate();
-            session.createNativeQuery("SET FOREIGN_KEY_CHECKS = 1;").executeUpdate();
+            session.createNativeMutationQuery("SET FOREIGN_KEY_CHECKS = 0;").executeUpdate();
+            session.createNativeMutationQuery("TRUNCATE TABLE admins").executeUpdate();
+            session.createNativeMutationQuery("TRUNCATE TABLE dates").executeUpdate();
+            session.createNativeMutationQuery("TRUNCATE TABLE matchmakings").executeUpdate();
+            session.createNativeMutationQuery("TRUNCATE TABLE players").executeUpdate();
+            session.createNativeMutationQuery("TRUNCATE TABLE stats").executeUpdate();
+            session.createNativeMutationQuery("TRUNCATE TABLE tournaments").executeUpdate();
+            session.createNativeMutationQuery("TRUNCATE TABLE users").executeUpdate();
+            session.createNativeMutationQuery("TRUNCATE TABLE teams").executeUpdate();
+            session.createNativeMutationQuery("SET FOREIGN_KEY_CHECKS = 1;").executeUpdate();
             for (Admin admin : AdminsController.getAdmins()) {
                 session.persist(admin);
             }
