@@ -240,6 +240,7 @@ CommandController ---> TournamentsController
 CommandController ---> TeamsController
 CommandController ---> PlayersController
 CommandController ---> AdminsController
+CommandController -----> DataController
 PublicView <- CommandController
 CommandController ..> Authentication
 Authentication <. AdminsController
@@ -280,10 +281,14 @@ Admin ..> Validations
 Team ..> Validations
 Tournament ..> Validations
 Validations .> ModelException
-DataController ---> PlayersController
-DataController ---> AdminsController
-DataController ---> TeamsController
-DataController ---> TournamentsController
-DataController ---> Authentication
+PlayersController <-- DataController
+AdminsController <-- DataController
+TeamsController <-- DataController
+TournamentsController <-- DataController
+DataController -> Player
+Team <- DataController
+DataController -> Admin
+Tournament <- DataController
+DataController --> Stat
 
 @enduml
